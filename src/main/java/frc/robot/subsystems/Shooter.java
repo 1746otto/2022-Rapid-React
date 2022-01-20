@@ -35,11 +35,36 @@ public class Shooter extends SubsystemBase {
       shooterSlave3.follow(shooterMaster);
       */
     
-  
-     
-
+      slave1.follow(master);
+      slave2.follow(master);
+      slave3.follow(master);
   }
 
+
+    public void setFullPower() {
+      master.set(ControlMode.PercentOutput, 1);
+      slave1.set(ControlMode.PercentOutput, 1);
+      slave3.set(ControlMode.PercentOutput, 1);
+      slave2.set(ControlMode.PercentOutput, 1);
+    
+     }
+
+
+     public void setCustomPower(double input) {
+      master.set(ControlMode.PercentOutput, input);
+      slave1.set(ControlMode.PercentOutput, input);
+      slave3.set(ControlMode.PercentOutput, input);
+      slave2.set(ControlMode.PercentOutput, input);
+    }
+
+     public void setZeroPower(double input) {
+      master.set(ControlMode.PercentOutput, 0);
+      slave1.set(ControlMode.PercentOutput, 0);
+      slave3.set(ControlMode.PercentOutput, 0);
+      slave2.set(ControlMode.PercentOutput, 0);
+    }
+
+  
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
