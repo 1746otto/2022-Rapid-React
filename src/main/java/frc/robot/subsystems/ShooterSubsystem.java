@@ -57,7 +57,7 @@ public class ShooterSubsystem extends SubsystemBase {
       slave2.set(ControlMode.PercentOutput, input);
     }
 
-     public void setZeroPower(double input) {
+     public void setZeroPower() {
       master.set(ControlMode.PercentOutput, 0);
       slave1.set(ControlMode.PercentOutput, 0);
       slave3.set(ControlMode.PercentOutput, 0);
@@ -80,5 +80,8 @@ public class ShooterSubsystem extends SubsystemBase {
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
   }
+
+
+  
 
 }
