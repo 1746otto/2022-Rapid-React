@@ -8,14 +8,14 @@ import frc.robot.Constants.CANIDConstants;
 
 public class DriveSubsystem extends SubsystemBase {
 
-    private final CANSparkMax m_rightLeader = new CANSparkMax(CANIDConstants.kleftDriveLeader, MotorType.kBrushless);
-    private final CANSparkMax m_rightFollow = new CANSparkMax(CANIDConstants.kleftDriveFollow, MotorType.kBrushless);
-    private final CANSparkMax m_leftLeader = new CANSparkMax(CANIDConstants.krightDriveLeader, MotorType.kBrushless);
-    private final CANSparkMax m_leftFollow = new CANSparkMax(CANIDConstants.krightDriveFollow, MotorType.kBrushless);
+    private final CANSparkMax m_rightLeader = new CANSparkMax(CANIDConstants.krightDriveLeader, MotorType.kBrushless);
+    private final CANSparkMax m_rightFollow = new CANSparkMax(CANIDConstants.krightDriveFollow, MotorType.kBrushless);
+    private final CANSparkMax m_leftLeader = new CANSparkMax(CANIDConstants.kleftDriveLeader, MotorType.kBrushless);
+    private final CANSparkMax m_leftFollow = new CANSparkMax(CANIDConstants.kleftDriveFollow, MotorType.kBrushless);
 
     public DriveSubsystem() {
-        m_rightLeader.setInverted(true);
         m_leftLeader.setInverted(true);
+        m_leftFollow.setInverted(true);
 
         m_rightFollow.follow(m_rightLeader);
         m_leftFollow.follow(m_leftLeader);
@@ -26,6 +26,9 @@ public class DriveSubsystem extends SubsystemBase {
         m_leftLeader.set(forward + rotation);
     }
 
-
+    public void stop() {
+        m_rightLeader.set(0);
+        m_leftLeader.set(0);
+    }
 
 }
