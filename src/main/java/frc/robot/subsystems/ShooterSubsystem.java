@@ -24,12 +24,12 @@ public class ShooterSubsystem extends SubsystemBase {
       slave2 = new VictorSPX(Ports.SHOOTER_SLAVE_2);
       slave3 = new VictorSPX(Ports.SHOOTER_SLAVE_3);
 
-      /*
-      shooterMaster.setInverted(true);
-      shooterSlave1.setInverted(true);
-      shooterSlave2.setInverted(false);
-      shooterSlave3.setInverted(true);
-  
+      master.setInverted(true);
+      slave1.setInverted(true);
+      slave2.setInverted(false);
+      slave3.setInverted(true);
+        /*
+
       shooterSlave1.follow(shooterMaster);
       shooterSlave2.follow(shooterMaster);
       shooterSlave3.follow(shooterMaster);
