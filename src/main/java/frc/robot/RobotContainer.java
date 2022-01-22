@@ -11,6 +11,7 @@ import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.ShooterCommand;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.Constants.ControllerConstants;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -19,21 +20,14 @@ import frc.robot.subsystems.ShooterSubsystem;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+  private final XboxController m_controller = new XboxController(ControllerConstants.kPort);
   // The robot's subsystems and commands are defined here...
-<<<<<<< src/main/java/frc/robot/RobotContainer.java
   private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
 
   private final AutonBasic m_autoCommand = new AutonBasic(m_driveSubsystem);
   //private final ShooterCommand m_autoCommand = new ShooterCommand(m_shooterSubsystem);
-
-=======
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
-
-  //private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-  private final ShooterCommand m_autoCommand = new ShooterCommand(m_shooterSubsystem);
->>>>>>> src/main/java/frc/robot/RobotContainer.java
+  private final TeleopDriveCommand m_teleopDriveCommand = new TeleopDriveCommand(m_controller.getY(Hand.kLeft), m_controller.getX(Hand.kLeft));
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -59,5 +53,9 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     return m_autoCommand;
+  }
+
+  public Command getTeleopDrive() {
+    return m_teleopDriveCommand;
   }
 }
