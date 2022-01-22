@@ -9,7 +9,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 
-public class Shooter extends SubsystemBase {
+public class ShooterSubsystem extends SubsystemBase {
   private TalonSRX master;
   private VictorSPX slave1;
   private VictorSPX slave2;
@@ -18,7 +18,7 @@ public class Shooter extends SubsystemBase {
 
 
       /** Creates a new ExampleSubsystem. */
-  public Shooter() {
+  public ShooterSubsystem() {
       master = new TalonSRX(Ports.SHOOTER_MASTER);
       slave1 = new VictorSPX(Ports.SHOOTER_SLAVE_1);
       slave2 = new VictorSPX(Ports.SHOOTER_SLAVE_2);
