@@ -6,9 +6,14 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.commands.DriveStopCommand;
+import frc.robot.commands.DriveStraightCommand;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -18,9 +23,9 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private final DriveSubsystem m_DriveSubsystem = new DriveSubsystem();
 
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+  private final ParallelRaceGroup m_autoCommand = new DriveStraightCommand(m_DriveSubsystem).withTimeout(5);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -34,7 +39,14 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+    XboxController exampleController = new XboxController(Constants.XBOX_CONTROLLER); // Creates an XboxController on port 2.
+    JoystickButton exampleButton = new JoystickButton(exampleController, XboxController.Button.kA.value); // Creates a new JoystickButton object for button 1 on exampleStick
+    // Binds an ExampleCommand to be scheduled when the trigger of the example joystick is pressed
+    exampleButton.whenPressed(new DriveStraightCommand(m_DriveSubsystem))
+                .whenReleased(new DriveStopCommand(m_DriveSubsystem));
+
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

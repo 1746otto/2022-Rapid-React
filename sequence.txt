@@ -1,0 +1,65 @@
+title This is Robot Initialization
+# https://sequencediagram.org
+
+
+participant Main
+participant Robot
+participant RobotContainer
+participant MyCommand
+participant MySubsystem
+participant CommandScheduler
+
+Main->Robot:new Robot()
+== later ==
+
+Main->Robot:robotInit()
+activate Robot
+Robot->RobotContainer:<<create>>
+activate RobotContainer
+RobotContainer->MySubsystem:<<create>>
+
+RobotContainer->MyCommand:new MyCommand(subsystem)
+activate MyCommand
+MyCommand->MyCommand:addRequirements(subsystem)
+deactivate MyCommand
+
+RobotContainer->RobotContainer:configureButtonBindings()
+deactivate RobotContainer
+deactivate Robot
+
+==autonomous mode init==
+Main->Robot:autonomousInit()
+activate Robot
+Robot->RobotContainer:getAutonomousCommand()
+Robot->MyCommand:schedule()
+activate MyCommand
+
+MyCommand->CommandScheduler:scheduleCommand()
+activate CommandScheduler
+
+CommandScheduler->MyCommand:initialize()
+deactivate CommandScheduler
+deactivate MyCommand
+deactivate Robot
+
+==autonomous mode periodic==
+
+loop until interrupt
+[->CommandScheduler:wake()
+activate CommandScheduler
+CommandScheduler->Robot:robotPeriodic()
+CommandScheduler->Robot:autonomousPeriodic()
+deactivate CommandScheduler
+end
+
+==teleop start==
+
+Main->Robot:autonomousPeriodic()
+activate Robot
+Robot->MyCommand:cancel()
+Robot->
+
+  public void autonomousPeriodic() {}
+
+      m_autonomousCommand.cancel();
+  public void teleopPeriodic() {}
