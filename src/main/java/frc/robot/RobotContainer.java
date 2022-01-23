@@ -20,20 +20,12 @@ import frc.robot.subsystems.ShooterSubsystem;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-<<<<<<< src/main/java/frc/robot/RobotContainer.java
   private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
 
   private final AutonBasic m_autoCommand = new AutonBasic(m_driveSubsystem);
   //private final ShooterCommand m_autoCommand = new ShooterCommand(m_shooterSubsystem);
 
-=======
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
-
-  //private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-  private final ShooterCommand m_autoCommand = new ShooterCommand(m_shooterSubsystem);
->>>>>>> src/main/java/frc/robot/RobotContainer.java
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
