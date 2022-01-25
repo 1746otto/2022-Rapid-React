@@ -7,7 +7,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.AutonBasic;
+import frc.robot.commands.IndexerCommand;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.IndexerSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.ShooterCommand;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -22,9 +24,10 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
-
-  private final AutonBasic m_autoCommand = new AutonBasic(m_driveSubsystem);
+  private final IndexerSubsystem m_indexerSubsystem = new IndexerSubsystem();
+  // private final AutonBasic m_autoCommand = new AutonBasic(m_driveSubsystem);
   //private final ShooterCommand m_autoCommand = new ShooterCommand(m_shooterSubsystem);
+  private final IndexerCommand m_autoCommand = new IndexerCommand(m_indexerSubsystem);
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */

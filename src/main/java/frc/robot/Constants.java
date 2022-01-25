@@ -1,5 +1,5 @@
 // Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
+// Open Source Software; you can modify and/or share it under the terms of@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
@@ -24,5 +24,20 @@ public final class Constants {
         public static final double kautonVelocity = 0.3;
         public static final double kautonDriveTime = 2.0;
     }
-    
+
+    public static class ShooterConstants {
+        public static final int kShooterMaster = 42;
+	    public static final int kShooterSlave1 = 40;
+	    public static final int kShooterSlave2 = 43;
+	    public static final int kShooterSlave3 = 41;
+        public static final int kIndexerMotor = 60;
+        public static final int kFullPower = 1; 
+        public static final int kZeroPower = 0;
+    }
+
+    public static class IndexerConstants {
+        public static final double kFullForward = -1.0;
+        public static double kHalfForward = -0.5;
+        public static double kStop = 0.0; 
+    }
 }

@@ -1,12 +1,12 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Ports;
+import frc.robot.Constants;
+import frc.robot.Constants.IndexerConstants;
+import frc.robot.Constants.ShooterConstants;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 
 public class IndexerSubsystem extends SubsystemBase {
@@ -17,22 +17,22 @@ public class IndexerSubsystem extends SubsystemBase {
 
       /** Creates a new ExampleSubsystem. */
   public IndexerSubsystem() {
-    frontSide = new TalonSRX(Ports.INDEXER_MOTOR);
+    frontSide = new TalonSRX(Constants.ShooterConstants.kIndexerMotor);
 
   }
   public void runFullForward() {
-    frontSide.set(ControlMode.PercentOutput, -1.0);
+    frontSide.set(ControlMode.PercentOutput, Constants.IndexerConstants.kFullForward);
   }
 
   public void runHalfForward() {
-    frontSide.set(ControlMode.PercentOutput, -0.5);
+    frontSide.set(ControlMode.PercentOutput, Constants.IndexerConstants.kHalfForward );
   }
 
   public void runCustom(double input) {
     frontSide.set(ControlMode.PercentOutput, -input);
   }
   public void stopIndexer() {
-    frontSide.set(ControlMode.PercentOutput, 0.0);
+    frontSide.set(ControlMode.PercentOutput, Constants.IndexerConstants.kStop);
 
   }
 
