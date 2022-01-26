@@ -1,29 +1,29 @@
 package frc.robot.commands;
 
-import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.commands.ArcadeDriveCommand;
+import edu.wpi.first.wpilibj.XboxController;
 
 /** An example command that uses an example subsystem. */
-public class TeleopDriveCommand extends CommandBase {
+public class ArcadeDriveCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final DriveSubsystem m_drive;
-  private final DoubleSupplier m_forward;
-  private final DoubleSupplier m_rotation;
+  private final XboxController m_controller;
   /**
    * Creates a new TeleopDriveCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public TeleopDriveCommand(DriveSubsystem subsystem, DoubleSupplier forward, DoubleSupplier rotation) { 
+  public ArcadeDriveCommand(DriveSubsystem subsystem, XboxController controller) { 
     m_drive = subsystem;
-    m_forward = forward;
-    m_rotation = rotation;
+    m_controller = controller;
     addRequirements(m_drive);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-      m_drive.arcadeDrive(m_forward.getAsDouble(), m_rotation.getAsDouble();
+      m_drive.arcadeDrive(m_controller.getLeftY(), m_controller.getLeftX());
   }
 }

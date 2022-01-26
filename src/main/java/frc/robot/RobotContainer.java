@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.ShooterCommand;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.Constants.ControllerConstants;
-
+import frc.robot.commands.ArcadeDriveCommand;
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -27,12 +27,13 @@ public class RobotContainer {
 
   private final AutonBasic m_autoCommand = new AutonBasic(m_driveSubsystem);
   //private final ShooterCommand m_autoCommand = new ShooterCommand(m_shooterSubsystem);
-  private final TeleopDriveCommand m_teleopDriveCommand = new TeleopDriveCommand(m_controller.getY(Hand.kLeft), m_controller.getX(Hand.kLeft));
+  private final ArcadeDriveCommand m_arcadeDriveCommand = new ArcadeDriveCommand(m_driveSubsystem, m_controller);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+    configureDefaultCommands();
   }
 
   /**
@@ -43,6 +44,9 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     //TODO: bind an xbox button to the shoot command
+  }
+  private void configureDefaultCommands() {
+    m_driveSubsystem.setDefaultCommand(new ArcadeDriveCommand(m_driveSubsystem, m_controller));
   }
 
   /**
@@ -56,6 +60,6 @@ public class RobotContainer {
   }
 
   public Command getTeleopDrive() {
-    return m_teleopDriveCommand;
+    return m_arcadeDriveCommand;
   }
 }
