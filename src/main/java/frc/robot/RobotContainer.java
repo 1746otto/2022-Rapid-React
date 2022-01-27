@@ -28,14 +28,17 @@ public class RobotContainer {
   // private final AutonBasic m_autoCommand = new AutonBasic(m_driveSubsystem);
   //private final ShooterCommand m_autoCommand = new ShooterCommand(m_shooterSubsystem);
   private final IndexerCommand m_autoCommand = new IndexerCommand(m_indexerSubsystem);
-
+ 
+  
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-  }
 
+  }
+  
+      
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
@@ -53,6 +56,13 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
+    return m_autoCommand;
+   
+  
+  }
+  private Command createAutoCommand () {
+    ();
+   
     return m_autoCommand;
   }
 }
