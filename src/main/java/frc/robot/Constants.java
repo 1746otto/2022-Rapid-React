@@ -25,7 +25,9 @@ public final class Constants {
         public static final double kautonDriveTime = 2.0;
     }
     public static class ControllerConstants {
-        public static final int kPort = 0;
+        public static final int kport = 0;
+        public static final double kdeadZone = .125;
+        public static final double kvelocityScale = .4;
     }
     
 }
