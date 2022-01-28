@@ -7,8 +7,12 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.AutonBasic;
+import frc.robot.commands.DriveForward;
+import frc.robot.commands.IndexerCommand;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.IndexerSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.ShooterCommand;
 import frc.robot.subsystems.ShooterSubsystem;
 
@@ -22,9 +26,11 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
+  private final IndexerSubsystem m_indexerSubsystem = new IndexerSubsystem();
 
-  private final AutonBasic m_autoCommand = new AutonBasic(m_driveSubsystem);
+  //private final AutonBasic m_autoCommand = new AutonBasic(m_driveSubsystem);
   //private final ShooterCommand m_autoCommand = new ShooterCommand(m_shooterSubsystem);
+  private final IndexerCommand m_autoCommand = new IndexerCommand(m_indexerSubsystem);
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -43,6 +49,21 @@ public class RobotContainer {
     //TODO: bind an xbox button to the shoot command
   }
 
+    /**
+   * This will create our autonomous command 
+   * 
+   * @return {@Command}
+   */
+  public SequentialCommandGroup autonomousCommandFactory() {
+
+    return new ShooterCommand(m_shooterSubsystem).withTimeout(1)
+          .andThen(new ShooterCommand(m_shooterSubsystem)
+                      .alongWith(new IndexerCommand(m_indexerSubsystem))
+                      .withTimeout(5))
+          .andThen( new DriveForward(m_driveSubsystem).withTimeout(5));
+  }
+
+
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
@@ -50,6 +71,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return autonomousCommandFactory();
   }
 }

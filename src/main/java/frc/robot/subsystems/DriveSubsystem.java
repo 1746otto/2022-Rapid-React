@@ -4,6 +4,7 @@ import com.revrobotics.CANSparkMax;
 
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.AutonConstants;
 import frc.robot.Constants.CANIDConstants;
 
 public class DriveSubsystem extends SubsystemBase {
@@ -29,6 +30,12 @@ public class DriveSubsystem extends SubsystemBase {
     public void stop() {
         m_rightLeader.set(0);
         m_leftLeader.set(0);
+    }
+
+    public void driveForward() {
+        m_rightLeader.set(AutonConstants.kautonVelocity);
+        m_leftLeader.set(AutonConstants.kautonVelocity);
+        
     }
 
 }
