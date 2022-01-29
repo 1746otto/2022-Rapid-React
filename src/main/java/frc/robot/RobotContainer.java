@@ -6,12 +6,16 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.Constants.AutonConstants;
+import frc.robot.commands.ArcadeDriveCommand;
 import frc.robot.commands.AutonBasic;
 import frc.robot.commands.IndexerCommand;
+import frc.robot.commands.IndexerFullForwardCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.ShooterCommand;
+import frc.robot.commands.ShooterFullPowerCommand;
 import frc.robot.subsystems.ShooterSubsystem;
 
 /**
@@ -21,6 +25,7 @@ import frc.robot.subsystems.ShooterSubsystem;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+  private static final String ShooterSubsystem = null;
   // The robot's subsystems and commands are defined here...
   private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
@@ -60,9 +65,11 @@ public class RobotContainer {
    
   
   }
-  private Command createAutoCommand () {
-    ();
-   
-    return m_autoCommand;
+  public Command createAutoCommand () {
+    return new ShooterFullPowerCommand(m_shooterSubsystem).withTimeout(AutonConstants.kSpeedUpTime)
+      .andThen(new ShooterFullPowerCommand(m_shooterSubsystem)
+        .alongWith(new IndexerFullForwardCommand(m_indexerSubsystem))
+        .withTimeout(AutonConstants.kShootTime))
+      .andThen(new ArcadeDriveCommand(m_driveSubsystem).withTimeout(AutonConstants.kautonDriveTime));
   }
 }

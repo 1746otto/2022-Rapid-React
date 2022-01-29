@@ -23,6 +23,8 @@ public final class Constants {
     public static class AutonConstants {
         public static final double kautonVelocity = 0.3;
         public static final double kautonDriveTime = 2.0;
+        public static double kSpeedUpTime = 1.0; 
+        public static double kShootTime = 3.9;
     }
 
     public static class ShooterConstants {
@@ -33,11 +35,13 @@ public final class Constants {
         public static final int kIndexerMotor = 60;
         public static final int kFullPower = 1; 
         public static final int kZeroPower = 0;
+        
     }
 
     public static class IndexerConstants {
         public static final double kFullForward = -1.0;
         public static double kHalfForward = -0.5;
-        public static double kStop = 0.0; 
+        public static double kStop = 0.0;
+
     }
 }
