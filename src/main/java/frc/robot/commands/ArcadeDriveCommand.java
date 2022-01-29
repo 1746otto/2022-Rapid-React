@@ -2,7 +2,6 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.Constants;
 import frc.robot.commands.ArcadeDriveCommand;
 import edu.wpi.first.wpilibj.XboxController;
 
@@ -25,6 +24,6 @@ public class ArcadeDriveCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-      m_drive.arcadeDrive((m_controller.getLeftY() * (m_controller.getLeftY() >= Constants.ControllerConstants.kdeadZone)) * (Constants.ControllerConstants.kvelocityScale), (m_controller.getLeftX() * (m_controller.getLeftX() >= Constants.ControllerConstants.kdeadZone)) * (Constants.ControllerConstants.kvelocityScale));
+      m_drive.arcadeDrive(m_controller.getLeftY(), m_controller.getLeftX());
   }
 }

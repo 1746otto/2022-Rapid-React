@@ -23,10 +23,16 @@ public class DriveSubsystem extends SubsystemBase {
     }
  
     public void arcadeDrive(double forward, double rotation) {
+        if (Math.abs(forward) < ControllerConstants.kdeadZone) {
+            forward = 0;
+        }
+        if (Math.abs(rotation) < ControllerConstants.kdeadZone){
+            rotation = 0;
+        }
         m_rightLeader.set(forward - rotation);
         m_leftLeader.set(forward + rotation);
     }
-
+    
     public void stop() {
         m_rightLeader.set(0);
         m_leftLeader.set(0);
