@@ -67,11 +67,7 @@ public class ShooterSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-     /* master.set(ControlMode.PercentOutput, ShooterConstants.kFullPower);
-      slave1.set(ControlMode.PercentOutput, ShooterConstants.kFullPower);
-      slave3.set(ControlMode.PercentOutput, ShooterConstants.kFullPower);
-      slave2.set(ControlMode.PercentOutput, ShooterConstants.kFullPower);
-  */}
+}
   
   
 

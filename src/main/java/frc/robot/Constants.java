@@ -15,8 +15,8 @@ package frc.robot;
 public final class Constants {
 
     public static class CANIDConstants {
-        public static final int kleftDriveLeader = 20; 
-        public static final int kleftDriveFollow = 21;
+        public static final int kleftDriveLeader = 12; 
+        public static final int kleftDriveFollow = 13;
         public static final int krightDriveLeader = 10;
         public static final int krightDriveFollow = 11;
     }
@@ -28,11 +28,11 @@ public final class Constants {
     }
 
     public static class ShooterConstants {
-        public static final int kShooterMaster = 42;
+        public static final int kShooterMaster = 41;
 	    public static final int kShooterSlave1 = 40;
 	    public static final int kShooterSlave2 = 43;
-	    public static final int kShooterSlave3 = 41;
-        public static final int kIndexerMotor = 60;
+	    public static final int kShooterSlave3 = 42;
+        public static final int kIndexerMotor = 30;
         public static final int kFullPower = 1; 
         public static final int kZeroPower = 0;
         
