@@ -4,7 +4,6 @@ import com.revrobotics.CANSparkMax;
 
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 import frc.robot.Constants.CANIDConstants;
 import frc.robot.Constants.ControllerConstants;
 
@@ -30,8 +29,8 @@ public class DriveSubsystem extends SubsystemBase {
         if (Math.abs(rotation) < ControllerConstants.kdeadZone){
             rotation = 0;
         }
-        m_rightLeader.set((forward - rotation)/Constants.ControllerConstants.kDriveControl);
-        m_leftLeader.set((forward + rotation)/Constants.ControllerConstants.kDriveControl);
+        m_rightLeader.set((forward - rotation)/ControllerConstants.kDriveControl);
+        m_leftLeader.set((forward + rotation)/ControllerConstants.kDriveControl);
     }
     
     public void stop() {
