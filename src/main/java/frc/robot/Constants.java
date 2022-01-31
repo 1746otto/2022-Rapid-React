@@ -20,9 +20,16 @@ public final class Constants {
         public static final int krightDriveLeader = 10;
         public static final int krightDriveFollow = 11;
     }
+
     public static class AutonConstants {
         public static final double kautonVelocity = 0.3;
         public static final double kautonDriveTime = 2.0;
+    }
+    
+    public static class ControllerConstants {
+        public static final int kport = 0;
+        public static final double kdeadZone = .125;
+        public static final double kDriveControl = 2.0;
     }
     
 }
