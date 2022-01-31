@@ -31,7 +31,7 @@ public class RobotContainer {
   private final IndexerSubsystem m_indexerSubsystem = new IndexerSubsystem();
   // private final AutonBasic m_autoCommand = new AutonBasic(m_driveSubsystem);
   //private final ShooterCommand m_autoCommand = new ShooterCommand(m_shooterSubsystem);
- // private final IndexerCommand m_autoCommand = new IndexerCommand(m_indexerSubsystem);
+ private final ShooterCommand m_autoCommand = new ShooterCommand(m_shooterSubsystem);
  
   
 
@@ -60,7 +60,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return createAutoCommand();
+    return m_autoCommand;
    
   
   }
