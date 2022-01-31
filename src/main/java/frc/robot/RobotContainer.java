@@ -25,14 +25,13 @@ import frc.robot.subsystems.ShooterSubsystem;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  private static final String ShooterSubsystem = null;
   // The robot's subsystems and commands are defined here...
   private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
   private final IndexerSubsystem m_indexerSubsystem = new IndexerSubsystem();
   // private final AutonBasic m_autoCommand = new AutonBasic(m_driveSubsystem);
   //private final ShooterCommand m_autoCommand = new ShooterCommand(m_shooterSubsystem);
-  private final IndexerCommand m_autoCommand = new IndexerCommand(m_indexerSubsystem);
+ // private final IndexerCommand m_autoCommand = new IndexerCommand(m_indexerSubsystem);
  
   
 
@@ -61,7 +60,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return createAutoCommand();
    
   
   }
