@@ -14,15 +14,41 @@ package frc.robot;
  */
 public final class Constants {
 
-    public static class CANIDConstants {
-        public static final int kleftDriveLeader = 20; 
-        public static final int kleftDriveFollow = 21;
+    public static class DriveConstants {
+        public static final int kleftDriveLeader = 12; 
+        public static final int kleftDriveFollow = 13;
         public static final int krightDriveLeader = 10;
         public static final int krightDriveFollow = 11;
     }
+
+    public static class IntakeConstants {
+        public static final int kIntake = 20;
+    }
+
+    public static class IndexerConstants {
+        public static final int kIndexer = 30;
+    }
+
+    public static class ShooterConstants {
+        public static final int kShooterTopLeft = 40;
+        public static final int kShooterTopRight = 41;
+        public static final int kShooterBottomLeft = 42;
+        public static final int kShooterBottomRIght = 43;
+    }
+
+    public static class ClimberConstants {
+        public static final int kClimber = 50;
+    }
+
     public static class AutonConstants {
         public static final double kautonVelocity = 0.3;
         public static final double kautonDriveTime = 2.0;
+    }
+    
+    public static class ControllerConstants {
+        public static final int kport = 0;
+        public static final double kdeadZone = .125;
+        public static final double kDriveControl = 2.0;
     }
     
 }

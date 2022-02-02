@@ -11,6 +11,8 @@ import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.ShooterCommand;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.Constants.ControllerConstants;
+import frc.robot.commands.ArcadeDriveCommand;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -19,18 +21,20 @@ import frc.robot.subsystems.ShooterSubsystem;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+  private final XboxController m_controller = new XboxController(ControllerConstants.kport);
   // The robot's subsystems and commands are defined here...
   private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
 
   private final AutonBasic m_autoCommand = new AutonBasic(m_driveSubsystem);
   //private final ShooterCommand m_autoCommand = new ShooterCommand(m_shooterSubsystem);
-
+  private final ArcadeDriveCommand m_arcadeDriveCommand = new ArcadeDriveCommand(m_driveSubsystem, m_controller);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+    configureDefaultCommands();
   }
 
   /**
@@ -42,6 +46,9 @@ public class RobotContainer {
   private void configureButtonBindings() {
     //TODO: bind an xbox button to the shoot command
   }
+  private void configureDefaultCommands() {
+    m_driveSubsystem.setDefaultCommand(new ArcadeDriveCommand(m_driveSubsystem, m_controller));
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -51,5 +58,9 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     return m_autoCommand;
+  }
+
+  public Command getTeleopDrive() {
+    return m_arcadeDriveCommand;
   }
 }
