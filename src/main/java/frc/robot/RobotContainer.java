@@ -61,17 +61,18 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     return createAutoCommand();
-   
-  
   }
-  public Command createAutoCommand () {
+  
+  public Command createAutoCommand() {
     return new ShooterFullPowerCommand(m_shooterSubsystem)
                         .withTimeout(AutonConstants.kSpeedUpTime)
-                        .andThen(new ShooterFullPowerCommand(m_shooterSubsystem)
-                                            .alongWith(new IndexerFullForwardCommand(m_indexerSubsystem))
-                                            .withTimeout(AutonConstants.kShootTime))
+                        .andThen( (new ShooterFullPowerCommand(m_shooterSubsystem)
+                                        .withTimeout(AutonConstants.kShootTime)
+                                        .alongWith(new IndexerFullForwardCommand(m_indexerSubsystem))
+                                  )
+                              )
                         .andThen(new ArcadeDriveCommand(m_driveSubsystem)
-                                            .withTimeout(AutonConstants.kautonDriveTime));
+                                      .withTimeout(AutonConstants.kautonDriveTime));
   }
   
   public Command createShooterStartUp() {
@@ -79,10 +80,14 @@ public class RobotContainer {
                         .withTimeout(AutonConstants.kSpeedUpTime);
   }
   
-  public Command createShooterAndIndexerStartUp () {
+  public Command createShooterAndIndexerStartUp() {
     return (new ShooterFullPowerCommand(m_shooterSubsystem)
                         .alongWith(new IndexerFullForwardCommand(m_indexerSubsystem)))
             .withTimeout(AutonConstants.kShootTime);
                         
+  }
+  public Command createDriveStartUp() {
+    return new ArcadeDriveCommand(m_driveSubsystem)
+                  .withTimeout(AutonConstants.kautonDriveTime);
   }
 }
