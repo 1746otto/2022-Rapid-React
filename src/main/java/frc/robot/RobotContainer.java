@@ -33,6 +33,10 @@ public class RobotContainer {
   //private final ShooterCommand m_autoCommand = new ShooterCommand(m_shooterSubsystem);
  private final ShooterCommand m_autoCommand = new ShooterCommand(m_shooterSubsystem);
  
+ private final ShooterFullPowerCommand sfpc = new ShooterFullPowerCommand(m_shooterSubsystem);
+ private final   IndexerFullForwardCommand iffc = new IndexerFullForwardCommand(m_indexerSubsystem);
+ private final   ArcadeDriveCommand adc = new ArcadeDriveCommand(m_driveSubsystem);
+
   
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -60,21 +64,41 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return createAutoCommand();
+    return createIndexerStartUp();
   }
   
   public Command createAutoCommand() {
-    return new ShooterFullPowerCommand(m_shooterSubsystem)
-                        .withTimeout(AutonConstants.kSpeedUpTime)
-                        .andThen( (new ShooterFullPowerCommand(m_shooterSubsystem)
-                                        .withTimeout(AutonConstants.kShootTime)
-                                        .alongWith(new IndexerFullForwardCommand(m_indexerSubsystem))
-                                  )
-                              )
-                        .andThen(new ArcadeDriveCommand(m_driveSubsystem)
-                                      .withTimeout(AutonConstants.kautonDriveTime));
+    return ( new ShooterFullPowerCommand(m_shooterSubsystem)
+                        .withTimeout(AutonConstants.kSpeedUpTime))
+                        .andThen( new ShooterFullPowerCommand(m_shooterSubsystem)
+                                        .withTimeout(AutonConstants.kShootTime))
+                                        .andThen(new ArcadeDriveCommand(m_driveSubsystem)
+                                        .withTimeout(AutonConstants.kautonDriveTime))
+                                        .andThen(new IndexerFullForwardCommand(m_indexerSubsystem)
+                                        .withTimeout(AutonConstants.kShootTime))
+                       ;
   }
   
+  public Command createAutoCommand2() {
+    
+    return  (iffc.withTimeout(2))
+                  .andThen(new ShooterFullPowerCommand(m_shooterSubsystem).withTimeout(3));
+                  //.andThen(adc.withTimeout(2));
+                  //.andThen( sfpc );
+                /*  alongWith( iffc )).withTimeout(2);
+                   
+                  .andThen( adc ).withTimeout(2);
+    */
+  }
+
+  public Command createIndexerStartUp() {
+    return new IndexerFullForwardCommand(m_indexerSubsystem).withTimeout(2);
+  }
+  public Command createAutoCommand3() {
+    
+    return  (sfpc.withTimeout(2)).andThen(adc);
+  }
+
   public Command createShooterStartUp() {
     return new ShooterFullPowerCommand(m_shooterSubsystem)
                         .withTimeout(AutonConstants.kSpeedUpTime);
