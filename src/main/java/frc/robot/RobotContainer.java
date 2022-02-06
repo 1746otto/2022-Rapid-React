@@ -59,7 +59,13 @@ public class RobotContainer {
     // An ExampleCommand will run in autonomous
     return m_tarmacAuton;
   }
-  public double
+  public int feetToTics(double feet) {
+    return (int)(Constants.DriveConstants.ktickToRotation * Constants.DriveConstants.kwheelDiameter/12 * 3.14159265359 * feet);
+  }
+  public double getRotationTicDif(double angle) {
+    
+    return 0;
+  }
   public Command getTeleopDrive() {
     return m_arcadeDriveCommand;
   }
