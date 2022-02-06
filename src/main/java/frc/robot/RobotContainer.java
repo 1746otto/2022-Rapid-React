@@ -6,7 +6,6 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.AutonBasic;
 import frc.robot.commands.AutonDriveCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -60,7 +59,7 @@ public class RobotContainer {
     // An ExampleCommand will run in autonomous
     return m_tarmacAuton;
   }
-
+  public double
   public Command getTeleopDrive() {
     return m_arcadeDriveCommand;
   }
