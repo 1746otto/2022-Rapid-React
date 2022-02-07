@@ -44,14 +44,14 @@ public class VisionDriveCommand extends CommandBase {
       if (target - m_vision.getXOffset() != error) {
         error = target - m_vision.getXOffset();
         deltaError = error - prevError;
-        double kPnorm = -(kP * error + kD * deltaError);
-        if (kPnorm < -0.5) {
-          kPnorm = -0.5;
-        } else if (kPnorm > 0.5) {
-        kPnorm = 0.5;
+        double rotationSignal = -(kP * error + kD * deltaError);
+        if (rotationSignal < -0.5) {
+          rotationSignal = -0.5;
+        } else if (rotationSignal > 0.5) {
+        rotationSignal = 0.5;
       }
       
-      m_drive.arcadeDrive(m_controller.getRightTriggerAxis() - m_controller.getLeftTriggerAxis(), kPnorm);
+      m_drive.arcadeDrive(m_controller.getRightTriggerAxis() - m_controller.getLeftTriggerAxis(), rotationSignal);
       prevError = error;
 
       return;
