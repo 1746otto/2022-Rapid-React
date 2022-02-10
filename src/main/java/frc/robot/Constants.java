@@ -22,7 +22,8 @@ public final class Constants {
     }
 
     public static class IntakeConstants {
-        public static final int kIntake = 20;
+        public static final int kIntakeMotor = 20;
+        public static final int kIntakeSolenoid = 0; //TODO: get real CAN ID
     }
 
     public static class IndexerConstants {
