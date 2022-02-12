@@ -11,10 +11,13 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import frc.robot.Constants.ClimberConstants;
 
+
 public class ClimberSubsystem extends SubsystemBase {
-    private final VictorSPX motorR;
-    private final TalonSRX motorL;
-    private final Solenoid pistons;
+    public static double periodic;
+    public final VictorSPX motorR;
+    public final TalonSRX motorL;
+    public final Solenoid pistons;
+    private Object climberPosition;
 
     public ClimberSubsystem() {    
         motorR = new VictorSPX(50);
@@ -24,13 +27,22 @@ public class ClimberSubsystem extends SubsystemBase {
         motorR.setSelectedSensorPosition(0.0);
     }
 
-    public void ClimberExtend(double climberVertical) {
-        if (motorR.getSelectedSensorPosition() < ClimberConstants.kTopEncoderTicks && climberVertical > 0) {
-            motorR.set(ControlMode.PercentOutput, 0);
-        }
-        else {
-            motorR.set(ControlMode.PercentOutput, climberVertical);
-        }
+    public void runClimber() {
+      motorR.set(ControlMode.PercentOutput, ClimberConstants.kClimberExtendSpeed);
+    }
+
+    public void stopClimber() {
+      motorR.set(ControlMode.PercentOutput, 0);
+    }
+
+    
+
+      
+    public boolean climberPosition(){
+        return motorR.getSelectedSensorPosition() < ClimberConstants.kTopEncoderTicks;
+        
+      
+     
     }
 
     public void trueClimber() {
@@ -45,7 +57,10 @@ public class ClimberSubsystem extends SubsystemBase {
         return pistons.get();
       }
     
-    
+   @Override
+   public void periodic(){
+     
+   } 
 
     
 }

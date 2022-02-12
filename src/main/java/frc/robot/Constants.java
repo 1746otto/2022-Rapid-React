@@ -39,6 +39,7 @@ public final class Constants {
     public static class ClimberConstants {
         public static final int kClimber = 50;
         public static final double kTopEncoderTicks = 51;
+        public static final double kClimberExtendSpeed = 1;
     }
 
     public static class AutonConstants {
