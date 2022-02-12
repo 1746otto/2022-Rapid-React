@@ -20,15 +20,13 @@ public class ShooterCommand extends CommandBase {
   
     // Called when the command is initially scheduled.
     @Override
-    public void initialize() {}
+    public void initialize() { 
+    }
   
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        // shooterMaster.set(ControlMode.PercentOutput, 1);
-        // shooterSlave1.set(ControlMode.PercentOutput, 1);
-        // shooterSlave3.set(ControlMode.PercentOutput, 1);
-        // shooterSlave2.set(ControlMode.PercentOutput, 1);
+        
       }
     
     
