@@ -14,9 +14,14 @@ import frc.robot.commands.IndexerFullForwardCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.ShooterFullPowerCommand;
+import frc.robot.commands.VisionDriveCommand;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.Vision;
+import frc.robot.Constants.ControllerConstants;
+import frc.robot.commands.ArcadeDriveCommand;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -25,26 +30,27 @@ import frc.robot.subsystems.ShooterSubsystem;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+  private final XboxController m_controller = new XboxController(ControllerConstants.kport);
+  private final JoystickButton m_visionDriveJoystickButton = new JoystickButton(m_controller, XboxController.Button.kA.value);
   // The robot's subsystems and commands are defined here...
   private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
+  private final Vision m_visionSubsystem = new Vision();
+  private final VisionDriveCommand m_visionDriveCommand = new VisionDriveCommand(m_driveSubsystem, m_controller, m_visionSubsystem);
   private final IndexerSubsystem m_indexerSubsystem = new IndexerSubsystem();
-  // private final AutonBasic m_autoCommand = new AutonBasic(m_driveSubsystem);
-  //private final ShooterCommand m_autoCommand = new ShooterCommand(m_shooterSubsystem);
- private final ShooterCommand m_autoCommand = new ShooterCommand(m_shooterSubsystem);
- 
- private final ShooterFullPowerCommand sfpc = new ShooterFullPowerCommand(m_shooterSubsystem);
- private final   IndexerFullForwardCommand iffc = new IndexerFullForwardCommand(m_indexerSubsystem);
- private final   ArcadeDriveCommand adc = new ArcadeDriveCommand(m_driveSubsystem);
-
   
+
+  private final AutonBasic m_autoCommand = new AutonBasic(m_driveSubsystem);
+  //private final ShooterCommand m_autoCommand = new ShooterCommand(m_shooterSubsystem);
+  private final ArcadeDriveCommand m_arcadeDriveCommand = new ArcadeDriveCommand(m_driveSubsystem, m_controller);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-
+    configureDefaultCommands();
   }
+
   
       
   /**
@@ -54,7 +60,11 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    //TODO: bind an xbox button to the shoot command
+    m_visionDriveJoystickButton.whenPressed(m_visionDriveCommand).whenReleased(m_arcadeDriveCommand);
+    //TODO: bind an xbox button to the shoot command    ` 
+  }
+  private void configureDefaultCommands() {
+    m_driveSubsystem.setDefaultCommand(new ArcadeDriveCommand(m_driveSubsystem, m_controller));
   }
 
   /**
@@ -74,7 +84,11 @@ public class RobotContainer {
                   .withTimeout(Constants.AutonConstants.kSpeedUpTime)
                  .andThen(new IndexerFullForwardCommand(m_indexerSubsystem)
                                     .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem)
-                                    .withTimeout(Constants.AutonConstants.kShootTime)) )
-                 .andThen(new ArcadeDriveCommand(m_driveSubsystem).withTimeout(Constants.AutonConstants.kautonDriveTime));
+                                    .withTimeout(Constants.AutonConstants.kShootTime)) );
+                 //.andThen(new ArcadeDriveCommand(m_driveSubsystem).withTimeout(Constants.AutonConstants.kautonDriveTime));
+  }
+
+  public Command getTeleopDrive() {
+    return m_arcadeDriveCommand;
   }
 }
