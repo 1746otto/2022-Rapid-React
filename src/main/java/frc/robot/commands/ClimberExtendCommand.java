@@ -3,15 +3,14 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.Constants.ClimberConstants;
-import edu.wpi.first.wpilibj.XboxController;
+
 
 public class ClimberExtendCommand extends CommandBase {
     private ClimberSubsystem m_climber = new ClimberSubsystem();
-    private final XboxController m_controller;
     
-    public ClimberExtendCommand(ClimberSubsystem subsystem, XboxController controller) {
+    public ClimberExtendCommand(ClimberSubsystem subsystem) {
         m_climber = subsystem;
-        m_controller = controller;
+
         addRequirements(subsystem);
     }
 
@@ -26,9 +25,8 @@ public class ClimberExtendCommand extends CommandBase {
 
   @Override
   public void initialize() {
-    if(m_controller.getAButton()){
-        m_climber.runClimber();
-    }
+    m_climber.runClimber();
+    
 
 }
 
