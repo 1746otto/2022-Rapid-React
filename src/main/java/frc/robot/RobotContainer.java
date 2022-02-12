@@ -31,7 +31,6 @@ import frc.robot.commands.ArcadeDriveCommand;
  */
 public class RobotContainer {
   private final XboxController m_controller = new XboxController(ControllerConstants.kport);
-  private final JoystickButton m_visionDriveJoystickButton = new JoystickButton(m_controller, XboxController.Button.kA.value);
   // The robot's subsystems and commands are defined here...
   private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
@@ -60,9 +59,13 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    JoystickButton m_visionDriveJoystickButton = new JoystickButton(m_controller, XboxController.Button.kA.value);
+    JoystickButton xBoxB = new JoystickButton(m_controller, XboxController.Button.kB.value);
+
     m_visionDriveJoystickButton.whenPressed(m_visionDriveCommand).whenReleased(m_arcadeDriveCommand);
-    //TODO: bind an xbox button to the shoot command    ` 
+    xBoxB.whenHeld(new ShooterFullPowerCommand(m_shooterSubsystem)); 
   }
+
   private void configureDefaultCommands() {
     m_driveSubsystem.setDefaultCommand(new ArcadeDriveCommand(m_driveSubsystem, m_controller));
   }
