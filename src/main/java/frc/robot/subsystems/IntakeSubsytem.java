@@ -14,7 +14,7 @@ public class IntakeSubsytem {
 
     public IntakeSubsytem() {
         intakeMotor = new CANSparkMax(Constants.IntakeConstants.kIntakeMotor, MotorType.kBrushless);
-        pistons = new Solenoid(Constants.IntakeConstants.kIntakeSolenoid);
+        pistons = new Solenoid(null, Constants.IntakeConstants.kIntakeSolenoid );
         
     }
 }
