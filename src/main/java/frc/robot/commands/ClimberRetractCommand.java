@@ -2,11 +2,12 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ClimberSubsystem;
+import frc.robot.Constants.ClimberConstants;
 
 public class ClimberRetractCommand extends CommandBase {
 
     private ClimberSubsystem m_climber = new ClimberSubsystem();
-    private final DigitalInput topLimitSwitch = new DigitalInput(0);
+    private final DigitalInput bottomLimitSwitch = new DigitalInput(ClimberConstants.kBottomLimitSwitch);
 
     public ClimberRetractCommand(ClimberSubsystem subsystem) {
         m_climber = subsystem;
@@ -30,7 +31,7 @@ public class ClimberRetractCommand extends CommandBase {
 
   @Override 
   public boolean isFinished(){
-    return (!m_climber.isClimberNonZero());
+    return (!m_climber.isClimberNonZero() || bottomLimitSwitch.get());
   }
 }
   
