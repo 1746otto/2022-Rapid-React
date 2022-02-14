@@ -10,6 +10,7 @@ import frc.robot.Constants.AutonConstants;
 import frc.robot.commands.ArcadeDriveCommand;
 import frc.robot.commands.AutonBasic;
 import frc.robot.commands.ClimberExtendCommand;
+import frc.robot.commands.ClimberRetractCommand;
 import frc.robot.commands.IndexerCommand;
 import frc.robot.commands.IndexerFullForwardCommand;
 import frc.robot.subsystems.ClimberSubsystem;
@@ -64,12 +65,13 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     JoystickButton m_visionDriveJoystickButton = new JoystickButton(m_controller, XboxController.Button.kA.value);
-    JoystickButton xBoxB = new JoystickButton(m_controller, XboxController.Button.kB.value); 
+    JoystickButton xBoxB /*This button should be called m_shootJoystickButton(just a suggestion)*/= new JoystickButton(m_controller, XboxController.Button.kB.value); 
     JoystickButton m_climbJoystickButton = new JoystickButton(m_controller, XboxController.Button.kY.value);
+    JoystickButton m_retractJoystickButton = new JoystickButton(m_controller,XboxController.Button.kX.value );
     m_visionDriveJoystickButton.whenPressed(m_visionDriveCommand).whenReleased(m_arcadeDriveCommand);
     xBoxB.whenHeld(new ShooterFullPowerCommand(m_shooterSubsystem)); 
     m_climbJoystickButton.whenPressed(new ClimberExtendCommand(m_climberSubsystem));
-
+    m_retractJoystickButton.whenPressed(new ClimberRetractCommand(m_climberSubsystem));
   }
 
   private void configureDefaultCommands() {
