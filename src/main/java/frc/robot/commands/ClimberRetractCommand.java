@@ -30,7 +30,7 @@ public class ClimberRetractCommand extends CommandBase {
 
   @Override 
   public boolean isFinished(){
-    return (!ClimberSubsystem.isClimberNonZero());
+    return (!m_climber.isClimberNonZero());
   }
 }
   

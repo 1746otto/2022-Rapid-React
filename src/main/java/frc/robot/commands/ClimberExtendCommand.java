@@ -30,7 +30,7 @@ public class ClimberExtendCommand extends CommandBase {
 
   @Override 
   public boolean isFinished(){
-    return (!ClimberSubsystem.isClimberLessThanMax() || topLimitSwitch.get());
+    return (!m_climber.isClimberLessThanMax() || topLimitSwitch.get());
   }
 }
   
