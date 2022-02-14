@@ -14,35 +14,32 @@ import frc.robot.Constants.ClimberConstants;
 
 public class ClimberSubsystem extends SubsystemBase {
     public static double periodic;
-    public final VictorSPX motorR;
-    public final TalonSRX motorL;
+    public static final VictorSPX motorR = new VictorSPX(50);
+    public static final TalonSRX motorL = new TalonSRX(51);
     public final Solenoid pistons;
     private Object climberPosition;
 
     public ClimberSubsystem() {    
-        motorR = new VictorSPX(50);
-        motorL = new TalonSRX(51);
+        //motorR = new VictorSPX(50);
+        //motorL = new TalonSRX(51);
         motorL.follow(motorR);
         pistons = new Solenoid(PneumaticsModuleType.REVPH, 2);
         motorR.setSelectedSensorPosition(0.0);
     }
 
-    public void runClimber() {
+    public static void runClimber() {
       motorR.set(ControlMode.PercentOutput, ClimberConstants.kClimberExtendSpeed);
     }
 
-    public void stopClimber() {
+    public static void stopClimber() {
       motorR.set(ControlMode.PercentOutput, 0);
     }
 
     
 
       
-    public boolean climberPosition(){
+    public static boolean isClimberLessThanMax(){
         return motorR.getSelectedSensorPosition() < ClimberConstants.kTopEncoderTicks;
-        
-      
-     
     }
 
     public void trueClimber() {
