@@ -27,8 +27,12 @@ public class ClimberSubsystem extends SubsystemBase {
         motorR.setSelectedSensorPosition(0.0);
     }
 
-    public static void runClimber() {
+    public static void runExtendClimber() {
       motorR.set(ControlMode.PercentOutput, ClimberConstants.kClimberExtendSpeed);
+    }
+
+    public static void runRetractClimber() {
+      motorR.set(ControlMode.PercentOutput, ClimberConstants.kClimberRetractSpeed);
     }
 
     public static void stopClimber() {
@@ -40,6 +44,10 @@ public class ClimberSubsystem extends SubsystemBase {
       
     public static boolean isClimberLessThanMax(){
         return motorR.getSelectedSensorPosition() < ClimberConstants.kTopEncoderTicks;
+    }
+
+    public static boolean isClimberNonZero() {
+      return motorR.getSelectedSensorPosition() > 0;
     }
 
     public void trueClimber() {

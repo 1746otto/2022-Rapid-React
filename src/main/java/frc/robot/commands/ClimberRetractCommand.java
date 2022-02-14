@@ -3,12 +3,12 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ClimberSubsystem;
 
-public class ClimberExtendCommand extends CommandBase {
+public class ClimberRetractCommand extends CommandBase {
 
     private ClimberSubsystem m_climber = new ClimberSubsystem();
     private final DigitalInput topLimitSwitch = new DigitalInput(0);
 
-    public ClimberExtendCommand(ClimberSubsystem subsystem) {
+    public ClimberRetractCommand(ClimberSubsystem subsystem) {
         m_climber = subsystem;
 
         addRequirements(subsystem);
@@ -16,7 +16,7 @@ public class ClimberExtendCommand extends CommandBase {
 
   @Override
   public void initialize() {
-    m_climber.runExtendClimber();
+    m_climber.runRetractClimber();
   }
 
   @Override
@@ -30,7 +30,7 @@ public class ClimberExtendCommand extends CommandBase {
 
   @Override 
   public boolean isFinished(){
-    return (!ClimberSubsystem.isClimberLessThanMax() || topLimitSwitch.get());
+    return (!ClimberSubsystem.isClimberNonZero());
   }
 }
   
