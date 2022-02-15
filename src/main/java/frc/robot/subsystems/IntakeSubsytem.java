@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import frc.robot.Constants;
 
@@ -14,7 +15,28 @@ public class IntakeSubsytem {
 
     public IntakeSubsytem() {
         intakeMotor = new CANSparkMax(Constants.IntakeConstants.kIntakeMotor, MotorType.kBrushless);
-        pistons = new Solenoid(null, Constants.IntakeConstants.kIntakeSolenoid );
-        
+        pistons = new Solenoid(PneumaticsModuleType.REVPH, Constants.IntakeConstants.kIntakeSolenoid );
     }
+
+    public void extend() {
+        pistons.set(true);//TODO: test to see if true/false are accurate on 2022 bot
+    }
+
+    public void retract() {
+        pistons.set(false);//TODO: test to see if true/false accurate on 2022 bot
+    }
+
+    public void runFullPower() {
+        intakeMotor.set(Constants.IntakeConstants.kIntakeFullPower);
+    }
+
+    public void runHalfPower() {
+        intakeMotor.set(Constants.IntakeConstants.kIntakerunHalfPower);
+    }
+
+    public void runCustomPower() {
+        intakeMotor.set(Constants.IntakeConstants.kIntakeCustomPower);
+    }
+
+    
 }
