@@ -19,8 +19,9 @@ public final class Constants {
         public static final int kleftDriveFollow = 13;
         public static final int krightDriveLeader = 10;
         public static final int krightDriveFollow = 11;
-        public static final int ktickToRotation = 4096;
-        public static final double kwheelDiameter = 4; //in inches.
+        public static final int kticksPerRotation = 4096;
+        public static final double kwheelCircumfrence = 4 * 3.1415926; //in inches.
+        public static final double kmotorToWheelRatio = 68/12;
     }
 
     public static class IntakeConstants {
