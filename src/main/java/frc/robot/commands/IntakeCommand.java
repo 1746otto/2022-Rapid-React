@@ -4,8 +4,9 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.IntakeSubsytem;
+import frc.robot.subsystems.IntakeSubsystem;
 
 /** An example command that uses an example subsystem. */
 public class IntakeCommand extends CommandBase {
@@ -33,7 +34,9 @@ public class IntakeCommand extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_subsystem.runZeroPower();
+  }
 
   // Returns true when the command should end.
   @Override

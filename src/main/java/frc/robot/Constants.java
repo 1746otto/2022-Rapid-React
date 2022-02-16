@@ -25,8 +25,8 @@ public final class Constants {
         public static final int kIntakeMotor = 20;
         public static final int kIntakeSolenoid = 0; //TODO: get real CAN ID
         public static final int kIntakeFullPower = 1;
-        public static final double kIntakerunHalfPower = .5;
-        public static final double kIntakeCustomPower = 0.0;
+        public static final double kIntakerunZeroPower = 0.0;
+        public static final double kIntakeCustomPower = 0.5;
     }
 
     public static class IndexerConstants {
@@ -38,6 +38,9 @@ public final class Constants {
         public static final int kShooterTopRight = 41;
         public static final int kShooterBottomLeft = 42;
         public static final int kShooterBottomRIght = 43;
+        public static final int kShooterZeroPower = 0;
+        public static final int kShooterFullPower = 1;
+
     }
 
     public static class ClimberConstants {

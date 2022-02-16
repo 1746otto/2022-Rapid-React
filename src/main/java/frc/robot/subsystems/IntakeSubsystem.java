@@ -2,18 +2,19 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 
-public class IntakeSubsytem {
+public class IntakeSubsystem extends SubsystemBase {
     CANSparkMax intakeMotor;
     Solenoid pistons;
     boolean intakeState = false; 
 
-    public IntakeSubsytem() {
+    public IntakeSubsystem() {
         intakeMotor = new CANSparkMax(Constants.IntakeConstants.kIntakeMotor, MotorType.kBrushless);
         pistons = new Solenoid(PneumaticsModuleType.REVPH, Constants.IntakeConstants.kIntakeSolenoid );
     }
@@ -30,13 +31,12 @@ public class IntakeSubsytem {
         intakeMotor.set(Constants.IntakeConstants.kIntakeFullPower);
     }
 
-    public void runHalfPower() {
-        intakeMotor.set(Constants.IntakeConstants.kIntakerunHalfPower);
+
+    public void runCustomPower(double input) {
+        intakeMotor.set(input);
     }
 
-    public void runCustomPower() {
-        intakeMotor.set(Constants.IntakeConstants.kIntakeCustomPower);
+    public void runZeroPower() {
+        intakeMotor.set(Constants.IntakeConstants.kIntakerunZeroPower);
     }
-
-    
 }

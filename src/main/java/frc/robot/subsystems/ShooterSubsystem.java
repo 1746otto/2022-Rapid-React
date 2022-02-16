@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Ports;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -42,10 +43,10 @@ public class ShooterSubsystem extends SubsystemBase {
 
 
     public void setFullPower() {
-      master.set(ControlMode.PercentOutput, 1);
-      slave1.set(ControlMode.PercentOutput, 1);
-      slave3.set(ControlMode.PercentOutput, 1);
-      slave2.set(ControlMode.PercentOutput, 1);
+      master.set(ControlMode.PercentOutput, Constants.ShooterConstants.kShooterFullPower);
+      slave1.set(ControlMode.PercentOutput, Constants.ShooterConstants.kShooterFullPower);
+      slave3.set(ControlMode.PercentOutput, Constants.ShooterConstants.kShooterFullPower);
+      slave2.set(ControlMode.PercentOutput, Constants.ShooterConstants.kShooterFullPower);
     
      }
 
@@ -58,10 +59,10 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
      public void setZeroPower() {
-      master.set(ControlMode.PercentOutput, 0);
-      slave1.set(ControlMode.PercentOutput, 0);
-      slave3.set(ControlMode.PercentOutput, 0);
-      slave2.set(ControlMode.PercentOutput, 0);
+      master.set(ControlMode.PercentOutput, Constants.ShooterConstants.kShooterZeroPower);
+      slave1.set(ControlMode.PercentOutput, Constants.ShooterConstants.kShooterZeroPower);
+      slave3.set(ControlMode.PercentOutput, Constants.ShooterConstants.kShooterZeroPower);
+      slave2.set(ControlMode.PercentOutput, Constants.ShooterConstants.kShooterZeroPower);
     }
 
   
