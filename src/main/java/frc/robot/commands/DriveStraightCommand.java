@@ -7,9 +7,9 @@ import frc.robot.subsystems.DriveSubsystem;
 public class DriveStraightCommand extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final DriveSubsystem m_drive;
-    private final int m_distance; //tics
+    private final int m_distance; //ticks
     private final double m_speed;
-    private final int m_startingTics;
+    private final int m_startingTicks;
     /**
      * Creates a new TeleopDriveCommand.
      *
@@ -19,7 +19,7 @@ public class DriveStraightCommand extends CommandBase {
       m_drive = subsystem;
       m_distance = (int)(distance * 12 / Constants.DriveConstants.kwheelCircumfrence * Constants.DriveConstants.kmotorToWheelRatio * Constants.DriveConstants.kticksPerRotation); //feet
       m_speed = (distance >= 0 ? 1 : -1) * speed;
-      m_startingTics = m_drive.getLeftTicks();
+      m_startingTicks = m_drive.getLeftTicks();
       addRequirements(m_drive);
     }
   
@@ -35,12 +35,12 @@ public class DriveStraightCommand extends CommandBase {
 
     public boolean isFinished() {
       if (m_distance < 0) {
-        if (m_distance <= (m_startingTics - m_drive.getLeftTicks())) {
+        if (m_distance <= (m_startingTicks - m_drive.getLeftTicks())) {
           return true;
         }
       }
       else {
-        if (m_distance >= (m_drive.getLeftTicks() - m_startingTics)) {
+        if (m_distance >= (m_drive.getLeftTicks() - m_startingTicks)) {
           return true;
         }
       }
