@@ -28,11 +28,11 @@ public class DriveStraightCommand extends CommandBase {
     public void execute() {
       m_drive.arcadeDrive(m_speed, 0);
     }
-
+    @Override
     public void end(boolean interrupted) {
       m_drive.arcadeDrive(0, 0);
     }
-
+    @Override
     public boolean isFinished() {
       if (m_distance < 0) {
         if (m_distance <= (m_startingTicks - m_drive.getLeftTicks())) {
