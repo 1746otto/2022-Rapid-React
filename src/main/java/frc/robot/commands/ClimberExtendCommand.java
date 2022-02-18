@@ -11,9 +11,9 @@ public class ClimberExtendCommand extends CommandBase {
     private final DigitalInput topLimitSwitch = new DigitalInput(ClimberConstants.kTopLimitSwitch);
 
     public ClimberExtendCommand(ClimberSubsystem subsystem) {
-        m_climber = subsystem;
+      m_climber = subsystem;
 
-        addRequirements(subsystem);
+      addRequirements(subsystem);
     }
 
   @Override
@@ -30,10 +30,10 @@ public class ClimberExtendCommand extends CommandBase {
     m_climber.stopClimber();
   }
 
-  @Override 
-  public boolean isFinished(){
+  //@Override 
+  /*public boolean isFinished(){
     return (!m_climber.isClimberLessThanMax() || topLimitSwitch.get());
-  }
+  }*/
 }
   
 

@@ -65,7 +65,7 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     JoystickButton m_visionDriveJoystickButton = new JoystickButton(m_controller, XboxController.Button.kA.value);
-    JoystickButton xBoxB /*This button should be called m_shootJoystickButton(just a suggestion)*/= new JoystickButton(m_controller, XboxController.Button.kB.value); 
+    JoystickButton xBoxB = new JoystickButton(m_controller, XboxController.Button.kB.value); 
     JoystickButton m_climbJoystickButton = new JoystickButton(m_controller, XboxController.Button.kY.value);
     JoystickButton m_retractJoystickButton = new JoystickButton(m_controller,XboxController.Button.kX.value );
     m_visionDriveJoystickButton.whenPressed(m_visionDriveCommand).whenReleased(m_arcadeDriveCommand);

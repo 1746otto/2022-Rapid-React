@@ -6,14 +6,14 @@ import frc.robot.Constants.ClimberConstants;
 
 public class ClimberRetractCommand extends CommandBase {
 
-    private ClimberSubsystem m_climber = new ClimberSubsystem();
-    private final DigitalInput bottomLimitSwitch = new DigitalInput(ClimberConstants.kBottomLimitSwitch);
+  private ClimberSubsystem m_climber = new ClimberSubsystem();
+  private final DigitalInput bottomLimitSwitch = new DigitalInput(ClimberConstants.kBottomLimitSwitch);
 
-    public ClimberRetractCommand(ClimberSubsystem subsystem) {
-        m_climber = subsystem;
+  public ClimberRetractCommand(ClimberSubsystem subsystem) {
+    m_climber = subsystem;
 
-        addRequirements(subsystem);
-    }
+    addRequirements(subsystem);
+  }
 
   @Override
   public void initialize() {
@@ -29,10 +29,10 @@ public class ClimberRetractCommand extends CommandBase {
     m_climber.stopClimber();
   }
 
-  @Override 
-  public boolean isFinished(){
+  //@Override 
+  /*public boolean isFinished(){
     return (!m_climber.isClimberNonZero() || bottomLimitSwitch.get());
-  }
+  }*/
 }
   
 

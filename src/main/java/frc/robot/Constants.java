@@ -27,11 +27,13 @@ public final class Constants {
 
     public static class ClimberConstants {
         public static final int kClimber = 50;
-        public static final double kTopEncoderTicks = 51;
+        //public static final double kTopEncoderTicks = 51;
         public static final double kClimberExtendSpeed = 1;
         public static final double kClimberRetractSpeed = -1;
         public static final int kTopLimitSwitch = 0;
         public static final int kBottomLimitSwitch = 1;
+        public static final int kChannel = 2;
+        public static final double resetSensorPosition = 0.0;
     }
 
     public static class AutonConstants {
