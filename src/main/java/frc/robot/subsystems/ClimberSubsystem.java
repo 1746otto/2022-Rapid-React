@@ -11,18 +11,16 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ClimberConstants;
 
 public class ClimberSubsystem extends SubsystemBase {
-    public double periodic;
-    public final VictorSPX motorR = new VictorSPX(50);
-    public final TalonSRX motorL = new TalonSRX(51);
-    public final Solenoid pistons;
+    private double periodic;
+    private final VictorSPX motorR = new VictorSPX(50);
+    private final TalonSRX motorL = new TalonSRX(51);
+    private final Solenoid pistons;
     private Object climberPosition;
 
     public ClimberSubsystem() {    
-        //motorR = new VictorSPX(50);
-        //motorL = new TalonSRX(51);
-        motorL.follow(motorR);
-        pistons = new Solenoid(PneumaticsModuleType.REVPH, ClimberConstants.kChannel);
-        motorR.setSelectedSensorPosition(ClimberConstants.resetSensorPosition);
+      motorL.follow(motorR);
+      pistons = new Solenoid(PneumaticsModuleType.REVPH, ClimberConstants.kChannel);
+      motorR.setSelectedSensorPosition(ClimberConstants.kResetSensorPosition);
     }
 
     public void runExtendClimber() {
@@ -37,33 +35,21 @@ public class ClimberSubsystem extends SubsystemBase {
       motorR.set(ControlMode.PercentOutput, 0);
     }
 
-    
-
-      
-    /*public boolean isClimberLessThanMax(){
-        return motorR.getSelectedSensorPosition() < ClimberConstants.kTopEncoderTicks;
-    }
-
-    public boolean isClimberNonZero() {
-      return motorR.getSelectedSensorPosition() > 0;
-    }*/
-
     public void trueClimber() {
-        pistons.set(true);
-      }
+      pistons.set(true);
+    }
     
     public void falseClimber() {
-        pistons.set(false);
-      }
+      pistons.set(false);
+    }
     
     public boolean getExtended() {
-        return pistons.get();
-      }
+      return pistons.get();
+    }
     
     @Override
     public void periodic(){
      
     } 
-
     
 }

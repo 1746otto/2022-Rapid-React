@@ -7,14 +7,13 @@ import frc.robot.Constants.ClimberConstants;
 
 public class ClimberExtendCommand extends CommandBase {
 
-    private ClimberSubsystem m_climber = new ClimberSubsystem();
-    private final DigitalInput topLimitSwitch = new DigitalInput(ClimberConstants.kTopLimitSwitch);
+  private ClimberSubsystem m_climber = new ClimberSubsystem();
+  private final DigitalInput topLimitSwitch = new DigitalInput(ClimberConstants.kTopLimitSwitch);
 
-    public ClimberExtendCommand(ClimberSubsystem subsystem) {
-      m_climber = subsystem;
-
-      addRequirements(subsystem);
-    }
+  public ClimberExtendCommand(ClimberSubsystem subsystem) {
+    m_climber = subsystem;
+    addRequirements(subsystem);
+  }
 
   @Override
   public void initialize() {
@@ -30,10 +29,10 @@ public class ClimberExtendCommand extends CommandBase {
     m_climber.stopClimber();
   }
 
-  //@Override 
-  /*public boolean isFinished(){
-    return (!m_climber.isClimberLessThanMax() || topLimitSwitch.get());
-  }*/
+  @Override 
+  public boolean isFinished(){
+    return (topLimitSwitch.get());
+  }
 }
   
 

@@ -11,7 +11,6 @@ public class ClimberRetractCommand extends CommandBase {
 
   public ClimberRetractCommand(ClimberSubsystem subsystem) {
     m_climber = subsystem;
-
     addRequirements(subsystem);
   }
 
@@ -29,10 +28,10 @@ public class ClimberRetractCommand extends CommandBase {
     m_climber.stopClimber();
   }
 
-  //@Override 
-  /*public boolean isFinished(){
-    return (!m_climber.isClimberNonZero() || bottomLimitSwitch.get());
-  }*/
+  @Override 
+  public boolean isFinished(){
+    return (bottomLimitSwitch.get());
+  }
 }
   
 
