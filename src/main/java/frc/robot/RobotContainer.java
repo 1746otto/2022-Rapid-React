@@ -7,8 +7,13 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ArcadeDriveCommand;
+import frc.robot.commands.AutonBasic;
+import frc.robot.commands.ClimberExtendCommand;
+import frc.robot.commands.ClimberRetractCommand;
+import frc.robot.commands.IndexerCommand;
 import frc.robot.commands.AutonDriveCommand;
 import frc.robot.commands.IndexerFullForwardCommand;
+import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -30,10 +35,10 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
+  private final ClimberSubsystem m_climberSubsystem = new ClimberSubsystem();
   private final Vision m_visionSubsystem = new Vision();
   private final VisionDriveCommand m_visionDriveCommand = new VisionDriveCommand(m_driveSubsystem, m_controller, m_visionSubsystem);
   private final IndexerSubsystem m_indexerSubsystem = new IndexerSubsystem();
-  
 
   private final Command m_tarmacAuton = new AutonDriveCommand(m_driveSubsystem, 0 ,Constants.AutonConstants.kautonSpeedBackwards).withTimeout(Constants.AutonConstants.kautonDriveTime);
   //private final ShooterCommand m_autoCommand = new ShooterCommand(m_shooterSubsystem);
@@ -56,10 +61,11 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     JoystickButton m_visionDriveJoystickButton = new JoystickButton(m_controller, XboxController.Button.kA.value);
-    JoystickButton xBoxB = new JoystickButton(m_controller, XboxController.Button.kB.value);
-
+    JoystickButton xBoxB = new JoystickButton(m_controller, XboxController.Button.kB.value); 
+    JoystickButton m_climbJoystickButton = new JoystickButton(m_controller, XboxController.Button.kY.value);
     m_visionDriveJoystickButton.whenPressed(m_visionDriveCommand).whenReleased(m_arcadeDriveCommand);
     xBoxB.whenHeld(new ShooterFullPowerCommand(m_shooterSubsystem)); 
+    m_climbJoystickButton.whenPressed(new ClimberExtendCommand(m_climberSubsystem));
   }
 
   private void configureDefaultCommands() {
