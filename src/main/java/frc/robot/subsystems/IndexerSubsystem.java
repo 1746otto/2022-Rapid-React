@@ -22,7 +22,7 @@ public class IndexerSubsystem extends SubsystemBase {
 
   }
   public void runFullForward() {
-    frontSide.set(ControlMode.PercentOutput, Constants.IndexerConstants.kHalfForward);
+    frontSide.set(ControlMode.PercentOutput, Constants.IndexerConstants.kFullForward);
   }
 
   public void runHalfForward() {

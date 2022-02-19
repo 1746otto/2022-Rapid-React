@@ -10,16 +10,16 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ClimberConstants;
 
 public class ClimberSubsystem extends SubsystemBase {
-    private final VictorSPX motorR = new VictorSPX(50);
-    private final TalonSRX motorL = new TalonSRX(51);
+    private final VictorSPX motorR = new VictorSPX(ClimberConstants.kMotorR);
+    private final TalonSRX motorL = new TalonSRX(ClimberConstants.kMotorL);
     private final Solenoid pistons;
     private final DigitalInput topLimitSwitch = new DigitalInput(ClimberConstants.kTopLimitSwitch);
     private final DigitalInput bottomLimitSwitch = new DigitalInput(ClimberConstants.kBottomLimitSwitch);
 
-    public ClimberSubsystem() {    
+    public ClimberSubsystem() {   
+      motorL.setInverted(true); 
       motorL.follow(motorR);
       pistons = new Solenoid(PneumaticsModuleType.REVPH, ClimberConstants.kChannel);
-      motorR.setSelectedSensorPosition(ClimberConstants.kResetSensorPosition);
     }
 
     public void runExtendClimber() {
@@ -35,22 +35,22 @@ public class ClimberSubsystem extends SubsystemBase {
     }
 
     public void engageClimberHook() {
-      pistons.set(ClimberConstants.climberHookEngage);
+      pistons.set(ClimberConstants.kClimberHookEngaged);
     }
 
     public void releaseClimberHook() {
-      pistons.set(ClimberConstants.climberHookReleased);
+      pistons.set(ClimberConstants.kClimberHookReleased);
     }
     
-    public boolean getExtended() {
-      return pistons.get();
+    public boolean getEngaged() {
+      return pistons.get() == ClimberConstants.kClimberHookEngaged;
     }
 
-    public boolean topLimitSwitchClick() {
+    public boolean isAtTop() {
       return topLimitSwitch.get();
     }
 
-    public boolean bottomLimitSwitchClick() {
+    public boolean isAtBottom() {
       return bottomLimitSwitch.get();
     }
 }

@@ -40,9 +40,7 @@ public class RobotContainer {
   private final ClimberSubsystem m_climberSubsystem = new ClimberSubsystem();
   private final Vision m_visionSubsystem = new Vision();
   private final VisionDriveCommand m_visionDriveCommand = new VisionDriveCommand(m_driveSubsystem, m_controller, m_visionSubsystem);
-  private final ClimberExtendCommand m_climberExtendCommand = new ClimberExtendCommand(m_climberSubsystem);
   private final IndexerSubsystem m_indexerSubsystem = new IndexerSubsystem();
-  
 
   private final AutonBasic m_autoCommand = new AutonBasic(m_driveSubsystem);
   //private final ShooterCommand m_autoCommand = new ShooterCommand(m_shooterSubsystem);
@@ -71,7 +69,6 @@ public class RobotContainer {
     m_visionDriveJoystickButton.whenPressed(m_visionDriveCommand).whenReleased(m_arcadeDriveCommand);
     xBoxB.whenHeld(new ShooterFullPowerCommand(m_shooterSubsystem)); 
     m_climbJoystickButton.whenPressed(new ClimberExtendCommand(m_climberSubsystem));
-    m_retractJoystickButton.whenPressed(new ClimberRetractCommand(m_climberSubsystem));
   }
 
   private void configureDefaultCommands() {
