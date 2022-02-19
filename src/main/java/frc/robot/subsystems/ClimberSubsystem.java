@@ -5,17 +5,17 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.PowerDistribution;
+//import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ClimberConstants;
 
 public class ClimberSubsystem extends SubsystemBase {
-    private double periodic;
+    //private double periodic;
     private final VictorSPX motorR = new VictorSPX(50);
     private final TalonSRX motorL = new TalonSRX(51);
     private final Solenoid pistons;
-    private Object climberPosition;
+    //private Object climberPosition;
 
     public ClimberSubsystem() {    
       motorL.follow(motorR);
@@ -35,21 +35,15 @@ public class ClimberSubsystem extends SubsystemBase {
       motorR.set(ControlMode.PercentOutput, 0);
     }
 
-    public void trueClimber() {
+    public void hookOffClimber() {
       pistons.set(true);
     }
     
-    public void falseClimber() {
+    public void hookOnClimber() {
       pistons.set(false);
     }
     
     public boolean getExtended() {
       return pistons.get();
     }
-    
-    @Override
-    public void periodic(){
-     
-    } 
-    
 }
