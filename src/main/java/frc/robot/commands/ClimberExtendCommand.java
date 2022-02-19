@@ -6,9 +6,7 @@ import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.ClimberConstants;
 
 public class ClimberExtendCommand extends CommandBase {
-
   private ClimberSubsystem m_climber = new ClimberSubsystem();
-  private final DigitalInput topLimitSwitch = new DigitalInput(ClimberConstants.kTopLimitSwitch);
 
   public ClimberExtendCommand(ClimberSubsystem subsystem) {
     m_climber = subsystem;
@@ -31,7 +29,7 @@ public class ClimberExtendCommand extends CommandBase {
 
   @Override 
   public boolean isFinished(){
-    return (topLimitSwitch.get());
+    return m_climber.topLimitSwitchClick();
   }
 }
   

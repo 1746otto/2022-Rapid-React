@@ -5,9 +5,7 @@ import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.Constants.ClimberConstants;
 
 public class ClimberRetractCommand extends CommandBase {
-
   private ClimberSubsystem m_climber = new ClimberSubsystem();
-  private final DigitalInput bottomLimitSwitch = new DigitalInput(ClimberConstants.kBottomLimitSwitch);
 
   public ClimberRetractCommand(ClimberSubsystem subsystem) {
     m_climber = subsystem;
@@ -30,10 +28,9 @@ public class ClimberRetractCommand extends CommandBase {
 
   @Override 
   public boolean isFinished(){
-    return (bottomLimitSwitch.get());
+    return m_climber.bottomLimitSwitchClick();
   }
 }
-  
 
   
   

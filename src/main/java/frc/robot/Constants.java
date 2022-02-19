@@ -34,6 +34,8 @@ public final class Constants {
         public static final int kBottomLimitSwitch = 1;
         public static final int kChannel = 2;
         public static final double kResetSensorPosition = 0.0;
+        public static final boolean climberHookEngage = true;
+        public static final boolean climberHookReleased = false;
     }
 
     public static class AutonConstants {
