@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.IntakeSubsystem;
 
 /** An example command that uses an example subsystem. */
@@ -26,7 +27,10 @@ public class IntakeCommand extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    m_subsystem.extend();
+    m_subsystem.runCustomPower(Constants.IntakeConstants.kIntakeCustomPower);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -36,6 +40,7 @@ public class IntakeCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     m_subsystem.runZeroPower();
+    m_subsystem.retract();
   }
 
   // Returns true when the command should end.
