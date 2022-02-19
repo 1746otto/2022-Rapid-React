@@ -1,11 +1,9 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
-import frc.robot.Ports;
+import frc.robot.Constants.ShooterConstants;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
@@ -20,10 +18,10 @@ public class ShooterSubsystem extends SubsystemBase {
 
       /** Creates a new ExampleSubsystem. */
   public ShooterSubsystem() {
-      master = new TalonSRX(Ports.SHOOTER_MASTER);
-      slave1 = new VictorSPX(Ports.SHOOTER_SLAVE_1);
-      slave2 = new VictorSPX(Ports.SHOOTER_SLAVE_2);
-      slave3 = new VictorSPX(Ports.SHOOTER_SLAVE_3);
+      master = new TalonSRX(ShooterConstants.kShooterMaster);
+      slave1 = new VictorSPX(ShooterConstants.kShooterSlave1);
+      slave2 = new VictorSPX(ShooterConstants.kShooterSlave2);
+      slave3 = new VictorSPX(ShooterConstants.kShooterSlave3);
 
       master.setInverted(true);
       slave1.setInverted(true);
@@ -43,10 +41,10 @@ public class ShooterSubsystem extends SubsystemBase {
 
 
     public void setFullPower() {
-      master.set(ControlMode.PercentOutput, Constants.ShooterConstants.kShooterFullPower);
-      slave1.set(ControlMode.PercentOutput, Constants.ShooterConstants.kShooterFullPower);
-      slave3.set(ControlMode.PercentOutput, Constants.ShooterConstants.kShooterFullPower);
-      slave2.set(ControlMode.PercentOutput, Constants.ShooterConstants.kShooterFullPower);
+      master.set(ControlMode.PercentOutput, ShooterConstants.kFullPower);
+      slave1.set(ControlMode.PercentOutput, ShooterConstants.kFullPower);
+      slave3.set(ControlMode.PercentOutput, ShooterConstants.kFullPower);
+      slave2.set(ControlMode.PercentOutput, ShooterConstants.kFullPower);
     
      }
 
@@ -59,18 +57,17 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
      public void setZeroPower() {
-      master.set(ControlMode.PercentOutput, Constants.ShooterConstants.kShooterZeroPower);
-      slave1.set(ControlMode.PercentOutput, Constants.ShooterConstants.kShooterZeroPower);
-      slave3.set(ControlMode.PercentOutput, Constants.ShooterConstants.kShooterZeroPower);
-      slave2.set(ControlMode.PercentOutput, Constants.ShooterConstants.kShooterZeroPower);
+      master.set(ControlMode.PercentOutput, ShooterConstants.kZeroPower);
+      slave1.set(ControlMode.PercentOutput, ShooterConstants.kZeroPower);
+      slave3.set(ControlMode.PercentOutput, ShooterConstants.kZeroPower);
+      slave2.set(ControlMode.PercentOutput, ShooterConstants.kZeroPower);
     }
 
   
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
- 
-    }
+  }
   
   
 
