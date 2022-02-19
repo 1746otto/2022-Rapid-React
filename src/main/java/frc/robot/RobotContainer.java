@@ -9,8 +9,10 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ArcadeDriveCommand;
 import frc.robot.commands.AutonDriveCommand;
 import frc.robot.commands.IndexerFullForwardCommand;
+import frc.robot.commands.IntakeCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ShooterFullPowerCommand;
@@ -33,6 +35,7 @@ public class RobotContainer {
   private final Vision m_visionSubsystem = new Vision();
   private final VisionDriveCommand m_visionDriveCommand = new VisionDriveCommand(m_driveSubsystem, m_controller, m_visionSubsystem);
   private final IndexerSubsystem m_indexerSubsystem = new IndexerSubsystem();
+  private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   
 
   private final Command m_tarmacAuton = new AutonDriveCommand(m_driveSubsystem, 0 ,Constants.AutonConstants.kautonSpeedBackwards).withTimeout(Constants.AutonConstants.kautonDriveTime);
@@ -57,9 +60,11 @@ public class RobotContainer {
   private void configureButtonBindings() {
     JoystickButton m_visionDriveJoystickButton = new JoystickButton(m_controller, XboxController.Button.kA.value);
     JoystickButton xBoxB = new JoystickButton(m_controller, XboxController.Button.kB.value);
+    JoystickButton xBoxX = new JoystickButton(m_controller, XboxController.Button.kX.value);
 
     m_visionDriveJoystickButton.whenPressed(m_visionDriveCommand).whenReleased(m_arcadeDriveCommand);
     xBoxB.whenHeld(new ShooterFullPowerCommand(m_shooterSubsystem)); 
+    xBoxX.whenHeld(new IntakeCommand(m_intakeSubsystem));
   }
 
   private void configureDefaultCommands() {
