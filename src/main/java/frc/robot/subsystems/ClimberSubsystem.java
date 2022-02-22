@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ClimberConstants;
+import frc.robot.Constants.RobotConstants;
 
 public class ClimberSubsystem extends SubsystemBase {
     private final VictorSPX motorR = new VictorSPX(ClimberConstants.kMotorR);
@@ -19,7 +20,7 @@ public class ClimberSubsystem extends SubsystemBase {
     public ClimberSubsystem() {   
       motorL.setInverted(true); 
       motorL.follow(motorR);
-      pistons = new Solenoid(PneumaticsModuleType.REVPH, ClimberConstants.kChannel);
+      pistons = new Solenoid(RobotConstants.kREVPH, PneumaticsModuleType.REVPH, ClimberConstants.kChannel);
     }
 
     public void runExtendClimber() {

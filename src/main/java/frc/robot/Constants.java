@@ -13,6 +13,10 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+
+    public static class RobotConstants {
+        public static final int kREVPH = 2;
+    }
     
     public static class DriveConstants {
         public static final int kleftDriveLeader = 12; 
