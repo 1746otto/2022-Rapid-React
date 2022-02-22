@@ -68,7 +68,7 @@ public class RobotContainer {
     m_visionDriveJoystickButton.whenPressed(m_visionDriveCommand).whenReleased(m_arcadeDriveCommand);
     xBoxB.whenHeld(new ShooterFullPowerCommand(m_shooterSubsystem)); 
     m_climbJoystickButton.whenPressed(new ClimberExtendCommand(m_climberSubsystem));
-    m_indexerButton.whenPressed(new IndexerFullForwardCommand(m_indexerSubsystem));
+    m_indexerButton.whenHeld(new IndexerFullForwardCommand(m_indexerSubsystem));
   }
 
   private void configureDefaultCommands() {
