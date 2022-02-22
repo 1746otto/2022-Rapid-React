@@ -64,9 +64,11 @@ public class RobotContainer {
     JoystickButton m_visionDriveJoystickButton = new JoystickButton(m_controller, XboxController.Button.kA.value);
     JoystickButton xBoxB = new JoystickButton(m_controller, XboxController.Button.kB.value); 
     JoystickButton m_climbJoystickButton = new JoystickButton(m_controller, XboxController.Button.kY.value);
+    JoystickButton m_indexerButton = new JoystickButton(m_controller, XboxController.Button.kX.value);
     m_visionDriveJoystickButton.whenPressed(m_visionDriveCommand).whenReleased(m_arcadeDriveCommand);
     xBoxB.whenHeld(new ShooterFullPowerCommand(m_shooterSubsystem)); 
     m_climbJoystickButton.whenPressed(new ClimberExtendCommand(m_climberSubsystem));
+    m_indexerButton.whenPressed(new IndexerFullForwardCommand(m_indexerSubsystem));
   }
 
   private void configureDefaultCommands() {
