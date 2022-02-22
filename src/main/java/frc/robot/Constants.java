@@ -61,10 +61,15 @@ public final class Constants {
     }
 
     public static class IndexerConstants {
-        public static final double kFullForward = -1.0;
-        public static double kHalfForward = -0.5;
-        public static double kStop = 0.0;
+        public static final double kWheelFullForward = 1;
+        public static final double kBeltFullForward = 1;
+        public static final double kWheelHalfForward = 0.5;
+        public static final double kBeltHalfForward = 0.5;
+        public static final double kWheelStop = 0.0;
+        public static final double kBeltStop = 0.0;
         public static final int kIndexer = 30;
+        public static final int kWheel = 30;
+        public static final int kBelt = 31; 
     }
     
     public static class ControllerConstants {
