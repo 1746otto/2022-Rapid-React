@@ -15,7 +15,7 @@ public class DriveStraightCommand extends CommandBase {
      *
      * @param subsystem The subsystem used by this command.
      */
-    public DriveStraightCommand(DriveSubsystem subsystem, double distance /*feet*/, double speed) { 
+    public DriveStraightCommand(DriveSubsystem subsystem, double distance /*feet*/, double speed /*always positive*/) { 
       m_drive = subsystem;
       m_distance = (int)(distance * 12 / Constants.DriveConstants.kwheelCircumfrence * Constants.DriveConstants.kmotorToWheelRatio * Constants.DriveConstants.kticksPerRotation); //feet
       m_speed = (distance >= 0 ? 1 : -1) * speed;
@@ -35,12 +35,14 @@ public class DriveStraightCommand extends CommandBase {
     @Override
     public boolean isFinished() {
       if (m_distance < 0) {
-        if (m_distance <= (m_startingTicks - m_drive.getLeftTicks())) {
+        if (m_distance >= (m_drive.getLeftTicks() - m_startingTicks)) { 
           return true;
         }
       }
+      else if (m_distance == 0)
+        return true;
       else {
-        if (m_distance >= (m_drive.getLeftTicks() - m_startingTicks)) {
+        if (m_distance <= (m_drive.getLeftTicks() - m_startingTicks)) {
           return true;
         }
       }
