@@ -27,7 +27,7 @@ public final class Constants {
 
     public static class IntakeConstants {
         public static final int kIntakeMotor = 20;
-        public static final int kIntakeSolenoid = 0; //TODO: get real CAN ID
+        public static final int kIntakeSolenoid = 8;
         public static final int kIntakeFullPower = 1;
         public static final double kIntakerunZeroPower = 0.0;
         public static final double kIntakeCustomPower = 0.5;
