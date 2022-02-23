@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.IntakeConstants;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -14,23 +15,24 @@ public class IntakeSubsystem extends SubsystemBase {
     Solenoid pistons;
     boolean intakeState = false; 
 
+    
     public IntakeSubsystem() {
-        intakeMotor = new CANSparkMax(Constants.IntakeConstants.kIntakeMotor, MotorType.kBrushless);
-        pistons = new Solenoid(PneumaticsModuleType.REVPH, Constants.IntakeConstants.kIntakeSolenoid );
+        intakeMotor = new CANSparkMax(IntakeConstants.kIntakeMotor, MotorType.kBrushless);
         pistons = new Solenoid(Constants.RobotConstants.kREVPH,PneumaticsModuleType.REVPH, Constants.IntakeConstants.kIntakeSolenoid );
 
     }
 
+
     public void extend() {
-        pistons.set(true);//TODO: test to see if true/false are accurate on 2022 bot
+        pistons.set(IntakeConstants.kIntakeExtended);//TODO: test to see if true/false are accurate on 2022 bot
     }
 
     public void retract() {
-        pistons.set(false);//TODO: test to see if true/false accurate on 2022 bot
+        pistons.set(IntakeConstants.kIntakeRetracted);//TODO: test to see if true/false accurate on 2022 bot
     }
 
     public void runFullPower() {
-        intakeMotor.set(Constants.IntakeConstants.kIntakeFullPower);
+        intakeMotor.set(IntakeConstants.kIntakeFullPower);
     }
 
 
@@ -39,6 +41,6 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public void runZeroPower() {
-        intakeMotor.set(Constants.IntakeConstants.kIntakerunZeroPower);
+        intakeMotor.set(IntakeConstants.kIntakerunZeroPower);
     }
 }
