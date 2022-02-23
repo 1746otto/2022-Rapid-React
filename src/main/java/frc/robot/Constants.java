@@ -14,6 +14,10 @@ package frc.robot;
  */
 public final class Constants {
 
+    public static class RobotConstants {
+        public static final int kREVPH = 2;
+    }
+
     public static class DriveConstants {
         public static final int kleftDriveLeader = 12; 
         public static final int kleftDriveFollow = 13;

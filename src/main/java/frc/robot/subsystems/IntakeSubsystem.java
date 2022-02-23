@@ -17,6 +17,8 @@ public class IntakeSubsystem extends SubsystemBase {
     public IntakeSubsystem() {
         intakeMotor = new CANSparkMax(Constants.IntakeConstants.kIntakeMotor, MotorType.kBrushless);
         pistons = new Solenoid(PneumaticsModuleType.REVPH, Constants.IntakeConstants.kIntakeSolenoid );
+        pistons = new Solenoid(Constants.RobotConstants.kREVPH,PneumaticsModuleType.REVPH, Constants.IntakeConstants.kIntakeSolenoid );
+
     }
 
     public void extend() {
