@@ -70,6 +70,8 @@ public final class Constants {
         public static final int kIndexer = 30;
         public static final int kWheel = 30;
         public static final int kBelt = 31; 
+        public static final int kBeambreakTop = 0;
+        public static final int kBeambreakBottom = 1;
     }
     
     public static class ControllerConstants {

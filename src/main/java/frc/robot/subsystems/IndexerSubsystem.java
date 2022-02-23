@@ -2,17 +2,21 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IndexerConstants;
-import frc.robot.Constants.ShooterConstants;
-import frc.robot.commands.IndexerFullForwardCommand;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-
+import edu.wpi.first.wpilibj.AnalogInput;
 
 public class IndexerSubsystem extends SubsystemBase {
  
   private final VictorSPX m_wheel;
   private final VictorSPX m_belt;
+  private final AnalogInput beambreakTop;
+  private final AnalogInput beambreakBottom;
+
+  private boolean beambreakTopLastState = false;
+  private boolean beambreakBottomLastState = false;
+  private boolean hopperDisabled = false;
   
       /** Creates a new ExampleSubsystem. */
 
@@ -20,6 +24,8 @@ public class IndexerSubsystem extends SubsystemBase {
     m_wheel = new VictorSPX(IndexerConstants.kWheel);
     m_belt = new VictorSPX(IndexerConstants.kBelt);
     m_belt.setInverted(true);
+    beambreakTop = new AnalogInput(IndexerConstants.kBeambreakTop);
+    beambreakBottom = new AnalogInput(IndexerConstants.kBeambreakBottom);
   }
 
   public void runWheelFullForward() {
@@ -102,7 +108,24 @@ public class IndexerSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    if (Math.floor(beambreakTop.getVoltage()) == 0) {
+      if (!beambreakTopLastState) {
+        hopperDisabled = true;
+        beambreakTopLastState = true;
+      }
+      else {
+        beambreakTopLastState = false;
+      }
+    }
+    if (Math.floor(beambreakBottom.getVoltage()) == 0) {
+      if (!beambreakBottomLastState) {
+        hopperDisabled = true;
+        beambreakBottomLastState = true;
+      }
+      else {
+        beambreakBottomLastState = false;
+      }
+    }
   }
   
   @Override
