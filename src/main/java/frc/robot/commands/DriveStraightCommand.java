@@ -18,7 +18,7 @@ public class DriveStraightCommand extends CommandBase {
     public DriveStraightCommand(DriveSubsystem subsystem, double distance /*feet*/, double speed /*always positive*/) { 
       m_drive = subsystem;
       m_distance = (distance * 12 / Constants.DriveConstants.kwheelCircumfrence * Constants.DriveConstants.kmotorToWheelRatio); //feet
-      m_speed = (distance >= 0 ? 1 : -1) * speed;
+      m_speed = (distance >= 0 ? 1 : -1) * Math.abs(speed);
       
       addRequirements(m_drive);
     }
