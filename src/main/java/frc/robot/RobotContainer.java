@@ -11,6 +11,7 @@ import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.ShooterCommand;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.commands.DriveStraightCommand;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.commands.ArcadeDriveCommand;
 
@@ -24,7 +25,7 @@ public class RobotContainer {
   private final XboxController m_controller = new XboxController(ControllerConstants.kport);
   // The robot's subsystems and commands are defined here...
   private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
-  
+  private final DriveStraightCommand m_driveStraightCommand = new DriveStraightCommand(m_driveSubsystem, Constants.DriveConstants.kautonDistance, Constants.DriveConstants.kautonSpeed);
 
   private final Command m_tarmacAuton = new AutonDriveCommand(m_driveSubsystem, 0 ,Constants.AutonConstants.kautonSpeedBackwards).withTimeout(Constants.AutonConstants.kautonDriveTime);
   //private final ShooterCommand m_autoCommand = new ShooterCommand(m_shooterSubsystem);
@@ -57,15 +58,9 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_tarmacAuton;
+    return m_driveStraightCommand;
   }
-  public int feetToTics(double feet) {
-    return (int)(Constants.DriveConstants.kticksPerRotation * Constants.DriveConstants.kwheelCircumfrence/12 * 3.14159265359 * feet);
-  }
-  public double getRotationTicDif(double angle) {
-    
-    return 0;
-  }
+  
   public Command getTeleopDrive() {
     return m_arcadeDriveCommand;
   }
