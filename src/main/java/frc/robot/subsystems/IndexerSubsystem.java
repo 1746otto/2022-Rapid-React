@@ -8,13 +8,12 @@ import frc.robot.commands.IndexerFullForwardCommand;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
-
 public class IndexerSubsystem extends SubsystemBase {
- 
+
   private final VictorSPX m_lower;
   private final VictorSPX m_upper;
-  
-      /** Creates a new ExampleSubsystem. */
+
+  /** Creates a new ExampleSubsystem. */
 
   public IndexerSubsystem() {
     m_lower = new VictorSPX(IndexerConstants.kLower);
@@ -22,23 +21,23 @@ public class IndexerSubsystem extends SubsystemBase {
     m_upper.setInverted(true);
   }
 
-  public void runWheelFullForward() {
+  public void runLowerFullForward() {
     m_lower.set(ControlMode.PercentOutput, IndexerConstants.kLowerFullForward);
   }
-  
-  public void runBeltFullForward() {
+
+  public void runUpperFullForward() {
     m_upper.set(ControlMode.PercentOutput, IndexerConstants.kUpperFullForward);
   }
 
   public void runBothFullForward() {
-    runWheelFullForward();
-    runBeltFullForward();
+    runLowerFullForward();
+    runUpperFullForward();
   }
 
   public void runLowerHalfForward() {
     m_lower.set(ControlMode.PercentOutput, IndexerConstants.kLowerHalfForward);
   }
-  
+
   public void runUpperHalfForward() {
     m_upper.set(ControlMode.PercentOutput, IndexerConstants.kUpperHalfForward);
   }
@@ -104,7 +103,7 @@ public class IndexerSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
   }
-  
+
   @Override
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
