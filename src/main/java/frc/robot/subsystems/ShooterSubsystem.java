@@ -19,7 +19,7 @@ public class ShooterSubsystem extends SubsystemBase {
       master = new VictorSPX(ShooterConstants.kShooterMaster);
       slave1 = new TalonSRX(ShooterConstants.kShooterSlave1);
       
-      slave1.setInverted(true);
+      slave1.setInverted(false);
       slave1.follow(master);
   }
 
