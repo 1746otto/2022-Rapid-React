@@ -6,12 +6,12 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.IntakeSubsystem;
 
 /** An example command that uses an example subsystem. */
 public class IntakeCommand extends CommandBase {
-  @SuppressWarnings({"PMD.UnusedPrivateField","PMD.SingularField"})
+  @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
   private final IntakeSubsystem m_subsystem;
 
   /**
@@ -29,12 +29,13 @@ public class IntakeCommand extends CommandBase {
   @Override
   public void initialize() {
     m_subsystem.extend();
-    m_subsystem.runCustomPower(Constants.IntakeConstants.kIntakeCustomPower);
+    m_subsystem.runCustomPower(IntakeConstants.kIntakeCustomPower);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+  }
 
   // Called once the command ends or is interrupted.
   @Override
