@@ -8,12 +8,14 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 
+
 public class ShooterSubsystem extends SubsystemBase {
   private TalonSRX master;
   private VictorSPX slave1;
   private VictorSPX slave2;
   private VictorSPX slave3;
-
+  
+  private double RPM = 0;
 
 
       /** Creates a new ExampleSubsystem. */
@@ -62,10 +64,15 @@ public class ShooterSubsystem extends SubsystemBase {
       slave3.set(ControlMode.PercentOutput, ShooterConstants.kZeroPower);
       slave2.set(ControlMode.PercentOutput, ShooterConstants.kZeroPower);
     }
+      public double RPM(){
+        return RPM;
 
+      }
   
   @Override
   public void periodic() {
+     
+    RPM = master.getSelectedSensorVelocity() / ShooterConstants.kShooterTPRPM;
     // This method will be called once per scheduler run
   }
   

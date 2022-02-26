@@ -57,6 +57,7 @@ public final class Constants {
         public static final int kIndexerMotor = 30;
         public static final int kFullPower = 1; 
         public static final int kZeroPower = 0;
+        public static final int kShooterTPRPM = 0;
         
     }
 
