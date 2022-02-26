@@ -16,7 +16,7 @@ public class CSVtable {
         
     }
     
-        public void bruh() {
+        public void table() {
             try
             {
                 FileWriter newWriter = new FileWriter(table, true);
