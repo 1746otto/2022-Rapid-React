@@ -62,14 +62,14 @@ public final class Constants {
         public static final int kShooterSlave2 = 43;
         public static final int kShooterSlave3 = 42;
         public static final int kIndexerMotor = 30;
-        public static final double kFullPower = .25;
+        public static final double kFullPower = 1;
         public static final int kZeroPower = 0;
 
     }
 
     public static class IndexerConstants {
-        public static final double kLowerFullForward = .25;
-        public static final double kUpperFullForward = .25;
+        public static final double kLowerFullForward = 1;
+        public static final double kUpperFullForward = 1;
         public static final double kLowerHalfForward = 0.5;
         public static final double kUpperHalfForward = 0.5;
         public static final double kLowerStop = 0.0;

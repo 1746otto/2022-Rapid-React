@@ -102,7 +102,7 @@ public class RobotContainer {
         .andThen(new IndexerFullForwardCommand(m_indexerSubsystem)
             .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem)
                 .withTimeout(Constants.AutonConstants.kShootTime)))
-        .andThen(new AutonDriveCommand(m_driveSubsystem, 0, .25)
+        .andThen(new AutonDriveCommand(m_driveSubsystem, 0, .5)
             .withTimeout(Constants.AutonConstants.kautonDriveTime));
   }
 
