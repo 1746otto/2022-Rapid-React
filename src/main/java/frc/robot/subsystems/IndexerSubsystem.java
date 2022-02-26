@@ -11,23 +11,23 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 public class IndexerSubsystem extends SubsystemBase {
  
-  private final VictorSPX m_wheel;
-  private final VictorSPX m_belt;
+  private final VictorSPX m_lower;
+  private final VictorSPX m_upper;
   
       /** Creates a new ExampleSubsystem. */
 
   public IndexerSubsystem() {
-    m_wheel = new VictorSPX(IndexerConstants.kWheel);
-    m_belt = new VictorSPX(IndexerConstants.kBelt);
-    m_belt.setInverted(true);
+    m_lower = new VictorSPX(IndexerConstants.kLower);
+    m_upper = new VictorSPX(IndexerConstants.kUpper);
+    m_upper.setInverted(true);
   }
 
   public void runWheelFullForward() {
-    m_wheel.set(ControlMode.PercentOutput, IndexerConstants.kWheelFullForward);
+    m_lower.set(ControlMode.PercentOutput, IndexerConstants.kLowerFullForward);
   }
   
   public void runBeltFullForward() {
-    m_belt.set(ControlMode.PercentOutput, IndexerConstants.kBeltFullForward);
+    m_upper.set(ControlMode.PercentOutput, IndexerConstants.kUpperFullForward);
   }
 
   public void runBothFullForward() {
@@ -35,69 +35,69 @@ public class IndexerSubsystem extends SubsystemBase {
     runBeltFullForward();
   }
 
-  public void runWheelHalfForward() {
-    m_wheel.set(ControlMode.PercentOutput, IndexerConstants.kWheelHalfForward);
+  public void runLowerHalfForward() {
+    m_lower.set(ControlMode.PercentOutput, IndexerConstants.kLowerHalfForward);
   }
   
-  public void runBeltHalfForward() {
-    m_belt.set(ControlMode.PercentOutput, IndexerConstants.kBeltHalfForward);
+  public void runUpperHalfForward() {
+    m_upper.set(ControlMode.PercentOutput, IndexerConstants.kUpperHalfForward);
   }
 
   public void runBothHalfForward() {
-    runWheelHalfForward();
-    runBeltHalfForward();
+    runLowerHalfForward();
+    runUpperHalfForward();
   }
 
-  public void runWheelCustom(double input) {
-    m_wheel.set(ControlMode.PercentOutput, input);
+  public void runLowerCustom(double input) {
+    m_lower.set(ControlMode.PercentOutput, input);
   }
 
-  public void runBeltCustom(double input) {
-    m_belt.set(ControlMode.PercentOutput, input);
+  public void runUpperCustom(double input) {
+    m_upper.set(ControlMode.PercentOutput, input);
   }
 
-  public void runBothCustom(double wheelInput, double beltInput) {
-    runWheelCustom(wheelInput);
-    runBeltCustom(beltInput);
+  public void runBothCustom(double lowerInput, double upperInput) {
+    runLowerCustom(lowerInput);
+    runUpperCustom(upperInput);
   }
 
-  public void stopWheelIndexer() {
-    m_wheel.set(ControlMode.PercentOutput, IndexerConstants.kWheelStop);
+  public void stopLowerIndexer() {
+    m_lower.set(ControlMode.PercentOutput, IndexerConstants.kLowerStop);
   }
 
-  public void stopBeltIndexer() {
-    m_belt.set(ControlMode.PercentOutput, IndexerConstants.kBeltStop);
+  public void stopUpperIndexer() {
+    m_upper.set(ControlMode.PercentOutput, IndexerConstants.kUpperStop);
   }
 
   public void stopBoth() {
-    stopWheelIndexer();
-    stopBeltIndexer();
+    stopLowerIndexer();
+    stopUpperIndexer();
   }
 
-  public void runWheelFullBackward() {
-    m_wheel.set(ControlMode.PercentOutput, -IndexerConstants.kWheelFullForward);
+  public void runLowerFullBackward() {
+    m_lower.set(ControlMode.PercentOutput, -IndexerConstants.kLowerFullForward);
   }
 
-  public void runBeltFullBackward() {
-    m_belt.set(ControlMode.PercentOutput, -IndexerConstants.kBeltFullForward);
+  public void runUpperFullBackward() {
+    m_upper.set(ControlMode.PercentOutput, -IndexerConstants.kUpperFullForward);
   }
 
   public void runBothFullBackward() {
-    runWheelFullBackward();
-    runBeltFullBackward();
+    runLowerFullBackward();
+    runUpperFullBackward();
   }
 
-  public void runWheelHalfBackward() {
-    m_wheel.set(ControlMode.PercentOutput, -IndexerConstants.kWheelHalfForward);
+  public void runLowerHalfBackward() {
+    m_lower.set(ControlMode.PercentOutput, -IndexerConstants.kLowerHalfForward);
   }
 
-  public void runBeltHalfBackward() {
-    m_belt.set(ControlMode.PercentOutput, -IndexerConstants.kBeltHalfForward);
+  public void runUpperHalfBackward() {
+    m_upper.set(ControlMode.PercentOutput, -IndexerConstants.kUpperHalfForward);
   }
 
   public void runBothHalfBackward() {
-    runWheelHalfBackward();
-    runBeltHalfBackward();
+    runLowerHalfBackward();
+    runUpperHalfBackward();
   }
 
   @Override
