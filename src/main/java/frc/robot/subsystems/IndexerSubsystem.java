@@ -30,6 +30,7 @@ public class IndexerSubsystem extends SubsystemBase {
 
   public void runWheelFullForward() {
     m_wheel.set(ControlMode.PercentOutput, IndexerConstants.kWheelFullForward);
+    
   }
   
   public void runBeltFullForward() {
@@ -105,10 +106,15 @@ public class IndexerSubsystem extends SubsystemBase {
     runWheelHalfBackward();
     runBeltHalfBackward();
   }
-
+  public boolean topBeamBreak(){
+    return beambreakTopLastState;
+  }
+  public boolean bottomBeamBreak(){
+    return beambreakBottomLastState;
+  }
   @Override
   public void periodic() {
-    if (Math.floor(beambreakTop.getVoltage()) == 0) {
+  /*  if (Math.floor(beambreakTop.getVoltage()) == 0) {
       if (!beambreakTopLastState) {
         hopperDisabled = true;
         beambreakTopLastState = true;
@@ -127,6 +133,11 @@ public class IndexerSubsystem extends SubsystemBase {
       }
     }
   }
+  */
+  beambreakBottomLastState = (Math.floor(beambreakBottom.getVoltage()) == 0);
+  beambreakTopLastState = (Math.floor(beambreakTop.getVoltage()) == 0); 
+
+  
   
   @Override
   public void simulationPeriodic() {

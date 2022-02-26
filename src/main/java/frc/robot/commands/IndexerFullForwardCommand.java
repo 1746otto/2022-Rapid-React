@@ -38,6 +38,10 @@ public class IndexerFullForwardCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    if(!m_subsystem.bottomBeamBreak)
+      if(m_subsystem.topBeamBreak){
+        return true;
+      }
     return false;
   }
 }
