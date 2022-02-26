@@ -15,10 +15,25 @@ public class CSVtable {
         table = new File("table.CSV");
         
     }
+    
+        public void bruh() {
+            try
+            {
+                FileWriter newWriter = new FileWriter(table, true);
+                newWriter.write((int)m_shooterSubsystem.RPM() + "/n");
+                newWriter.close();
+            }
+            catch(Exception e)
+            {
+                System.out.println(e);
+            }
+
+    }
+}
 
     
-       m_shooterSubsystem.RPM();
+
         
     
     
-}
+
