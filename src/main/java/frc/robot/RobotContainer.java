@@ -69,8 +69,6 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    // JoystickButton m_visionDriveJoystickButton = new JoystickButton(m_controller,
-    // XboxController.Button.kA.value);
     new JoystickButton(m_controller, XboxController.Button.kA.value)
         .whenPressed(m_visionDriveCommand).whenReleased(m_arcadeDriveCommand);
 
