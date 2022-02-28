@@ -14,26 +14,29 @@ public class ShooterSubsystem extends SubsystemBase {
 
 
 
-      /** Creates a new ExampleSubsystem. */
+  /** Creates a new ExampleSubsystem. */
   public ShooterSubsystem() {
-      master = new VictorSPX(ShooterConstants.kShooterMaster);
-      slave1 = new TalonSRX(ShooterConstants.kShooterSlave1);
-      
-      slave1.setInverted(false);
-      slave1.follow(master);
+    master = new VictorSPX(ShooterConstants.kShooterMaster);
+    slave1 = new TalonSRX(ShooterConstants.kShooterSlave1);
+
+    slave1.setInverted(false);
+    slave1.follow(master);
+  }
+
+  /**
+   * Sets the power level of the shooter motor {@TalonSRX} at full power as defined in our
+   * constants.
+   */
+  public void setFullPower() {
+    master.set(ControlMode.PercentOutput, ShooterConstants.kFullPower);
   }
 
 
-    public void setFullPower() {
-      master.set(ControlMode.PercentOutput, ShooterConstants.kFullPower);
-     }
+  public void setCustomPower(double input) {
+    master.set(ControlMode.PercentOutput, input);
+  }
 
-
-     public void setCustomPower(double input) {
-      master.set(ControlMode.PercentOutput, input);
-    }
-
-     public void setZeroPower() {
-      master.set(ControlMode.PercentOutput, ShooterConstants.kZeroPower);
-    }
+  public void setZeroPower() {
+    master.set(ControlMode.PercentOutput, ShooterConstants.kZeroPower);
+  }
 }

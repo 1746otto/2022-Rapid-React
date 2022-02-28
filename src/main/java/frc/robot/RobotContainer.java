@@ -13,11 +13,9 @@ import frc.robot.commands.ClimberRetractCommand;
 import frc.robot.commands.IndexerCommand;
 import frc.robot.commands.AutonDriveCommand;
 import frc.robot.commands.IndexerFullForwardCommand;
-import frc.robot.commands.IntakeCommand;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -48,19 +46,18 @@ public class RobotContainer {
   private final Command m_tarmacAuton =
       new AutonDriveCommand(m_driveSubsystem, 0, Constants.AutonConstants.kautonSpeedBackwards)
           .withTimeout(Constants.AutonConstants.kautonDriveTime);
-  // private final ShooterCommand m_autoCommand = new
-  // ShooterCommand(m_shooterSubsystem);
+  // private final ShooterCommand m_autoCommand = new ShooterCommand(m_shooterSubsystem);
   private final ArcadeDriveCommand m_arcadeDriveCommand =
       new ArcadeDriveCommand(m_driveSubsystem, m_controller);
 
-  /**
-   * The container for the robot. Contains subsystems, OI devices, and commands.
-   */
+  /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
     configureDefaultCommands();
   }
+
+
 
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
@@ -72,12 +69,15 @@ public class RobotContainer {
     JoystickButton m_visionDriveJoystickButton =
         new JoystickButton(m_controller, XboxController.Button.kA.value);
     JoystickButton xBoxB = new JoystickButton(m_controller, XboxController.Button.kB.value);
-    JoystickButton xBoxX = new JoystickButton(m_controller, XboxController.Button.kX.value);
-
+    JoystickButton m_climbJoystickButton =
+        new JoystickButton(m_controller, XboxController.Button.kY.value);
+    JoystickButton m_indexerButton =
+        new JoystickButton(m_controller, XboxController.Button.kX.value);
     m_visionDriveJoystickButton.whenPressed(m_visionDriveCommand)
         .whenReleased(m_arcadeDriveCommand);
     xBoxB.whenHeld(new ShooterFullPowerCommand(m_shooterSubsystem));
-    xBoxX.whenHeld(new IntakeCommand(m_intakeSubsystem));
+    m_climbJoystickButton.whenPressed(new ClimberExtendCommand(m_climberSubsystem));
+    m_indexerButton.whenHeld(new IndexerFullForwardCommand(m_indexerSubsystem));
   }
 
   private void configureDefaultCommands() {
@@ -96,14 +96,20 @@ public class RobotContainer {
     return createAutoCommand();
   }
 
+
+  /**
+   * This creates a sequence of commands for our autonomous operation
+   * 
+   * @return Command for autonomous mode
+   */
   public Command createAutoCommand() {
     return new ShooterFullPowerCommand(m_shooterSubsystem)
         .withTimeout(Constants.AutonConstants.kSpeedUpTime)
         .andThen(new IndexerFullForwardCommand(m_indexerSubsystem)
             .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem)
-                .withTimeout(Constants.AutonConstants.kShootTime)))
-        .andThen(new AutonDriveCommand(m_driveSubsystem, 0, .5)
-            .withTimeout(Constants.AutonConstants.kautonDriveTime));
+                .withTimeout(Constants.AutonConstants.kShootTime))
+            .andThen(new ArcadeDriveCommand(m_driveSubsystem, m_controller)
+                .withTimeout(Constants.AutonConstants.kautonDriveTime)));
   }
 
   public Command getTeleopDrive() {
