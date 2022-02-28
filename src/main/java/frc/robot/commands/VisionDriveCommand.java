@@ -5,7 +5,7 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.Vision;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import frc.robot.Constants.autoAimConstants;
+
 
 /** An example command that uses an example subsystem. */
 public class VisionDriveCommand extends CommandBase {
@@ -22,6 +22,9 @@ public class VisionDriveCommand extends CommandBase {
    * 
    * @param subsystem The subsystem used by this command.
    */
+
+
+
   public VisionDriveCommand(DriveSubsystem driveSubsystem, XboxController controller,
       Vision visionSubsystem) {
     m_drive = driveSubsystem;
@@ -33,14 +36,19 @@ public class VisionDriveCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    double target = 0;
+    double error = 0;
+    double prevError = 0;
+    double deltaError = 0;
+
     m_vision.fetchvision();
 
     if (m_vision.isTargetValid()) {
       System.out.println("Target Valid!");
 
-      autoAimConstants.kError = autoAimConstants.kTarget - m_vision.getXOffset();
-      autoAimConstants.kDeltaError = autoAimConstants.kError - autoAimConstants.kPrevError;
-      double rotationSignal = -(kP * autoAimConstants.kError + kD * autoAimConstants.kDeltaError);
+      error = target - m_vision.getXOffset();
+      deltaError = error - prevError;
+      double rotationSignal = -(kP * error + kD * deltaError);
 
       if (rotationSignal < -0.5) {
         rotationSignal = -0.5;
@@ -50,14 +58,14 @@ public class VisionDriveCommand extends CommandBase {
 
       m_drive.arcadeDrive(m_controller.getRightTriggerAxis() - m_controller.getLeftTriggerAxis(),
           rotationSignal);
-      autoAimConstants.kPrevError = autoAimConstants.kError;
+      prevError = error;
       return;
     } else {
       System.out.println("Target Not Valid!");
     }
     m_drive.arcadeDrive(m_controller.getRightTriggerAxis() - m_controller.getLeftTriggerAxis(), 0);
-    autoAimConstants.kError = 0;
-    autoAimConstants.kPrevError = 0;
-    autoAimConstants.kDeltaError = 0;
+    error = 0;
+    prevError = 0;
+    deltaError = 0;
   }
 }
