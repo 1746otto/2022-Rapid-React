@@ -69,15 +69,20 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    JoystickButton m_visionDriveJoystickButton =
-        new JoystickButton(m_controller, XboxController.Button.kA.value);
-    JoystickButton xBoxB = new JoystickButton(m_controller, XboxController.Button.kB.value);
-    JoystickButton xBoxX = new JoystickButton(m_controller, XboxController.Button.kX.value);
+    new JoystickButton(m_controller, XboxController.Button.kA.value)
+        .whenPressed(m_visionDriveCommand).whenReleased(m_arcadeDriveCommand);
 
-    m_visionDriveJoystickButton.whenPressed(m_visionDriveCommand)
-        .whenReleased(m_arcadeDriveCommand);
-    xBoxB.whenHeld(new ShooterFullPowerCommand(m_shooterSubsystem));
-    xBoxX.whenHeld(new IntakeCommand(m_intakeSubsystem));
+    JoystickButton m_DriverLBumper =
+        new JoystickButton(m_controller, XboxController.Button.kLeftBumper.value);
+    m_DriverLBumper.whenHeld(new ShooterFullPowerCommand(m_shooterSubsystem));
+
+    JoystickButton m_climbJoystickButton =
+        new JoystickButton(m_controller, XboxController.Button.kY.value);
+    m_climbJoystickButton.whenPressed(new ClimberExtendCommand(m_climberSubsystem));
+
+    JoystickButton m_DriverRBumper =
+        new JoystickButton(m_controller, XboxController.Button.kRightBumper.value);
+    m_DriverRBumper.whenHeld(new IndexerFullForwardCommand(m_indexerSubsystem));
   }
 
   private void configureDefaultCommands() {
