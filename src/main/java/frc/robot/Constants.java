@@ -25,7 +25,12 @@ public final class Constants {
         public static final int krightDriveLeader = 10;
         public static final int krightDriveFollow = 11;
     }
-
+    public static class autoAimConstants {
+        public static final double kTarget = 0;
+        public static double kError = 0;
+        public static double kPrevError = 0;
+        public static double kDeltaError = 0;
+    }
     public static class IntakeConstants {
         public static final int kIntakeMotor = 20;
         public static final int kIntakeSolenoid = 8;

@@ -5,6 +5,7 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.Vision;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.Constants.autoAimConstants;
 
 /** An example command that uses an example subsystem. */
 public class VisionDriveCommand extends CommandBase {
@@ -14,10 +15,6 @@ public class VisionDriveCommand extends CommandBase {
   private final Vision m_vision;
   public double kP = 0.05;
   public double kD = 0 * kP;
-  public double error = 0;
-  double prevError = 0;
-  double deltaError = 0;
-
   JoystickButton visionDriveJoystick;
 
   /*
@@ -40,37 +37,27 @@ public class VisionDriveCommand extends CommandBase {
 
     if (m_vision.isTargetValid()) {
       System.out.println("Target Valid!");
-      // Should be in consants
-      double target = 0;
 
-      if (target - m_vision.getXOffset() != error) {
-        error = target - m_vision.getXOffset();
-        deltaError = error - prevError;
-        double rotationSignal = -(kP * error + kD * deltaError);
-        if (rotationSignal < -0.5) {
-          rotationSignal = -0.5;
-        } else if (rotationSignal > 0.5) {
-          rotationSignal = 0.5;
-        }
+      autoAimConstants.kError = autoAimConstants.kTarget - m_vision.getXOffset();
+      autoAimConstants.kDeltaError = autoAimConstants.kError - autoAimConstants.kPrevError;
+      double rotationSignal = -(kP * autoAimConstants.kError + kD * autoAimConstants.kDeltaError);
 
-        m_drive.arcadeDrive(m_controller.getRightTriggerAxis() - m_controller.getLeftTriggerAxis(),
-            rotationSignal);
-        prevError = error;
-
-        return;
+      if (rotationSignal < -0.5) {
+        rotationSignal = -0.5;
+      } else if (rotationSignal > 0.5) {
+        rotationSignal = 0.5;
       }
-      deltaError = 0;
+
+      m_drive.arcadeDrive(m_controller.getRightTriggerAxis() - m_controller.getLeftTriggerAxis(),
+          rotationSignal);
+      autoAimConstants.kPrevError = autoAimConstants.kError;
       return;
     } else {
       System.out.println("Target Not Valid!");
     }
     m_drive.arcadeDrive(m_controller.getRightTriggerAxis() - m_controller.getLeftTriggerAxis(), 0);
-    error = 0;
-    prevError = 0;
-    deltaError = 0;
-
-
-    m_drive.arcadeDrive(m_controller.getRightTriggerAxis() - m_controller.getLeftTriggerAxis(),
-        m_controller.getLeftX());
+    autoAimConstants.kError = 0;
+    autoAimConstants.kPrevError = 0;
+    autoAimConstants.kDeltaError = 0;
   }
 }
