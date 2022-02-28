@@ -5,15 +5,12 @@
 package frc.robot;
 
 /**
- * The Constants class provides a convenient place for teams to hold robot-wide
- * numerical or boolean
- * constants. This class should not be used for any other purpose. All constants
- * should be declared
+ * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
+ * constants. This class should not be used for any other purpose. All constants should be declared
  * globally (i.e. public static). Do not put anything functional in this class.
  *
  * <p>
- * It is advised to statically import this class (or one of its inner classes)
- * wherever the
+ * It is advised to statically import this class (or one of its inner classes) wherever the
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
@@ -30,7 +27,13 @@ public final class Constants {
     }
 
     public static class IntakeConstants {
-        public static final int kIntake = 20;
+        public static final int kIntakeMotor = 20;
+        public static final int kIntakeSolenoid = 8;
+        public static final int kIntakeFullPower = 1;
+        public static final double kIntakerunZeroPower = 0.0;
+        public static final double kIntakeCustomPower = 0.5;
+        public static final boolean kIntakeExtended = true;
+        public static final boolean kIntakeRetracted = false;
     }
 
     public static class ClimberConstants {
@@ -65,15 +68,15 @@ public final class Constants {
     }
 
     public static class IndexerConstants {
-        public static final double kWheelFullForward = 0.25;
-        public static final double kBeltFullForward = 0.25;
-        public static final double kWheelHalfForward = 0.1;
-        public static final double kBeltHalfForward = 0.1;
-        public static final double kWheelStop = 0.0;
-        public static final double kBeltStop = 0.0;
+        public static final double kLowerFullForward = 1;
+        public static final double kUpperFullForward = 1;
+        public static final double kLowerHalfForward = 0.5;
+        public static final double kUpperHalfForward = 0.5;
+        public static final double kLowerStop = 0.0;
+        public static final double kUpperStop = 0.0;
         public static final int kIndexer = 30;
-        public static final int kWheel = 30;
-        public static final int kBelt = 31;
+        public static final int kLower = 30;
+        public static final int kUpper = 31;
     }
 
     public static class ControllerConstants {
