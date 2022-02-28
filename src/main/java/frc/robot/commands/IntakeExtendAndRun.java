@@ -1,16 +1,11 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.IntakeSubsystem;
 
 /** An example command that uses an example subsystem. */
-public class IntakeCommand extends CommandBase {
+public class IntakeExtendAndRun extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final IntakeSubsystem m_subsystem;
 
@@ -19,7 +14,7 @@ public class IntakeCommand extends CommandBase {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public IntakeCommand(IntakeSubsystem subsystem) {
+  public IntakeExtendAndRun(IntakeSubsystem subsystem) {
     m_subsystem = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
@@ -28,7 +23,8 @@ public class IntakeCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_subsystem.runCustomPower(IntakeConstants.kIntakerunZeroPower);
+    m_subsystem.extend();
+    m_subsystem.runCustomPower(0.5);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -37,10 +33,7 @@ public class IntakeCommand extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    m_subsystem.runZeroPower();
-    m_subsystem.retract();
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override

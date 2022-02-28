@@ -11,6 +11,7 @@ import frc.robot.commands.AutonBasic;
 import frc.robot.commands.ClimberExtendCommand;
 import frc.robot.commands.ClimberRetractCommand;
 import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.IntakeExtendAndRun;
 import frc.robot.commands.IndexerCommand;
 import frc.robot.commands.AutonDriveCommand;
 import frc.robot.commands.IndexerFullForwardCommand;
@@ -83,11 +84,12 @@ public class RobotContainer {
         .whenReleased(m_arcadeDriveCommand);
     xBoxB.whenHeld(new ShooterFullPowerCommand(m_shooterSubsystem));
     // xBoxX.whenHeld(new IntakeCommand(m_intakeSubsystem));
-    m_runIntake.toggleWhenPressed(new IntakeExtendCommand(m_intakeSubsystem));
-    m_runIntake.whenPressed(new IntakeFullPowerCommand(m_intakeSubsystem))
-        .cancelWhenPressed(new IntakeFullPowerCommand(m_intakeSubsystem));
-    xBoxX.toggleWhenPressed(new IntakeExtendCommand(m_intakeSubsystem));
+    // m_runIntake.toggleWhenPressed(new IntakeExtendCommand(m_intakeSubsystem));
+    m_runIntake.toggleWhenPressed(new IntakeExtendAndRun(m_intakeSubsystem));
+    // m_runIntake.cancelWhenPressed(new IntakeFullPowerCommand(m_intakeSubsystem));
+    // xBoxX.toggleWhenPressed(new IntakeExtendCommand(m_intakeSubsystem));
     m_intakeSubsystem.setDefaultCommand(new IntakeRetractCommand(m_intakeSubsystem));
+    m_intakeSubsystem.setDefaultCommand(new IntakeCommand(m_intakeSubsystem));
   }
 
   private void configureDefaultCommands() {
