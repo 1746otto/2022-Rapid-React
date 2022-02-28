@@ -8,7 +8,7 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.AnalogInput;
 
 public class IndexerSubsystem extends SubsystemBase {
- 
+
   private final VictorSPX m_wheel;
   private final VictorSPX m_belt;
   private final AnalogInput beambreakTop;
@@ -17,8 +17,8 @@ public class IndexerSubsystem extends SubsystemBase {
   private boolean beambreakTopLastState = false;
   private boolean beambreakBottomLastState = false;
   private boolean hopperDisabled = false;
-  
-      /** Creates a new ExampleSubsystem. */
+
+  /** Creates a new ExampleSubsystem. */
 
   public IndexerSubsystem() {
     m_wheel = new VictorSPX(IndexerConstants.kWheel);
@@ -30,9 +30,9 @@ public class IndexerSubsystem extends SubsystemBase {
 
   public void runWheelFullForward() {
     m_wheel.set(ControlMode.PercentOutput, IndexerConstants.kWheelFullForward);
-    
+
   }
-  
+
   public void runBeltFullForward() {
     m_belt.set(ControlMode.PercentOutput, IndexerConstants.kBeltFullForward);
   }
@@ -45,7 +45,7 @@ public class IndexerSubsystem extends SubsystemBase {
   public void runWheelHalfForward() {
     m_wheel.set(ControlMode.PercentOutput, IndexerConstants.kWheelHalfForward);
   }
-  
+
   public void runBeltHalfForward() {
     m_belt.set(ControlMode.PercentOutput, IndexerConstants.kBeltHalfForward);
   }
@@ -106,39 +106,42 @@ public class IndexerSubsystem extends SubsystemBase {
     runWheelHalfBackward();
     runBeltHalfBackward();
   }
-  public boolean topBeamBreak(){
+
+  public boolean topBeamBreak() {
     return beambreakTopLastState;
   }
-  public boolean bottomBeamBreak(){
+
+  public boolean bottomBeamBreak() {
     return beambreakBottomLastState;
   }
+
   @Override
   public void periodic() {
-  /*  if (Math.floor(beambreakTop.getVoltage()) == 0) {
-      if (!beambreakTopLastState) {
-        hopperDisabled = true;
-        beambreakTopLastState = true;
-      }
-      else {
-        beambreakTopLastState = false;
-      }
-    }
-    if (Math.floor(beambreakBottom.getVoltage()) == 0) {
-      if (!beambreakBottomLastState) {
-        hopperDisabled = true;
-        beambreakBottomLastState = true;
-      }
-      else {
-        beambreakBottomLastState = false;
-      }
-    }
+    /*
+     * if (Math.floor(beambreakTop.getVoltage()) == 0) {
+     * if (!beambreakTopLastState) {
+     * hopperDisabled = true;
+     * beambreakTopLastState = true;
+     * }
+     * else {
+     * beambreakTopLastState = false;
+     * }
+     * }
+     * if (Math.floor(beambreakBottom.getVoltage()) == 0) {
+     * if (!beambreakBottomLastState) {
+     * hopperDisabled = true;
+     * beambreakBottomLastState = true;
+     * }
+     * else {
+     * beambreakBottomLastState = false;
+     * }
+     * }
+     * }
+     */
+    beambreakBottomLastState = (Math.floor(beambreakBottom.getVoltage()) == 0);
+    beambreakTopLastState = (Math.floor(beambreakTop.getVoltage()) == 0);
   }
-  */
-  beambreakBottomLastState = (Math.floor(beambreakBottom.getVoltage()) == 0);
-  beambreakTopLastState = (Math.floor(beambreakTop.getVoltage()) == 0); 
 
-  
-  
   @Override
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
