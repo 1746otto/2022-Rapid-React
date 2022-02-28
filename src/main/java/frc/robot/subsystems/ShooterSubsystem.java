@@ -7,33 +7,40 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
-
 public class ShooterSubsystem extends SubsystemBase {
   private VictorSPX master;
   private TalonSRX slave1;
 
-
-
-      /** Creates a new ExampleSubsystem. */
+  /** Creates a new ExampleSubsystem. */
   public ShooterSubsystem() {
-      master = new VictorSPX(ShooterConstants.kShooterMaster);
-      slave1 = new TalonSRX(ShooterConstants.kShooterSlave1);
-      
-      slave1.setInverted(false);
-      slave1.follow(master);
+    master = new VictorSPX(ShooterConstants.kShooterMaster);
+    slave1 = new TalonSRX(ShooterConstants.kShooterSlave1);
+
+    slave1.setInverted(false);
+    slave1.follow(master);
+  }
+
+  public void setFullPower() {
+    master.set(ControlMode.PercentOutput, ShooterConstants.kFullPower);
   }
 
 
-    public void setFullPower() {
-      master.set(ControlMode.PercentOutput, ShooterConstants.kFullPower);
-     }
 
+  @Override
+  public void periodic() {
+    // This method will be called once per scheduler run
+  }
 
-     public void setCustomPower(double input) {
-      master.set(ControlMode.PercentOutput, input);
-    }
+  @Override
+  public void simulationPeriodic() {
+    // This method will be called once per scheduler run during simulation
+  }
 
-     public void setZeroPower() {
-      master.set(ControlMode.PercentOutput, ShooterConstants.kZeroPower);
-    }
+  public void setCustomPower(double input) {
+    master.set(ControlMode.PercentOutput, input);
+  }
+
+  public void setZeroPower() {
+    master.set(ControlMode.PercentOutput, ShooterConstants.kZeroPower);
+  }
 }
