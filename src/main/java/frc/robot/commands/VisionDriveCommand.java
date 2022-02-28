@@ -60,18 +60,17 @@ public class VisionDriveCommand extends CommandBase {
         return;
       }
       deltaError = 0;
-      error = 0;
       return;
     } else {
       System.out.println("Target Not Valid!");
     }
     m_drive.arcadeDrive(m_controller.getRightTriggerAxis() - m_controller.getLeftTriggerAxis(), 0);
+    error = 0;
+    prevError = 0;
+    deltaError = 0;
 
-    // prevError = 0;
-    // deltaError = 0;
 
-
-    // m_drive.arcadeDrive(m_controller.getRightTriggerAxis() - m_controller.getLeftTriggerAxis(),
-    // m_controller.getLeftX());
+    m_drive.arcadeDrive(m_controller.getRightTriggerAxis() - m_controller.getLeftTriggerAxis(),
+        m_controller.getLeftX());
   }
 }
