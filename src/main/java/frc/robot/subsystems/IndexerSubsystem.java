@@ -12,6 +12,9 @@ public class IndexerSubsystem extends SubsystemBase {
 
   private final VictorSPX m_lower;
   private final VictorSPX m_upper;
+  // added for tuning can be gotten rid of later
+  public double tuningUpperIndexerLimits;
+  public double tuningLowerIndexerLimits;
 
   /** Creates a new ExampleSubsystem. */
 
@@ -22,11 +25,15 @@ public class IndexerSubsystem extends SubsystemBase {
   }
 
   public void runLowerFullForward() {
-    m_lower.set(ControlMode.PercentOutput, IndexerConstants.kLowerFullForward);
+    // added for tuning
+    // m_lower.set(ControlMode.PercentOutput, IndexerConstants.kLowerFullForward);
+    m_lower.set(ControlMode.PercentOutput, tuningLowerIndexerLimits);
   }
 
   public void runUpperFullForward() {
-    m_upper.set(ControlMode.PercentOutput, IndexerConstants.kUpperFullForward);
+    // added for tuning
+    // m_upper.set(ControlMode.PercentOutput, IndexerConstants.kUpperFullForward);
+    m_upper.set(ControlMode.PercentOutput, tuningUpperIndexerLimits);
   }
 
   public void runBothFullForward() {
