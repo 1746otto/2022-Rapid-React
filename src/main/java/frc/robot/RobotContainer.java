@@ -108,9 +108,9 @@ public class RobotContainer {
         .withTimeout(Constants.AutonConstants.kSpeedUpTime)
         .andThen(new IndexerFullForwardCommand(m_indexerSubsystem)
             .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem)
-                .withTimeout(Constants.AutonConstants.kShootTime)));
-    // .andThen(new
-    // ArcadeDriveCommand(m_driveSubsystem).withTimeout(Constants.AutonConstants.kautonDriveTime));
+                .withTimeout(Constants.AutonConstants.kShootTime)))
+        .andThen(new AutonDriveCommand(m_driveSubsystem, 0, .5)
+            .withTimeout(Constants.AutonConstants.kautonDriveTime));
   }
 
   public Command getTeleopDrive() {
