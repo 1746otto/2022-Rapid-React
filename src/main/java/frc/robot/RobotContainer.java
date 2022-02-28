@@ -84,12 +84,9 @@ public class RobotContainer {
         .whenReleased(m_arcadeDriveCommand);
     xBoxB.whenHeld(new ShooterFullPowerCommand(m_shooterSubsystem));
     // xBoxX.whenHeld(new IntakeCommand(m_intakeSubsystem));
-    // m_runIntake.toggleWhenPressed(new IntakeExtendCommand(m_intakeSubsystem));
-    m_runIntake.toggleWhenPressed(new IntakeExtendAndRun(m_intakeSubsystem));
-    // m_runIntake.cancelWhenPressed(new IntakeFullPowerCommand(m_intakeSubsystem));
-    // xBoxX.toggleWhenPressed(new IntakeExtendCommand(m_intakeSubsystem));
-    m_intakeSubsystem.setDefaultCommand(new IntakeRetractCommand(m_intakeSubsystem));
-    m_intakeSubsystem.setDefaultCommand(new IntakeCommand(m_intakeSubsystem));
+    m_runIntake.toggleWhenPressed(new IntakeCommand(m_intakeSubsystem));
+    xBoxX.toggleWhenPressed(new IntakeExtendCommand(m_intakeSubsystem));
+    // m_intakeSubsystem.setDefaultCommand(new IntakeRetractCommand(m_intakeSubsystem));
   }
 
   private void configureDefaultCommands() {

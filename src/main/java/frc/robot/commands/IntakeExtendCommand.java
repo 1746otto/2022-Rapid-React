@@ -6,7 +6,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 
 /** An example command that uses an example subsystem. */
 public class IntakeExtendCommand extends CommandBase {
-  @SuppressWarnings({"PMD.UnusedPrivateField","PMD.SingularField"})
+  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final IntakeSubsystem m_subsystem;
 
   /**
@@ -32,8 +32,10 @@ public class IntakeExtendCommand extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {} 
-    
+  public void end(boolean interrupted) {
+    m_subsystem.retract();
+  }
+
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
