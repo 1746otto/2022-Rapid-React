@@ -13,6 +13,7 @@ import frc.robot.commands.ClimberRetractCommand;
 import frc.robot.commands.IndexerCommand;
 import frc.robot.commands.AutonDriveCommand;
 import frc.robot.commands.IndexerFullForwardCommand;
+import frc.robot.commands.IndexerLowerBeltForwardCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
@@ -38,12 +39,13 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
-  private final ClimberSubsystem m_climberSubsystem = new ClimberSubsystem();
+  // private final ClimberSubsystem m_climberSubsystem = new ClimberSubsystem();
   private final Vision m_visionSubsystem = new Vision();
   private final VisionDriveCommand m_visionDriveCommand =
       new VisionDriveCommand(m_driveSubsystem, m_controller, m_visionSubsystem);
   private final IndexerSubsystem m_indexerSubsystem = new IndexerSubsystem();
-  private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
+
+  // private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
 
   private final Command m_tarmacAuton =
       new AutonDriveCommand(m_driveSubsystem, 0, Constants.AutonConstants.kautonSpeedBackwards)
@@ -76,13 +78,17 @@ public class RobotContainer {
         new JoystickButton(m_controller, XboxController.Button.kLeftBumper.value);
     m_DriverLBumper.whenHeld(new ShooterFullPowerCommand(m_shooterSubsystem));
 
-    JoystickButton m_climbJoystickButton =
-        new JoystickButton(m_controller, XboxController.Button.kY.value);
-    m_climbJoystickButton.whenPressed(new ClimberExtendCommand(m_climberSubsystem));
+    // JoystickButton m_climbJoystickButton =
+    // new JoystickButton(m_controller, XboxController.Button.kY.value);
+    // m_climbJoystickButton.whenPressed(new ClimberExtendCommand(m_climberSubsystem));
 
     JoystickButton m_DriverRBumper =
         new JoystickButton(m_controller, XboxController.Button.kRightBumper.value);
     m_DriverRBumper.whenHeld(new IndexerFullForwardCommand(m_indexerSubsystem));
+
+    JoystickButton m_StartButton =
+        new JoystickButton(m_controller, XboxController.Button.kStart.value);
+    m_StartButton.whenHeld(new IndexerLowerBeltForwardCommand(m_indexerSubsystem));
   }
 
   private void configureDefaultCommands() {

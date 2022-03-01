@@ -13,8 +13,8 @@ public class IndexerSubsystem extends SubsystemBase {
   private final VictorSPX m_lower;
   private final VictorSPX m_upper;
   // added for tuning can be gotten rid of later
-  public double tuningUpperIndexerLimits;
-  public double tuningLowerIndexerLimits;
+  public double tuningUpperIndexerLimits = 0.25;
+  public double tuningLowerIndexerLimits = 0.40;
 
   /** Creates a new ExampleSubsystem. */
 

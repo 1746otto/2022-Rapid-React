@@ -28,6 +28,8 @@ public class IndexerFullForwardCommand extends CommandBase {
   public void initialize() {
     // commented out for tuning
     // m_subsystem.runBothFullForward();
+    SmartDashboard.putNumber("IndexerUpperLimits", m_subsystem.tuningUpperIndexerLimits);
+    SmartDashboard.putNumber("IndexerLowerLimits: ", m_subsystem.tuningLowerIndexerLimits);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -36,8 +38,10 @@ public class IndexerFullForwardCommand extends CommandBase {
   public void execute() {
 
     m_subsystem.runBothFullForward();
-    SmartDashboard.putNumber("IndexerUpperLimits", m_subsystem.tuningUpperIndexerLimits);
-    SmartDashboard.putNumber("IndexerLowerLimits: ", m_subsystem.tuningLowerIndexerLimits);
+    m_subsystem.tuningUpperIndexerLimits =
+        SmartDashboard.getNumber("IndexerUpperLimits", m_subsystem.tuningUpperIndexerLimits);
+    m_subsystem.tuningLowerIndexerLimits =
+        SmartDashboard.getNumber("IndexerLowerLimits: ", m_subsystem.tuningLowerIndexerLimits);
 
   }
 
