@@ -11,12 +11,16 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class IntakeSubsystem extends SubsystemBase {
     CANSparkMax intakeMotor;
+    CANSparkMax intakeOmniWheels;
     Solenoid pistons;
     boolean intakeState = false;
 
     public IntakeSubsystem() {
         intakeMotor = new CANSparkMax(IntakeConstants.kIntakeMotor, MotorType.kBrushless);
-        pistons = new Solenoid(RobotConstants.kREVPH, PneumaticsModuleType.REVPH, IntakeConstants.kIntakeSolenoid);
+        intakeOmniWheels = new CANSparkMax(IntakeConstants.kIntakeOmniWheels, MotorType.kBrushless);
+        pistons = new Solenoid(RobotConstants.kREVPH, PneumaticsModuleType.REVPH,
+                IntakeConstants.kIntakeSolenoid);
+        intakeOmniWheels.follow(intakeMotor);
 
     }
 
@@ -38,5 +42,15 @@ public class IntakeSubsystem extends SubsystemBase {
 
     public void runZeroPower() {
         intakeMotor.set(IntakeConstants.kIntakerunZeroPower);
+    }
+
+    public void turnOnIntake() {
+        extend();
+        runCustomPower(0.5);
+    }
+
+    public void turnOffIntake() {
+        runZeroPower();
+        retract();
     }
 }
