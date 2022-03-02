@@ -10,7 +10,7 @@ import frc.robot.Constants.IndexerConstants;
 
 /** An example command that uses an example subsystem. */
 public class BottomIndexerIntakeCommand extends CommandBase {
-    @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
+    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final IndexerSubsystem m_indexer;
 
     /**
@@ -27,18 +27,17 @@ public class BottomIndexerIntakeCommand extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        m_indexer.runWheelFullForward();
+        m_indexer.runLowerFullForward();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
-    public void execute() {
-    }
+    public void execute() {}
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        m_indexer.stopWheelIndexer();
+        m_indexer.stopLowerIndexer();
     }
 
     // Returns true when the command should end.
