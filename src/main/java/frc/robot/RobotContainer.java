@@ -11,8 +11,10 @@ import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.ShooterCommand;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.commands.DriveStraightCommand;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.commands.ArcadeDriveCommand;
+import frc.robot.commands.ExampleCommand;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -24,8 +26,8 @@ public class RobotContainer {
   private final XboxController m_controller = new XboxController(ControllerConstants.kport);
   // The robot's subsystems and commands are defined here...
   private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
-  
-
+  private final DriveStraightCommand m_driveStraightCommand = new DriveStraightCommand(m_driveSubsystem, Constants.DriveConstants.kautonDistance, Constants.DriveConstants.kautonSpeed);
+  private final ExampleCommand m_nothingCommand = new ExampleCommand();
   private final Command m_tarmacAuton = new AutonDriveCommand(m_driveSubsystem, 0 ,Constants.AutonConstants.kautonSpeedBackwards).withTimeout(Constants.AutonConstants.kautonDriveTime);
   //private final ShooterCommand m_autoCommand = new ShooterCommand(m_shooterSubsystem);
   private final ArcadeDriveCommand m_arcadeDriveCommand = new ArcadeDriveCommand(m_driveSubsystem, m_controller);
@@ -55,17 +57,19 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
+  public Command createAutoCommand() {
+    return new DriveStraightCommand(m_driveSubsystem, Constants.DriveConstants.kautonDistance, Constants.DriveConstants.kautonSpeed)
+      .andThen(new DriveStraightCommand(m_driveSubsystem, -1 * Constants.DriveConstants.kautonDistance, Constants.DriveConstants.kautonSpeed))
+      .andThen(new DriveStraightCommand(m_driveSubsystem, Constants.DriveConstants.kautonDistance, Constants.DriveConstants.kautonSpeed))
+      .andThen(new DriveStraightCommand(m_driveSubsystem, -1 * Constants.DriveConstants.kautonDistance, Constants.DriveConstants.kautonSpeed))
+      .andThen(new DriveStraightCommand(m_driveSubsystem, Constants.DriveConstants.kautonDistance, Constants.DriveConstants.kautonSpeed));
+  }
+  
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_tarmacAuton;
+    return createAutoCommand();
   }
-  public int feetToTics(double feet) {
-    return (int)(Constants.DriveConstants.kticksPerRotation * Constants.DriveConstants.kwheelCircumfrence/12 * 3.14159265359 * feet);
-  }
-  public double getRotationTicDif(double angle) {
-    
-    return 0;
-  }
+  
   public Command getTeleopDrive() {
     return m_arcadeDriveCommand;
   }

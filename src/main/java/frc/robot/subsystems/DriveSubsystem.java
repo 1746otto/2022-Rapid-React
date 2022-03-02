@@ -33,12 +33,12 @@ public class DriveSubsystem extends SubsystemBase {
         m_leftLeader.set((forward + rotation)/ControllerConstants.kDriveControl);
     }
     
-    public int getLeftTicks() {
-        return m_leftLeader.getEncoder().getMeasurementPeriod();
+    public double getLeftRotations() {
+        return m_leftLeader.getEncoder().getPosition();
     }
 
-    public int getRightTicks() {
-        return m_rightLeader.getEncoder().getMeasurementPeriod();
+    public double getRightRotations() {
+        return m_rightLeader.getEncoder().getPosition();
     }
 
     public void stop() {
