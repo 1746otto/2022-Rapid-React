@@ -25,13 +25,15 @@ public class DriveStraightCommand extends CommandBase {
   
     // Called every time the scheduler runs while the command is scheduled.
     @Override
-    public void execute() {
+    public void initialize() {
       m_drive.arcadeDrive(m_speed, 0);
     }
+
     @Override
     public void end(boolean interrupted) {
       m_drive.arcadeDrive(0, 0);
     }
+
     @Override
     public boolean isFinished() {
       if (m_distance < 0) {
@@ -39,8 +41,6 @@ public class DriveStraightCommand extends CommandBase {
           return true;
         }
       }
-      else if (m_distance == 0)
-        return true;
       else {
         if (m_distance <= (m_drive.getLeftTicks() - m_startingTicks)) {
           return true;
