@@ -107,11 +107,11 @@ public class IndexerSubsystem extends SubsystemBase {
     runBeltHalfBackward();
   }
 
-  public boolean topBeamBreak() {
+  public boolean topBeamBreakBroken() {
     return beambreakTopLastState;
   }
 
-  public boolean bottomBeamBreak() {
+  public boolean bottomBeamBreakBroken() {
     return beambreakBottomLastState;
   }
 
