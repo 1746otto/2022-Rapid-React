@@ -10,6 +10,7 @@ import frc.robot.commands.ArcadeDriveCommand;
 import frc.robot.commands.AutonBasic;
 import frc.robot.commands.ClimberExtendCommand;
 import frc.robot.commands.ClimberRetractCommand;
+import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.IndexerCommand;
 import frc.robot.commands.AutonDriveCommand;
 import frc.robot.commands.IndexerFullForwardCommand;
@@ -22,6 +23,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ShooterFullPowerCommand;
+import frc.robot.commands.ShooterTuningCommand;
 import frc.robot.commands.VisionDriveCommand;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.Vision;
@@ -83,8 +85,15 @@ public class RobotContainer {
     JoystickButton m_DriverRBumper =
         new JoystickButton(m_controller, XboxController.Button.kRightBumper.value);
     m_DriverRBumper.whenHeld(new IndexerFullForwardCommand(m_indexerSubsystem));
+
+    JoystickButton m_XButton = new JoystickButton(m_controller, XboxController.Button.kX.value);
+    m_XButton.whenHeld(new ShooterTuningCommand(m_shooterSubsystem));
+
+    JoystickButton m_AButton = new JoystickButton(m_controller, XboxController.Button.kX.value);
+    m_AButton.whenHeld(new ShooterTuningCommand(m_shooterSubsystem));
   }
 
+  // Constants.ShooterConstants.kFullPower - = 1
   private void configureDefaultCommands() {
     m_driveSubsystem.setDefaultCommand(new RunCommand(() -> m_driveSubsystem.arcadeDrive(
         m_controller.getRightTriggerAxis() - m_controller.getLeftTriggerAxis(),
