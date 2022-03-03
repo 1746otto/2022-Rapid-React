@@ -26,6 +26,7 @@ public class IndexerSubsystem extends SubsystemBase {
     m_upper.setInverted(true);
     beambreakTop = new AnalogInput(IndexerConstants.kBeamBreakTop);
     beambreakBottom = new AnalogInput(IndexerConstants.kBeamBreakBottom);
+
   }
 
   public void runLowerFullForward() {
