@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ShooterFullPowerCommand;
+import frc.robot.commands.ShooterTuning2Command;
 import frc.robot.commands.ShooterTuningCommand;
 import frc.robot.commands.VisionDriveCommand;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -90,7 +91,7 @@ public class RobotContainer {
     m_XButton.whenHeld(new ShooterTuningCommand(m_shooterSubsystem));
 
     JoystickButton m_AButton = new JoystickButton(m_controller, XboxController.Button.kX.value);
-    m_AButton.whenHeld(new ShooterTuningCommand(m_shooterSubsystem));
+    m_AButton.whenHeld(new ShooterTuning2Command(m_shooterSubsystem));
   }
 
   // Constants.ShooterConstants.kFullPower - = 1

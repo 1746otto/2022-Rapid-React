@@ -24,8 +24,8 @@ public class ShooterTuningCommand extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        ShooterConstants.kFullPower -= 0.1;
-        m_subsystem.setFullPower();
+        // ShooterConstants.kFullPower -= 0.1;
+        // m_subsystem.setFullPower();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
