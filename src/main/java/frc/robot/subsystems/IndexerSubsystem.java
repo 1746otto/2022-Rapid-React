@@ -130,13 +130,6 @@ public class IndexerSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    /*
-     * if (Math.floor(beambreakTop.getVoltage()) == 0) { if (!beambreakTopLastState) {
-     * hopperDisabled = true; beambreakTopLastState = true; } else { beambreakTopLastState = false;
-     * } } if (Math.floor(beambreakBottom.getVoltage()) == 0) { if (!beambreakBottomLastState) {
-     * hopperDisabled = true; beambreakBottomLastState = true; } else { beambreakBottomLastState =
-     * false; } } }
-     */
     beambreakBottomLastState = (Math.floor(beambreakBottom.getVoltage()) == 0);
     beambreakTopLastState = (Math.floor(beambreakTop.getVoltage()) == 0);
     System.out.println("Bottom state:" + beambreakBottomLastState);

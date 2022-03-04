@@ -5,7 +5,7 @@ import frc.robot.subsystems.IndexerSubsystem;
 
 /** An example command that uses an example subsystem. */
 public class IndexerFullForwardCommand extends CommandBase {
-  @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
+  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final IndexerSubsystem m_subsystem;
 
   /**
@@ -13,6 +13,7 @@ public class IndexerFullForwardCommand extends CommandBase {
    *
    * @param subsystem The subsystem used by this command.
    */
+
   public IndexerFullForwardCommand(IndexerSubsystem subsystem) {
     m_subsystem = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
@@ -27,8 +28,7 @@ public class IndexerFullForwardCommand extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
