@@ -13,6 +13,7 @@ public class IndexerFullForwardCommand extends CommandBase {
    *
    * @param subsystem The subsystem used by this command.
    */
+
   public IndexerFullForwardCommand(IndexerSubsystem subsystem) {
     m_subsystem = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.

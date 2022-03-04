@@ -8,45 +8,47 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.IndexerSubsystem;
 
 /** An example command that uses an example subsystem. */
 public class IntakeCommand extends CommandBase {
-  @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
-  private final IntakeSubsystem m_subsystem;
+  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+  private final IntakeSubsystem m_intake;
+  private final IndexerSubsystem m_indexer;
 
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public IntakeCommand(IntakeSubsystem subsystem) {
-    m_subsystem = subsystem;
+  public IntakeCommand(IntakeSubsystem subsystemIntake, IndexerSubsystem subsystemIndexer) {
+    m_intake = subsystemIntake;
+    m_indexer = subsystemIndexer;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);
+    addRequirements(subsystemIntake, subsystemIndexer);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_subsystem.extend();
-    m_subsystem.runCustomPower(IntakeConstants.kIntakeCustomPower);
+    m_intake.extend();
+    m_intake.runCustomPower(IntakeConstants.kIntakeCustomPower);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_subsystem.runZeroPower();
-    m_subsystem.retract();
+    m_intake.runZeroPower();
+    m_intake.retract();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return (m_indexer.bottomBeamBreakBroken() && m_indexer.topBeamBreakBroken());
   }
 }
