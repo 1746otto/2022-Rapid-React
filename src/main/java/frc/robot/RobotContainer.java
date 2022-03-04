@@ -72,15 +72,14 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     JoystickButton m_visionDriveJoystickButton =
-        new JoystickButton(m_controller, XboxController.Button.kA.value);
-    JoystickButton xBoxB = new JoystickButton(m_controller, XboxController.Button.kB.value);
+        new JoystickButton(m_controller, XboxController.Button.kB.value);
+    // JoystickButton xBoxB = new JoystickButton(m_controller, XboxController.Button.kB.value);
     JoystickButton xBoxX = new JoystickButton(m_controller, XboxController.Button.kX.value);
     JoystickButton updateTuningValuesButton =
         new JoystickButton(m_controller, XboxController.Button.kStart.value);
 
-    m_visionDriveJoystickButton.whenPressed(m_visionDriveCommand)
-        .whenReleased(m_arcadeDriveCommand);
-    xBoxB.whenHeld(new ShooterFullPowerCommand(m_shooterSubsystem));
+    m_visionDriveJoystickButton.whenHeld(m_visionDriveCommand);
+    // xBoxB.whenHeld(new ShooterFullPowerCommand(m_shooterSubsystem));
     xBoxX.whenHeld(new IntakeCommand(m_intakeSubsystem));
 
     updateTuningValuesButton.whenPressed(m_visionTuningCommand);

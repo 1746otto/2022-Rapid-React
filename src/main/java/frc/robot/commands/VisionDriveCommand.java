@@ -14,7 +14,7 @@ public class VisionDriveCommand extends CommandBase {
   private final XboxController m_controller;
   private final Vision m_vision;
   public double kP = 0.05;
-  public double kD = 0 * kP;
+  public double kD = 0.015;
   public double error = 0;
   double prevError = 0;
   double deltaError = 0;
@@ -32,7 +32,8 @@ public class VisionDriveCommand extends CommandBase {
     m_drive = subsystem;
     m_controller = controller;
     m_vision = visionSubsystem;
-    addRequirements(m_drive);
+    addRequirements(m_drive, m_vision);
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -44,8 +45,8 @@ public class VisionDriveCommand extends CommandBase {
       System.out.println("Target Valid!");
       double target = 0;
 
-      if (target - m_vision.getXOffset() != error) {
-        error = target - m_vision.getXOffset();
+      if (target - m_vision.getYOffset() != error) {
+        error = target - m_vision.getYOffset();
         deltaError = error - prevError;
         rotationSignal = -(kP * error + kD * deltaError);
         if (rotationSignal < -0.5) {
@@ -53,31 +54,30 @@ public class VisionDriveCommand extends CommandBase {
         } else if (rotationSignal > 0.5) {
           rotationSignal = 0.5;
         }
-        SmartDashboard.putNumber("kP", kP);
-        SmartDashboard.putNumber("kD", kD);
-        SmartDashboard.putNumber("error", error);
-        SmartDashboard.putNumber("delta error", deltaError);
-        SmartDashboard.putNumber("previous error", prevError);
-        SmartDashboard.putNumber("rotational signal", rotationSignal);
-
+        /*
+         * SmartDashboard.putNumber("kP", kP); SmartDashboard.putNumber("kD", kD);
+         * SmartDashboard.putNumber("error", error); SmartDashboard.putNumber("delta error",
+         * deltaError); SmartDashboard.putNumber("previous error", prevError);
+         * SmartDashboard.putNumber("rotational signal", rotationSignal);
+         */
         m_drive.arcadeDrive(m_controller.getRightTriggerAxis() - m_controller.getLeftTriggerAxis(),
-            rotationSignal);
+            rotationSignal * -1);
         prevError = error;
 
         return;
       }
+      m_drive.arcadeDrive(m_controller.getRightTriggerAxis() - m_controller.getLeftTriggerAxis(),
+          rotationSignal * -1);
       deltaError = 0;
       return;
     } else {
+      m_drive.arcadeDrive(m_controller.getRightTriggerAxis() - m_controller.getLeftTriggerAxis(),
+          0);
       System.out.println("Target Not Valid!");
     }
-    m_drive.arcadeDrive(m_controller.getRightTriggerAxis() - m_controller.getLeftTriggerAxis(), 0);
+
     error = 0;
     prevError = 0;
     deltaError = 0;
-
-
-    m_drive.arcadeDrive(m_controller.getRightTriggerAxis() - m_controller.getLeftTriggerAxis(),
-        m_controller.getLeftX());
   }
 }

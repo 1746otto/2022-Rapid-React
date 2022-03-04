@@ -22,5 +22,6 @@ public class VisionTuningCommand extends CommandBase {
     SmartDashboard.putNumber("delta error", tunedCommand.deltaError);
     SmartDashboard.putNumber("previous error", tunedCommand.prevError);
     SmartDashboard.putNumber("rotational signal", tunedCommand.rotationSignal);
+    SmartDashboard.updateValues();
   }
 }
