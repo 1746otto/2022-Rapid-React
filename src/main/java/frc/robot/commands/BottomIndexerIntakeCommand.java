@@ -8,10 +8,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.Constants.IndexerConstants;
 
+
 /** An example command that uses an example subsystem. */
 public class BottomIndexerIntakeCommand extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final IndexerSubsystem m_indexer;
+
 
     /**
      * Creates a new ExampleCommand.
@@ -27,7 +29,8 @@ public class BottomIndexerIntakeCommand extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        m_indexer.runLowerFullForward();
+        m_indexer.runLowerCustom(0.35);
+
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -38,6 +41,7 @@ public class BottomIndexerIntakeCommand extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         m_indexer.stopLowerIndexer();
+        m_indexer.stopOmniWheels();
     }
 
     // Returns true when the command should end.

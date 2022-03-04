@@ -10,7 +10,7 @@ import frc.robot.Constants.IndexerConstants;
 
 /** An example command that uses an example subsystem. */
 public class TopIndexerIntakeCommand extends CommandBase {
-    @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
+    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final IndexerSubsystem m_indexer;
 
     /**
@@ -27,13 +27,13 @@ public class TopIndexerIntakeCommand extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        m_indexer.runBothFullForward();
+        m_indexer.runBothCustom(0.35, 0.35);
+        m_indexer.omniWheelRun();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
-    public void execute() {
-    }
+    public void execute() {}
 
     // Called once the command ends or is interrupted.
     @Override

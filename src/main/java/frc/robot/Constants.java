@@ -28,7 +28,7 @@ public final class Constants {
 
     public static class IntakeConstants {
         public static final int kIntakeMotor = 20;
-        public static final int kIntakeSolenoid = 8;
+        public static final int kIntakeSolenoid = 11;
         public static final int kIntakeFullPower = 1;
         public static final double kIntakerunZeroPower = 0.0;
         public static final double kIntakeCustomPower = 0.5;
@@ -52,7 +52,7 @@ public final class Constants {
         public static final double kautonVelocity = 0.3;
         public static final double kautonDriveTime = 2.0;
         public static final double kautonSpeedBackwards = 0.7;
-        public static double kSpeedUpTime = 3.0;
+        public static double kSpeedUpTime = 0.5;
         public static double kShootTime = 4.0;
     }
 
