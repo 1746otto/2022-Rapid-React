@@ -26,7 +26,7 @@ public class TopIndexerIntakeCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_indexer.runBothCustom(0.35, 0.35);
+    m_indexer.runBothCustom(0.4, 0.35);
     // m_indexer.runOmni();
   }
 
