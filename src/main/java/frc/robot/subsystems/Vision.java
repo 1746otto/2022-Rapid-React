@@ -1,8 +1,9 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Vision {
+public class Vision extends SubsystemBase {
   private boolean validTarget;
   private double xOffset;
   private double yOffset;
@@ -16,21 +17,36 @@ public class Vision {
   private double getpipe;
   private double camtran;
 
+  public Vision() {
+
+  }
+
   public void fetchvision() {
     try {
-      validTarget = (NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv")
-        .getDouble(0.0) == 1) ? true : false;
-      xOffset = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0.0);
-      yOffset = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0.0);
-      targetArea = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0.0);
-      skew = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ts").getDouble(0.0);
-      pipeLatency = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tl").getDouble(0.0);
-      tshort = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tshort").getDouble(0.0);
-      tlong = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tlong").getDouble(0.0);
-      thor = NetworkTableInstance.getDefault().getTable("limelight").getEntry("thor").getDouble(0.0);
-      tvert = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tvert").getDouble(0.0);
-      getpipe = NetworkTableInstance.getDefault().getTable("limelight").getEntry("getpipe").getDouble(0.0);
-      camtran = NetworkTableInstance.getDefault().getTable("limelight").getEntry("camtran").getDouble(0.0);
+      validTarget = (NetworkTableInstance.getDefault().getTable("limelight-shooter").getEntry("tv")
+          .getDouble(0.0) == 1) ? true : false;
+      xOffset = NetworkTableInstance.getDefault().getTable("limelight-shooter").getEntry("tx")
+          .getDouble(0.0);
+      yOffset = NetworkTableInstance.getDefault().getTable("limelight-shooter").getEntry("ty")
+          .getDouble(0.0);
+      targetArea = NetworkTableInstance.getDefault().getTable("limelight-shooter").getEntry("ta")
+          .getDouble(0.0);
+      skew = NetworkTableInstance.getDefault().getTable("limelight-shooter").getEntry("ts")
+          .getDouble(0.0);
+      pipeLatency = NetworkTableInstance.getDefault().getTable("limelight-shooter").getEntry("tl")
+          .getDouble(0.0);
+      tshort = NetworkTableInstance.getDefault().getTable("limelight-shooter").getEntry("tshort")
+          .getDouble(0.0);
+      tlong = NetworkTableInstance.getDefault().getTable("limelight-shooter").getEntry("tlong")
+          .getDouble(0.0);
+      thor = NetworkTableInstance.getDefault().getTable("limelight-shooter").getEntry("thor")
+          .getDouble(0.0);
+      tvert = NetworkTableInstance.getDefault().getTable("limelight-shooter").getEntry("tvert")
+          .getDouble(0.0);
+      getpipe = NetworkTableInstance.getDefault().getTable("limelight-shooter").getEntry("getpipe")
+          .getDouble(0.0);
+      camtran = NetworkTableInstance.getDefault().getTable("limelight-shooter").getEntry("camtran")
+          .getDouble(0.0);
     } catch (Exception e) {
       System.out.println(e.getMessage());
     }
