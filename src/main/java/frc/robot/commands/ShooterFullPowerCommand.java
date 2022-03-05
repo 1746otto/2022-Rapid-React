@@ -1,7 +1,7 @@
 package frc.robot.commands;
 
-import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.ShooterSubsystem;
 
 /** An example command that uses an example subsystem. */
 public class ShooterFullPowerCommand extends CommandBase {
