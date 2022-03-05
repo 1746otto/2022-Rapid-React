@@ -27,7 +27,7 @@ public class TopIndexerIntakeCommand extends CommandBase {
   @Override
   public void initialize() {
     m_indexer.runBothCustom(0.35, 0.35);
-    m_indexer.omniWheelRun();
+    // m_indexer.runOmni();
   }
 
   // Called once the command ends or is interrupted.

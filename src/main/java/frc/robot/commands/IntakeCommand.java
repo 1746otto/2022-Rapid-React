@@ -24,7 +24,7 @@ public class IntakeCommand extends CommandBase {
     m_intake = subsystemIntake;
     m_indexer = subsystemIndexer;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystemIntake, subsystemIndexer);
+    addRequirements(subsystemIntake);
   }
 
   // Called when the command is initially scheduled.
@@ -44,6 +44,6 @@ public class IntakeCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (m_indexer.bottomBeamBreakBroken() && m_indexer.topBeamBreakBroken());
+    return m_indexer.bottomBeamBreakBroken();
   }
 }

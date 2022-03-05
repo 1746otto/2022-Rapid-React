@@ -33,7 +33,7 @@ public class BottomIndexerIntakeCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     m_indexer.stopLowerIndexer();
-    m_indexer.stopOmniWheels();
+    // m_indexer.stopOmni();
   }
 
   // Returns true when the command should end.
