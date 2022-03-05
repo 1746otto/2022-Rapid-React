@@ -11,47 +11,49 @@ import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.RobotConstants;
 
 public class ClimberSubsystem extends SubsystemBase {
-    private final VictorSPX motorR = new VictorSPX(ClimberConstants.kMotorR);
-    private final TalonSRX motorL = new TalonSRX(ClimberConstants.kMotorL);
-    private final Solenoid pistons;
-    private final DigitalInput topLimitSwitch = new DigitalInput(ClimberConstants.kTopLimitSwitch);
-    private final DigitalInput bottomLimitSwitch = new DigitalInput(ClimberConstants.kBottomLimitSwitch);
+  private final VictorSPX motorR = new VictorSPX(ClimberConstants.kMotorR);
+  private final TalonSRX motorL = new TalonSRX(ClimberConstants.kMotorL);
+  private final Solenoid pistons;
+  private final DigitalInput topLimitSwitch = new DigitalInput(ClimberConstants.kTopLimitSwitch);
+  private final DigitalInput bottomLimitSwitch =
+      new DigitalInput(ClimberConstants.kBottomLimitSwitch);
 
-    public ClimberSubsystem() {   
-      motorL.setInverted(true); 
-      motorL.follow(motorR);
-      pistons = new Solenoid(RobotConstants.kREVPH, PneumaticsModuleType.REVPH, ClimberConstants.kChannel);
-    }
+  public ClimberSubsystem() {
+    motorL.setInverted(true);
+    motorL.follow(motorR);
+    pistons =
+        new Solenoid(RobotConstants.kREVPH, PneumaticsModuleType.REVPH, ClimberConstants.kChannel);
+  }
 
-    public void runExtendClimber() {
-      motorR.set(ControlMode.PercentOutput, ClimberConstants.kClimberExtendSpeed);
-    }
+  public void runExtendClimber() {
+    motorR.set(ControlMode.PercentOutput, ClimberConstants.kClimberExtendSpeed);
+  }
 
-    public void runRetractClimber() {
-      motorR.set(ControlMode.PercentOutput, ClimberConstants.kClimberRetractSpeed);
-    }
+  public void runRetractClimber() {
+    motorR.set(ControlMode.PercentOutput, ClimberConstants.kClimberRetractSpeed);
+  }
 
-    public void stopClimber() {
-      motorR.set(ControlMode.PercentOutput, 0);
-    }
+  public void stopClimber() {
+    motorR.set(ControlMode.PercentOutput, 0);
+  }
 
-    public void engageClimberHook() {
-      pistons.set(ClimberConstants.kClimberHookEngaged);
-    }
+  public void engageClimberHook() {
+    pistons.set(ClimberConstants.kClimberHookEngaged);
+  }
 
-    public void releaseClimberHook() {
-      pistons.set(ClimberConstants.kClimberHookReleased);
-    }
-    
-    public boolean getEngaged() {
-      return pistons.get() == ClimberConstants.kClimberHookEngaged;
-    }
+  public void releaseClimberHook() {
+    pistons.set(ClimberConstants.kClimberHookReleased);
+  }
 
-    public boolean isAtTop() {
-      return topLimitSwitch.get();
-    }
+  public boolean getEngaged() {
+    return pistons.get() == ClimberConstants.kClimberHookEngaged;
+  }
 
-    public boolean isAtBottom() {
-      return bottomLimitSwitch.get();
-    }
+  public boolean isAtTop() {
+    return topLimitSwitch.get();
+  }
+
+  public boolean isAtBottom() {
+    return bottomLimitSwitch.get();
+  }
 }
