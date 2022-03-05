@@ -70,19 +70,6 @@ public class IndexerSubsystem extends SubsystemBase {
     runUpperCustom(upperInput);
   }
 
-  public void stopLowerIndexer() {
-    m_lower.set(ControlMode.PercentOutput, IndexerConstants.kLowerStop);
-  }
-
-  public void stopUpperIndexer() {
-    m_upper.set(ControlMode.PercentOutput, IndexerConstants.kUpperStop);
-  }
-
-  public void stopBoth() {
-    stopLowerIndexer();
-    stopUpperIndexer();
-  }
-
   public void runLowerFullBackward() {
     m_lower.set(ControlMode.PercentOutput, -IndexerConstants.kLowerFullForward);
   }
@@ -107,6 +94,19 @@ public class IndexerSubsystem extends SubsystemBase {
   public void runBothHalfBackward() {
     runLowerHalfBackward();
     runUpperHalfBackward();
+  }
+
+  public void stopLowerIndexer() {
+    m_lower.set(ControlMode.PercentOutput, IndexerConstants.kLowerStop);
+  }
+
+  public void stopUpperIndexer() {
+    m_upper.set(ControlMode.PercentOutput, IndexerConstants.kUpperStop);
+  }
+
+  public void stopBoth() {
+    stopLowerIndexer();
+    stopUpperIndexer();
   }
 
   public void omniWheelRun() {

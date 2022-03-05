@@ -15,6 +15,12 @@ package frc.robot;
  */
 public final class Constants {
 
+  public static class ControllerConstants {
+    public static final int kport = 0;
+    public static final double kdeadZone = .125;
+    public static final double kDriveControl = 2.0;
+  }
+
   public static class RobotConstants {
     public static final int kREVPH = 2;
   }
@@ -79,12 +85,6 @@ public final class Constants {
     public static final int kUpper = 31;
     public static final int kBeamBreakTop = 0;
     public static final int kBeamBreakBottom = 1;
-  }
-
-  public static class ControllerConstants {
-    public static final int kport = 0;
-    public static final double kdeadZone = .125;
-    public static final double kDriveControl = 2.0;
   }
 
 }

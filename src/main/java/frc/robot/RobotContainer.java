@@ -62,27 +62,27 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(m_controller, XboxController.Button.kB.value).whenHeld(m_visionDriveCommand);
-    JoystickButton updateTuningValuesButton =
+    JoystickButton m_driverBButton =
+        new JoystickButton(m_controller, XboxController.Button.kB.value);
+    m_driverBButton.whenHeld(m_visionDriveCommand);
+    JoystickButton m_driverStartButton =
         new JoystickButton(m_controller, XboxController.Button.kStart.value);
-    updateTuningValuesButton.whenHeld(m_visionTuningCommand);
-    JoystickButton m_DriverLBumper =
+    m_driverStartButton.whenHeld(m_visionTuningCommand);
+    JoystickButton m_driverLBumper =
         new JoystickButton(m_controller, XboxController.Button.kLeftBumper.value);
-    m_DriverLBumper.whenHeld(new ShooterFullPowerCommand(m_shooterSubsystem)
+    m_driverLBumper.whenHeld(new ShooterFullPowerCommand(m_shooterSubsystem)
         .withTimeout(Constants.AutonConstants.kSpeedUpTime)
         .andThen(new IndexerFullForwardCommand(m_indexerSubsystem)
             .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem))));
-
     JoystickButton m_climbJoystickButton =
         new JoystickButton(m_controller, XboxController.Button.kY.value);
     m_climbJoystickButton.whenPressed(new ClimberExtendCommand(m_climberSubsystem));
-
-    JoystickButton m_DriverRBumper =
+    JoystickButton m_driverRBumper =
         new JoystickButton(m_controller, XboxController.Button.kRightBumper.value);
-    m_DriverRBumper.whenHeld(new IndexerFullForwardCommand(m_indexerSubsystem));
-    JoystickButton m_IntakeButton =
+    m_driverRBumper.whenHeld(new IndexerFullForwardCommand(m_indexerSubsystem));
+    JoystickButton m_driverXButton =
         new JoystickButton(m_controller, XboxController.Button.kX.value);
-    m_IntakeButton.whenHeld(new IntakeCommand(m_intakeSubsystem, m_indexerSubsystem)
+    m_driverXButton.whenHeld(new IntakeCommand(m_intakeSubsystem, m_indexerSubsystem)
         .alongWith(new SequentialCommandGroup(new TopIndexerIntakeCommand(m_indexerSubsystem),
             new BottomIndexerIntakeCommand(m_indexerSubsystem))));
   }
@@ -91,7 +91,6 @@ public class RobotContainer {
     m_driveSubsystem.setDefaultCommand(new RunCommand(() -> m_driveSubsystem.arcadeDrive(
         m_controller.getRightTriggerAxis() - m_controller.getLeftTriggerAxis(),
         m_controller.getLeftX()), m_driveSubsystem));
-    System.out.println(-m_controller.getLeftX());
   }
 
   /**

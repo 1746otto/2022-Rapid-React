@@ -17,15 +17,6 @@ public class IntakeSubsystem extends SubsystemBase {
     intakeMotor = new CANSparkMax(IntakeConstants.kIntakeMotor, MotorType.kBrushless);
     pistons = new Solenoid(RobotConstants.kREVPH, PneumaticsModuleType.REVPH,
         IntakeConstants.kIntakeSolenoid);
-
-  }
-
-  public void extend() {
-    pistons.set(IntakeConstants.kIntakeExtended);
-  }
-
-  public void retract() {
-    pistons.set(IntakeConstants.kIntakeRetracted);
   }
 
   public void runFullPower() {
@@ -38,5 +29,13 @@ public class IntakeSubsystem extends SubsystemBase {
 
   public void runZeroPower() {
     intakeMotor.set(IntakeConstants.kIntakerunZeroPower);
+  }
+
+  public void extend() {
+    pistons.set(IntakeConstants.kIntakeExtended);
+  }
+
+  public void retract() {
+    pistons.set(IntakeConstants.kIntakeRetracted);
   }
 }
