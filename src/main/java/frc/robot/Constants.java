@@ -85,6 +85,8 @@ public final class Constants {
     public static final int kUpper = 31;
     public static final int kBeamBreakTop = 0;
     public static final int kBeamBreakBottom = 1;
+    public static final double kLowerCustomPower = 0.5;
+    public static final double kUpperCustomPower = 0.5;
   }
 
 }

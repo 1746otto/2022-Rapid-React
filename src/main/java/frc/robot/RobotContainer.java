@@ -17,6 +17,7 @@ import frc.robot.commands.AutonDriveCommand;
 import frc.robot.commands.BottomIndexerIntakeCommand;
 import frc.robot.commands.ClimberExtendCommand;
 import frc.robot.commands.IndexerFullForwardCommand;
+import frc.robot.commands.IntakeCargoCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeExtendCommand;
 import frc.robot.commands.ShooterFullPowerCommand;
@@ -77,14 +78,7 @@ public class RobotContainer {
     xBoxY.whenPressed(new ClimberExtendCommand(m_climberSubsystem));
     xBoxB.whenHeld(new VisionDriveCommand(m_driveSubsystem, m_controller, m_visionSubsystem));
     xBoxStart.whenHeld(new VisionTuningCommand(m_visionTuningCommand));
-    xBoxA.whenHeld(new IntakeCommand(m_intakeSubsystem, m_indexerSubsystem)
-        .alongWith(new SequentialCommandGroup(new TopIndexerIntakeCommand(m_indexerSubsystem),
-            new BottomIndexerIntakeCommand(m_indexerSubsystem))));
-    /*
-     * xBoxA.whenHeld(new IntakeCommand(m_intakeSubsystem, m_indexerSubsystem) .alongWith(new
-     * TopIndexerIntakeCommand(m_indexerSubsystem)) .andThen(new
-     * BottomIndexerIntakeCommand(m_indexerSubsystem)));
-     */
+    xBoxA.whenHeld(new IntakeCargoCommand(m_indexerSubsystem, m_intakeSubsystem));
     xBoxLBumper.whenHeld(new ShooterFullPowerCommand(m_shooterSubsystem)
         .withTimeout(Constants.AutonConstants.kSpeedUpTime)
         .andThen(new IndexerFullForwardCommand(m_indexerSubsystem)

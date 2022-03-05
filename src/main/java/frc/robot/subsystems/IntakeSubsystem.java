@@ -7,18 +7,19 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.RobotConstants;
-import frc.robot.subsystems.IndexerSubsystem;
 
 public class IntakeSubsystem extends SubsystemBase {
   CANSparkMax intakeMotor;
   Solenoid pistons;
   boolean intakeState = false;
+  CANSparkMax omniWheels;
   // IndexerSubsystem m_indexer;
 
   public IntakeSubsystem() {
     intakeMotor = new CANSparkMax(IntakeConstants.kIntakeMotor, MotorType.kBrushless);
     pistons = new Solenoid(RobotConstants.kREVPH, PneumaticsModuleType.REVPH,
         IntakeConstants.kIntakeSolenoid);
+    omniWheels = new CANSparkMax(IntakeConstants.kIntakeOmniWheels, MotorType.kBrushless);
   }
 
   public void extend() {
@@ -31,19 +32,22 @@ public class IntakeSubsystem extends SubsystemBase {
 
   public void runFullPower() {
     intakeMotor.set(IntakeConstants.kIntakeFullPower);
+    omniWheels.set(IntakeConstants.kIntakeFullPower);
   }
 
   public void runCustomPower(double input) {
     intakeMotor.set(input);
+    omniWheels.set(input);
   }
 
   public void runZeroPower() {
-    intakeMotor.set(IntakeConstants.kIntakerunZeroPower);
+    intakeMotor.stopMotor();
+    omniWheels.stopMotor();
   }
 
   public void turnOnIntake() {
     extend();
-    runCustomPower(0.5);
+    runCustomPower(IntakeConstants.kIntakeCustomPower);
   }
 
   public void turnOffIntake() {
@@ -53,6 +57,5 @@ public class IntakeSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // m_indexer.runOmni();
   }
 }
