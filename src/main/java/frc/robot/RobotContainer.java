@@ -6,11 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.ArcadeDriveCommand;
-import frc.robot.commands.AutonBasic;
 import frc.robot.commands.ClimberExtendCommand;
-import frc.robot.commands.ClimberRetractCommand;
-import frc.robot.commands.IndexerCommand;
 import frc.robot.commands.AutonDriveCommand;
 import frc.robot.commands.BottomIndexerIntakeCommand;
 import frc.robot.commands.IndexerFullForwardCommand;
@@ -49,14 +45,6 @@ public class RobotContainer {
   private final IndexerSubsystem m_indexerSubsystem = new IndexerSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   VisionTuningCommand m_visionTuningCommand = new VisionTuningCommand(m_visionDriveCommand);
-
-  private final Command m_tarmacAuton =
-      new AutonDriveCommand(m_driveSubsystem, 0, Constants.AutonConstants.kautonSpeedBackwards)
-          .withTimeout(Constants.AutonConstants.kautonDriveTime);
-  // private final ShooterCommand m_autoCommand = new
-  // ShooterCommand(m_shooterSubsystem);
-  private final ArcadeDriveCommand m_arcadeDriveCommand =
-      new ArcadeDriveCommand(m_driveSubsystem, m_controller);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -112,7 +100,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
     return createAutoCommand();
   }
 
@@ -124,9 +111,5 @@ public class RobotContainer {
                 .withTimeout(Constants.AutonConstants.kShootTime)))
         .andThen(new AutonDriveCommand(m_driveSubsystem, 0, .5)
             .withTimeout(Constants.AutonConstants.kautonDriveTime));
-  }
-
-  public Command getTeleopDrive() {
-    return m_arcadeDriveCommand;
   }
 }

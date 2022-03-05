@@ -5,7 +5,6 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.Vision;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /** An example command that uses an example subsystem. */
 public class VisionDriveCommand extends CommandBase {
@@ -54,12 +53,6 @@ public class VisionDriveCommand extends CommandBase {
         } else if (rotationSignal > 0.5) {
           rotationSignal = 0.5;
         }
-        /*
-         * SmartDashboard.putNumber("kP", kP); SmartDashboard.putNumber("kD", kD);
-         * SmartDashboard.putNumber("error", error); SmartDashboard.putNumber("delta error",
-         * deltaError); SmartDashboard.putNumber("previous error", prevError);
-         * SmartDashboard.putNumber("rotational signal", rotationSignal);
-         */
         m_drive.arcadeDrive(m_controller.getRightTriggerAxis() - m_controller.getLeftTriggerAxis(),
             rotationSignal * -1);
         prevError = error;
