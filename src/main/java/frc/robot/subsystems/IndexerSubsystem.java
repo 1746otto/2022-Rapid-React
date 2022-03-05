@@ -1,13 +1,12 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.IndexerConstants;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.IndexerConstants;
 
 public class IndexerSubsystem extends SubsystemBase {
 
@@ -19,10 +18,8 @@ public class IndexerSubsystem extends SubsystemBase {
 
   private boolean beambreakTopLastState = false;
   private boolean beambreakBottomLastState = false;
-  private boolean hopperDisabled = false;
 
   /** Creates a new ExampleSubsystem. */
-
   public IndexerSubsystem() {
     m_lower = new VictorSPX(IndexerConstants.kLower);
     m_upper = new VictorSPX(IndexerConstants.kUpper);
@@ -73,19 +70,6 @@ public class IndexerSubsystem extends SubsystemBase {
     runUpperCustom(upperInput);
   }
 
-  public void stopLowerIndexer() {
-    m_lower.set(ControlMode.PercentOutput, IndexerConstants.kLowerStop);
-  }
-
-  public void stopUpperIndexer() {
-    m_upper.set(ControlMode.PercentOutput, IndexerConstants.kUpperStop);
-  }
-
-  public void stopBoth() {
-    stopLowerIndexer();
-    stopUpperIndexer();
-  }
-
   public void runLowerFullBackward() {
     m_lower.set(ControlMode.PercentOutput, -IndexerConstants.kLowerFullForward);
   }
@@ -112,6 +96,19 @@ public class IndexerSubsystem extends SubsystemBase {
     runUpperHalfBackward();
   }
 
+  public void stopLowerIndexer() {
+    m_lower.set(ControlMode.PercentOutput, IndexerConstants.kLowerStop);
+  }
+
+  public void stopUpperIndexer() {
+    m_upper.set(ControlMode.PercentOutput, IndexerConstants.kUpperStop);
+  }
+
+  public void stopBoth() {
+    stopLowerIndexer();
+    stopUpperIndexer();
+  }
+
   public void omniWheelRun() {
     tempMotor.set(-0.5);
   }
@@ -134,10 +131,5 @@ public class IndexerSubsystem extends SubsystemBase {
     beambreakTopLastState = (Math.floor(beambreakTop.getVoltage()) == 0);
     System.out.println("Bottom state:" + beambreakBottomLastState);
     System.out.println("Top state" + beambreakTopLastState);
-  }
-
-  @Override
-  public void simulationPeriodic() {
-    // This method will be called once per scheduler run during simulation
   }
 }

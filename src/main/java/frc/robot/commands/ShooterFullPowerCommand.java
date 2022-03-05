@@ -1,11 +1,11 @@
 package frc.robot.commands;
 
-import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.ShooterSubsystem;
 
 /** An example command that uses an example subsystem. */
 public class ShooterFullPowerCommand extends CommandBase {
-  @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
+  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final ShooterSubsystem m_subsystem;
 
   /**
@@ -23,11 +23,6 @@ public class ShooterFullPowerCommand extends CommandBase {
   @Override
   public void initialize() {
     m_subsystem.setFullPower();
-  }
-
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
   }
 
   // Called once the command ends or is interrupted.
