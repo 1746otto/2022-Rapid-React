@@ -26,6 +26,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ShooterFullPowerCommand;
 import frc.robot.commands.TopIndexerIntakeCommand;
 import frc.robot.commands.VisionDriveCommand;
+import frc.robot.commands.VisionTuningCommand;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.Vision;
 import frc.robot.Constants.ControllerConstants;
@@ -47,6 +48,7 @@ public class RobotContainer {
       new VisionDriveCommand(m_driveSubsystem, m_controller, m_visionSubsystem);
   private final IndexerSubsystem m_indexerSubsystem = new IndexerSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
+  VisionTuningCommand m_visionTuningCommand = new VisionTuningCommand(m_visionDriveCommand);
 
   private final Command m_tarmacAuton =
       new AutonDriveCommand(m_driveSubsystem, 0, Constants.AutonConstants.kautonSpeedBackwards)
@@ -72,9 +74,10 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(m_controller, XboxController.Button.kB.value)
-        .whenPressed(m_visionDriveCommand).whenReleased(m_arcadeDriveCommand);
-
+    new JoystickButton(m_controller, XboxController.Button.kB.value).whenHeld(m_visionDriveCommand);
+    JoystickButton updateTuningValuesButton =
+        new JoystickButton(m_controller, XboxController.Button.kStart.value);
+    updateTuningValuesButton.whenHeld(m_visionTuningCommand);
     JoystickButton m_DriverLBumper =
         new JoystickButton(m_controller, XboxController.Button.kLeftBumper.value);
     m_DriverLBumper.whenHeld(new ShooterFullPowerCommand(m_shooterSubsystem)
