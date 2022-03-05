@@ -13,6 +13,7 @@ public class IndexerFullForwardCommand extends CommandBase {
    *
    * @param subsystem The subsystem used by this command.
    */
+
   public IndexerFullForwardCommand(IndexerSubsystem subsystem) {
     m_subsystem = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
@@ -24,10 +25,6 @@ public class IndexerFullForwardCommand extends CommandBase {
   public void initialize() {
     m_subsystem.runBothFullForward();
   }
-
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override

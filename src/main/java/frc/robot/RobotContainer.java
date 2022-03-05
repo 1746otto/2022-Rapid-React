@@ -6,32 +6,29 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
+import frc.robot.Constants.ControllerConstants;
 import frc.robot.commands.ArcadeDriveCommand;
-import frc.robot.commands.AutonBasic;
-import frc.robot.commands.ClimberExtendCommand;
-import frc.robot.commands.ClimberRetractCommand;
-import frc.robot.commands.IntakeCommand;
-import frc.robot.commands.IntakeExtendAndRun;
-import frc.robot.commands.IndexerCommand;
 import frc.robot.commands.AutonDriveCommand;
+import frc.robot.commands.BottomIndexerIntakeCommand;
+import frc.robot.commands.ClimberExtendCommand;
 import frc.robot.commands.IndexerFullForwardCommand;
+import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeExtendCommand;
-import frc.robot.commands.IntakeFullPowerCommand;
-import frc.robot.commands.IntakeRetractCommand;
-import frc.robot.commands.IntakeStopCommand;
+import frc.robot.commands.ShooterFullPowerCommand;
+import frc.robot.commands.TopIndexerIntakeCommand;
+import frc.robot.commands.VisionDriveCommand;
+import frc.robot.commands.VisionTuningCommand;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.StartEndCommand;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.ShooterFullPowerCommand;
-import frc.robot.commands.VisionDriveCommand;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.Vision;
-import frc.robot.Constants.ControllerConstants;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -50,16 +47,8 @@ public class RobotContainer {
       new VisionDriveCommand(m_driveSubsystem, m_controller, m_visionSubsystem);
   private final IndexerSubsystem m_indexerSubsystem = new IndexerSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
-  private final IntakeCommand m_intakeCommand = new IntakeCommand(m_intakeSubsystem);
-
-
-  private final Command m_tarmacAuton =
-      new AutonDriveCommand(m_driveSubsystem, 0, Constants.AutonConstants.kautonSpeedBackwards)
-          .withTimeout(Constants.AutonConstants.kautonDriveTime);
-  // private final ShooterCommand m_autoCommand = new
-  // ShooterCommand(m_shooterSubsystem);
-  private final ArcadeDriveCommand m_arcadeDriveCommand =
-      new ArcadeDriveCommand(m_driveSubsystem, m_controller);
+  private final VisionTuningCommand m_visionTuningCommand =
+      new VisionTuningCommand(m_visionSubsystem, m_driveSubsystem);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -77,17 +66,26 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    JoystickButton xBoxY = new JoystickButton(m_controller, XboxController.Button.kY.value);
     JoystickButton xBoxB = new JoystickButton(m_controller, XboxController.Button.kB.value);
     JoystickButton xBoxX = new JoystickButton(m_controller, XboxController.Button.kX.value);
     JoystickButton xBoxA = new JoystickButton(m_controller, XboxController.Button.kA.value);
+    JoystickButton xBoxStart = new JoystickButton(m_controller, XboxController.Button.kStart.value);
+    JoystickButton xBoxLBumper =
+        new JoystickButton(m_controller, XboxController.Button.kLeftBumper.value);
 
-    xBoxB.whenHeld(new ShooterFullPowerCommand(m_shooterSubsystem));
-    // xBoxX.whenHeld(new IntakeCommand(m_intakeSubsystem));
-    xBoxA.toggleWhenPressed(new StartEndCommand(m_intakeSubsystem::turnOnIntake,
-        m_intakeSubsystem::turnOffIntake, m_intakeSubsystem));
+    xBoxY.whenPressed(new ClimberExtendCommand(m_climberSubsystem));
+    xBoxB.whenHeld(new VisionDriveCommand(m_visionDriveCommand));
+    xBoxStart.whenHeld(new VisionTuningCommand(m_visionTuningCommand));
+    xBoxA.whenHeld(new IntakeCommand(m_intakeSubsystem, m_indexerSubsystem)
+        .alongWith(new SequentialCommandGroup(new TopIndexerIntakeCommand(m_indexerSubsystem),
+            new BottomIndexerIntakeCommand(m_indexerSubsystem))));
+    xBoxLBumper.whenHeld(new ShooterFullPowerCommand(m_shooterSubsystem)
+        .withTimeout(Constants.AutonConstants.kSpeedUpTime)
+        .andThen(new IndexerFullForwardCommand(m_indexerSubsystem)
+            .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem))));
     xBoxX.toggleWhenPressed(new StartEndCommand(m_intakeSubsystem::extend,
         m_intakeSubsystem::turnOffIntake, m_intakeSubsystem));
-    // m_intakeSubsystem.setDefaultCommand(new IntakeRetractCommand(m_intakeSubsystem));
   }
 
   private void configureDefaultCommands() {
@@ -102,7 +100,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
     return createAutoCommand();
   }
 
@@ -113,11 +110,13 @@ public class RobotContainer {
             .andThen(new IntakeExtendCommand(m_intakeSubsystem)
                 .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem)
                     .withTimeout(Constants.AutonConstants.kShootTime))));
-    // .andThen(new
-    // ArcadeDriveCommand(m_driveSubsystem).withTimeout(Constants.AutonConstants.kautonDriveTime));
   }
 
   public Command getTeleopDrive() {
-    return m_arcadeDriveCommand;
+    return new ArcadeDriveCommand(m_driveSubsystem, m_controller)
+        .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem)
+            .withTimeout(Constants.AutonConstants.kShootTime))
+        .andThen(new AutonDriveCommand(m_driveSubsystem, 0, .5)
+            .withTimeout(Constants.AutonConstants.kautonDriveTime));
   }
 }

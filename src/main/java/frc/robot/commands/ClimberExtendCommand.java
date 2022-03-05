@@ -21,15 +21,10 @@ public class ClimberExtendCommand extends CommandBase {
     m_climber.stopClimber();
   }
 
-  @Override 
-  public boolean isFinished(){
+  @Override
+  public boolean isFinished() {
     return m_climber.isAtTop();
   }
 }
-  
 
-  
-  
 
-  
-  

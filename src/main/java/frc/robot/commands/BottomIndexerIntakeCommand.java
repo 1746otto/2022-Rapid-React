@@ -1,20 +1,24 @@
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
+
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.IndexerSubsystem;
 
 /** An example command that uses an example subsystem. */
-public class IntakeRetractCommand extends CommandBase {
+public class BottomIndexerIntakeCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final IntakeSubsystem m_subsystem;
+  private final IndexerSubsystem m_indexer;
 
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public IntakeRetractCommand(IntakeSubsystem subsystem) {
-    m_subsystem = subsystem;
+  public BottomIndexerIntakeCommand(IndexerSubsystem subsystem) {
+    m_indexer = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
   }
@@ -22,16 +26,19 @@ public class IntakeRetractCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_subsystem.retract();
+    m_indexer.runLowerFullForward();
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_indexer.stopLowerIndexer();
+    m_indexer.stopOmniWheels();
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return m_indexer.bottomBeamBreakBroken();
   }
 }
