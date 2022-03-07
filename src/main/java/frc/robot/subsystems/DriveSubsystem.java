@@ -35,7 +35,7 @@ public class DriveSubsystem extends SubsystemBase {
     if (Math.abs(rotation) < ControllerConstants.kdeadZone) {
       rotation = 0;
     }
-    if (forward >= 0 && rotation >= 0) { // Quadrant 1
+    if (forward > 0 && rotation > 0) { // Quadrant 1
       if (Math.abs(forward) >= Math.abs(rotation)) {
         forwardComponent = 1;
         rotationComponent = rotation / forward;
@@ -46,7 +46,7 @@ public class DriveSubsystem extends SubsystemBase {
       sumComponents = forwardComponent + rotationComponent;
       forward /= sumComponents;
       rotation /= sumComponents;
-    } else if (forward >= 0 && rotation < 0) { // Quadrant 2
+    } else if (forward > 0 && rotation < 0) { // Quadrant 2
       if (Math.abs(forward) > Math.abs(rotation)) {
         forwardComponent = 1;
         rotationComponent = rotation / forward;
