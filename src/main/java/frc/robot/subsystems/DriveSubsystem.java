@@ -29,12 +29,6 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public void arcadeDrive(double forward, double rotation) {
-    if (Math.abs(forward) < ControllerConstants.kdeadZone) {
-      forward = 0;
-    }
-    if (Math.abs(rotation) < ControllerConstants.kdeadZone) {
-      rotation = 0;
-    }
     if (forward > 0 && rotation > 0) { // Quadrant 1
       if (Math.abs(forward) >= Math.abs(rotation)) {
         forwardComponent = 1;
@@ -43,6 +37,8 @@ public class DriveSubsystem extends SubsystemBase {
         forwardComponent = forward / rotation;
         rotationComponent = 1;
       }
+      forwardComponent = Math.abs(forwardComponent);
+      rotationComponent = Math.abs(rotationComponent);
       sumComponents = forwardComponent + rotationComponent;
       forward /= sumComponents;
       rotation /= sumComponents;
@@ -54,6 +50,8 @@ public class DriveSubsystem extends SubsystemBase {
         forwardComponent = -1 * (forward / rotation);
         rotationComponent = -1;
       }
+      forwardComponent = Math.abs(forwardComponent);
+      rotationComponent = Math.abs(rotationComponent);
       sumComponents = forwardComponent + rotationComponent;
       forward /= sumComponents;
       rotation /= sumComponents;
@@ -65,17 +63,21 @@ public class DriveSubsystem extends SubsystemBase {
         forwardComponent = -1 * (forward / rotation);
         rotationComponent = -1;
       }
+      forwardComponent = Math.abs(forwardComponent);
+      rotationComponent = Math.abs(rotationComponent);
       sumComponents = forwardComponent + rotationComponent;
       forward /= sumComponents;
       rotation /= sumComponents;
     } else if (forward < 0 && rotation > 0) { // Quadrant 4
       if (Math.abs(forward) > Math.abs(rotation)) {
         forwardComponent = -1;
-        rotationComponent = -1 * (rotation / forward);
+        rotationComponent = 1 * (rotation / forward);
       } else {
         forwardComponent = forward / rotation;
         rotationComponent = 1;
       }
+      forwardComponent = Math.abs(forwardComponent);
+      rotationComponent = Math.abs(rotationComponent);
       sumComponents = forwardComponent + rotationComponent;
       forward /= sumComponents;
       rotation /= sumComponents;
@@ -88,6 +90,8 @@ public class DriveSubsystem extends SubsystemBase {
         forwardComponent = 0;
         rotationComponent = -1;
       }
+      forwardComponent = Math.abs(forwardComponent);
+      rotationComponent = Math.abs(rotationComponent);
       sumComponents = forwardComponent + rotationComponent;
       forward /= sumComponents;
       rotation /= sumComponents;
@@ -100,6 +104,8 @@ public class DriveSubsystem extends SubsystemBase {
         forwardComponent = -1;
         rotationComponent = 0;
       }
+      forwardComponent = Math.abs(forwardComponent);
+      rotationComponent = Math.abs(rotationComponent);
       sumComponents = forwardComponent + rotationComponent;
       forward /= sumComponents;
       rotation /= sumComponents;
