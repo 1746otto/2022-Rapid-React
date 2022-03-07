@@ -29,6 +29,12 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public void arcadeDrive(double forward, double rotation) {
+    if (Math.abs(forward) < ControllerConstants.kdeadZone) {
+      forward = 0;
+    }
+    if (Math.abs(rotation) < ControllerConstants.kdeadZone) {
+      rotation = 0;
+    }
     if (forward > 0 && rotation > 0) { // Quadrant 1
       if (Math.abs(forward) >= Math.abs(rotation)) {
         forwardComponent = 1;
