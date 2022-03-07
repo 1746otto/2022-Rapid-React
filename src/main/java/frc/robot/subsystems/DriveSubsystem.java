@@ -68,13 +68,37 @@ public class DriveSubsystem extends SubsystemBase {
       sumComponents = forwardComponent + rotationComponent;
       forward /= sumComponents;
       rotation /= sumComponents;
-    } else { // Quadrant 4
+    } else if (forward < 0 && rotation > 0) { // Quadrant 4
       if (Math.abs(forward) > Math.abs(rotation)) {
         forwardComponent = -1;
         rotationComponent = -1 * (rotation / forward);
       } else {
         forwardComponent = forward / rotation;
         rotationComponent = 1;
+      }
+      sumComponents = forwardComponent + rotationComponent;
+      forward /= sumComponents;
+      rotation /= sumComponents;
+    } else if (forward == 0 && rotation != 0) {
+      if (rotation > 0) {
+        forwardComponent = 0;
+        rotationComponent = 1;
+      }
+      if (rotation < 0) {
+        forwardComponent = 0;
+        rotationComponent = -1;
+      }
+      sumComponents = forwardComponent + rotationComponent;
+      forward /= sumComponents;
+      rotation /= sumComponents;
+    } else if (forward != 0 && rotation == 0) {
+      if (forward > 0) {
+        forwardComponent = 1;
+        rotationComponent = 0;
+      }
+      if (forward < 0) {
+        forwardComponent = -1;
+        rotationComponent = 0;
       }
       sumComponents = forwardComponent + rotationComponent;
       forward /= sumComponents;
