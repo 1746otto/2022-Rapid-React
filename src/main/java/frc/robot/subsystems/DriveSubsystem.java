@@ -16,6 +16,9 @@ public class DriveSubsystem extends SubsystemBase {
       new CANSparkMax(DriveConstants.kleftDriveLeader, MotorType.kBrushless);
   private final CANSparkMax m_leftFollow =
       new CANSparkMax(DriveConstants.kleftDriveFollow, MotorType.kBrushless);
+  private double forwardComponent;
+  private double rotationComponent;
+  private double sumComponents;
 
   public DriveSubsystem() {
     m_leftLeader.setInverted(true);
@@ -32,8 +35,89 @@ public class DriveSubsystem extends SubsystemBase {
     if (Math.abs(rotation) < ControllerConstants.kdeadZone) {
       rotation = 0;
     }
-    m_rightLeader.set((forward - rotation) / ControllerConstants.kDriveControl);
-    m_leftLeader.set((forward + rotation) / ControllerConstants.kDriveControl);
+    if (forward > 0 && rotation > 0) { // Quadrant 1
+      if (Math.abs(forward) >= Math.abs(rotation)) {
+        forwardComponent = 1;
+        rotationComponent = rotation / forward;
+      } else {
+        forwardComponent = forward / rotation;
+        rotationComponent = 1;
+      }
+      forwardComponent = Math.abs(forwardComponent);
+      rotationComponent = Math.abs(rotationComponent);
+      sumComponents = forwardComponent + rotationComponent;
+      forward /= sumComponents;
+      rotation /= sumComponents;
+    } else if (forward > 0 && rotation < 0) { // Quadrant 2
+      if (Math.abs(forward) > Math.abs(rotation)) {
+        forwardComponent = 1;
+        rotationComponent = rotation / forward;
+      } else {
+        forwardComponent = -1 * (forward / rotation);
+        rotationComponent = -1;
+      }
+      forwardComponent = Math.abs(forwardComponent);
+      rotationComponent = Math.abs(rotationComponent);
+      sumComponents = forwardComponent + rotationComponent;
+      forward /= sumComponents;
+      rotation /= sumComponents;
+    } else if (forward < 0 && rotation < 0) { // Quadrant 3
+      if (Math.abs(forward) > Math.abs(rotation)) {
+        forwardComponent = -1;
+        rotationComponent = -1 * (rotation / forward);
+      } else {
+        forwardComponent = -1 * (forward / rotation);
+        rotationComponent = -1;
+      }
+      forwardComponent = Math.abs(forwardComponent);
+      rotationComponent = Math.abs(rotationComponent);
+      sumComponents = forwardComponent + rotationComponent;
+      forward /= sumComponents;
+      rotation /= sumComponents;
+    } else if (forward < 0 && rotation > 0) { // Quadrant 4
+      if (Math.abs(forward) > Math.abs(rotation)) {
+        forwardComponent = -1;
+        rotationComponent = 1 * (rotation / forward);
+      } else {
+        forwardComponent = forward / rotation;
+        rotationComponent = 1;
+      }
+      forwardComponent = Math.abs(forwardComponent);
+      rotationComponent = Math.abs(rotationComponent);
+      sumComponents = forwardComponent + rotationComponent;
+      forward /= sumComponents;
+      rotation /= sumComponents;
+    } else if (forward == 0 && rotation != 0) {
+      if (rotation > 0) {
+        forwardComponent = 0;
+        rotationComponent = 1;
+      }
+      if (rotation < 0) {
+        forwardComponent = 0;
+        rotationComponent = -1;
+      }
+      forwardComponent = Math.abs(forwardComponent);
+      rotationComponent = Math.abs(rotationComponent);
+      sumComponents = forwardComponent + rotationComponent;
+      forward /= sumComponents;
+      rotation /= sumComponents;
+    } else if (forward != 0 && rotation == 0) {
+      if (forward > 0) {
+        forwardComponent = 1;
+        rotationComponent = 0;
+      }
+      if (forward < 0) {
+        forwardComponent = -1;
+        rotationComponent = 0;
+      }
+      forwardComponent = Math.abs(forwardComponent);
+      rotationComponent = Math.abs(rotationComponent);
+      sumComponents = forwardComponent + rotationComponent;
+      forward /= sumComponents;
+      rotation /= sumComponents;
+    }
+    m_rightLeader.set(forward - rotation);
+    m_leftLeader.set(forward + rotation);
   }
 
   public void stop() {
