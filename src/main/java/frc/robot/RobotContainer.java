@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.ControllerConstants;
+import frc.robot.Constants.RobotConstants;
 import frc.robot.commands.AutonDriveCommand;
 import frc.robot.commands.BottomIndexerIntakeCommand;
 import frc.robot.commands.ClimberExtendCommand;
@@ -28,7 +29,6 @@ import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.Vision;
-import frc.robot.Constants.RobotConstants;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -58,7 +58,6 @@ public class RobotContainer {
         // Configure the button bindings
         configureButtonBindings();
         configureDefaultCommands();
-        configureCompressor();
     }
 
     /**
@@ -99,7 +98,11 @@ public class RobotContainer {
                 m_controller.getLeftX()), m_driveSubsystem));
     }
 
-    private void configureCompressor() {
+    public void enableCompressor() {
+        compressor.enableDigital();
+    }
+
+    public void disableCompressor() {
         compressor.disable();
     }
 
