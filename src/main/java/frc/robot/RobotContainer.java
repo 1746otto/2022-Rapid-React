@@ -38,84 +38,93 @@ import frc.robot.subsystems.Vision;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  private final XboxController m_controller = new XboxController(ControllerConstants.kport);
-  // The robot's subsystems and commands are defined here...
-  private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
-  private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
-  private final ClimberSubsystem m_climberSubsystem = new ClimberSubsystem();
-  private final Vision m_visionSubsystem = new Vision();
-  private final VisionDriveCommand m_visionDriveCommand =
-      new VisionDriveCommand(m_driveSubsystem, m_controller, m_visionSubsystem);
-  private final IndexerSubsystem m_indexerSubsystem = new IndexerSubsystem();
-  private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
-  private final VisionTuningCommand m_visionTuningCommand =
-      new VisionTuningCommand(m_visionSubsystem, m_driveSubsystem);
+        private final XboxController m_controller = new XboxController(ControllerConstants.kport);
+        // The robot's subsystems and commands are defined here...
+        private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
+        private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
+        private final ClimberSubsystem m_climberSubsystem = new ClimberSubsystem();
+        private final Vision m_visionSubsystem = new Vision();
+        private final VisionDriveCommand m_visionDriveCommand =
+                        new VisionDriveCommand(m_driveSubsystem, m_controller, m_visionSubsystem);
+        private final IndexerSubsystem m_indexerSubsystem = new IndexerSubsystem();
+        private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
+        private final VisionTuningCommand m_visionTuningCommand =
+                        new VisionTuningCommand(m_visionSubsystem, m_driveSubsystem);
 
-  /**
-   * The container for the robot. Contains subsystems, OI devices, and commands.
-   */
-  public RobotContainer() {
-    // Configure the button bindings
-    configureButtonBindings();
-    configureDefaultCommands();
-  }
+        /**
+         * The container for the robot. Contains subsystems, OI devices, and commands.
+         */
+        public RobotContainer() {
+                // Configure the button bindings
+                configureButtonBindings();
+                configureDefaultCommands();
+        }
 
-  /**
-   * Use this method to define your button->command mappings. Buttons can be created by
-   * instantiating a {@link GenericHID} or one of its subclasses
-   * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
-   * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-   */
-  private void configureButtonBindings() {
-    JoystickButton xBoxY = new JoystickButton(m_controller, XboxController.Button.kY.value);
-    JoystickButton xBoxB = new JoystickButton(m_controller, XboxController.Button.kB.value);
-    JoystickButton xBoxX = new JoystickButton(m_controller, XboxController.Button.kX.value);
-    JoystickButton xBoxA = new JoystickButton(m_controller, XboxController.Button.kA.value);
-    JoystickButton xBoxStart = new JoystickButton(m_controller, XboxController.Button.kStart.value);
-    JoystickButton xBoxLBumper =
-        new JoystickButton(m_controller, XboxController.Button.kLeftBumper.value);
+        /**
+         * Use this method to define your button->command mappings. Buttons can be created by
+         * instantiating a {@link GenericHID} or one of its subclasses
+         * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it
+         * to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+         */
+        private void configureButtonBindings() {
+                JoystickButton xBoxY =
+                                new JoystickButton(m_controller, XboxController.Button.kY.value);
+                JoystickButton xBoxB =
+                                new JoystickButton(m_controller, XboxController.Button.kB.value);
+                JoystickButton xBoxX =
+                                new JoystickButton(m_controller, XboxController.Button.kX.value);
+                JoystickButton xBoxA =
+                                new JoystickButton(m_controller, XboxController.Button.kA.value);
+                JoystickButton xBoxStart = new JoystickButton(m_controller,
+                                XboxController.Button.kStart.value);
+                JoystickButton xBoxLBumper = new JoystickButton(m_controller,
+                                XboxController.Button.kLeftBumper.value);
 
-    xBoxY.whenPressed(new ClimberExtendCommand(m_climberSubsystem));
-    xBoxB.whenHeld(new VisionDriveCommand(m_driveSubsystem, m_controller, m_visionSubsystem));
-    xBoxStart.whenHeld(new VisionTuningCommand(m_visionTuningCommand));
-    xBoxA.whenHeld(new IntakeCargoCommand(m_indexerSubsystem, m_intakeSubsystem));
-    xBoxLBumper.whenHeld(new ShooterFullPowerCommand(m_shooterSubsystem)
-        .withTimeout(Constants.AutonConstants.kSpeedUpTime)
-        .andThen(new IndexerFullForwardCommand(m_indexerSubsystem)
-            .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem))));
-    xBoxX.toggleWhenPressed(new StartEndCommand(m_intakeSubsystem::extend,
-        m_intakeSubsystem::turnOffIntake, m_intakeSubsystem));
-  }
+                xBoxY.whenPressed(new ClimberExtendCommand(m_climberSubsystem));
+                xBoxX.whenHeld(new VisionDriveCommand(m_driveSubsystem, m_controller,
+                                m_visionSubsystem));
+                xBoxStart.whenHeld(new VisionTuningCommand(m_visionTuningCommand));
+                xBoxA.whenHeld(new IntakeCargoCommand(m_indexerSubsystem, m_intakeSubsystem));
+                xBoxLBumper.whenHeld(new ShooterFullPowerCommand(m_shooterSubsystem)
+                                .withTimeout(Constants.AutonConstants.kSpeedUpTime)
+                                .andThen(new IndexerFullForwardCommand(m_indexerSubsystem).raceWith(
+                                                new ShooterFullPowerCommand(m_shooterSubsystem))));
+                xBoxB.toggleWhenPressed(new StartEndCommand(m_intakeSubsystem::extend,
+                                m_intakeSubsystem::turnOffIntake, m_intakeSubsystem));
+        }
 
-  private void configureDefaultCommands() {
-    m_driveSubsystem.setDefaultCommand(new RunCommand(() -> m_driveSubsystem.arcadeDrive(
-        m_controller.getRightTriggerAxis() - m_controller.getLeftTriggerAxis(),
-        m_controller.getLeftX()), m_driveSubsystem));
-  }
+        private void configureDefaultCommands() {
+                m_driveSubsystem.setDefaultCommand(
+                                new RunCommand(() -> m_driveSubsystem.arcadeDrive(
+                                                m_controller.getRightTriggerAxis()
+                                                                - m_controller.getLeftTriggerAxis(),
+                                                m_controller.getLeftX()), m_driveSubsystem));
+        }
 
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
-  public Command getAutonomousCommand() {
-    return createAutoCommand();
-  }
+        /**
+         * Use this to pass the autonomous command to the main {@link Robot} class.
+         *
+         * @return the command to run in autonomous
+         */
+        public Command getAutonomousCommand() {
+                return createAutoCommand();
+        }
 
-  public Command createAutoCommand() {
-    return new ShooterFullPowerCommand(m_shooterSubsystem)
-        .withTimeout(Constants.AutonConstants.kSpeedUpTime)
-        .andThen(new IndexerFullForwardCommand(m_indexerSubsystem)
-            .andThen(new IntakeExtendCommand(m_intakeSubsystem)
-                .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem)
-                    .withTimeout(Constants.AutonConstants.kShootTime))));
-  }
+        public Command createAutoCommand() {
+                return new ShooterFullPowerCommand(m_shooterSubsystem)
+                                .withTimeout(Constants.AutonConstants.kSpeedUpTime)
+                                .andThen(new IndexerFullForwardCommand(m_indexerSubsystem).andThen(
+                                                new IntakeExtendCommand(m_intakeSubsystem).raceWith(
+                                                                new ShooterFullPowerCommand(
+                                                                                m_shooterSubsystem)
+                                                                                                .withTimeout(Constants.AutonConstants.kShootTime))));
+        }
 
-  public Command getTeleopDrive() {
-    return new ArcadeDriveCommand(m_driveSubsystem, m_controller)
-        .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem)
-            .withTimeout(Constants.AutonConstants.kShootTime))
-        .andThen(new AutonDriveCommand(m_driveSubsystem, 0, .5)
-            .withTimeout(Constants.AutonConstants.kautonDriveTime));
-  }
+        public Command getTeleopDrive() {
+                return new ArcadeDriveCommand(m_driveSubsystem, m_controller)
+                                .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem)
+                                                .withTimeout(Constants.AutonConstants.kShootTime))
+                                .andThen(new AutonDriveCommand(m_driveSubsystem, 0, .5).withTimeout(
+                                                Constants.AutonConstants.kautonDriveTime));
+        }
 }
