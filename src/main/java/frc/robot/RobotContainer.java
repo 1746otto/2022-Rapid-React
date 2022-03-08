@@ -15,6 +15,7 @@ import frc.robot.commands.IndexerCommand;
 import frc.robot.commands.AutonDriveCommand;
 import frc.robot.commands.IndexerFullForwardCommand;
 import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.ShooterCustomRPMCommand;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
@@ -23,6 +24,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ShooterFullPowerCommand;
+import frc.robot.commands.ShooterPIDTuningCommand;
 import frc.robot.commands.ShooterTuning2Command;
 import frc.robot.commands.ShooterTuningCommand;
 import frc.robot.commands.VisionDriveCommand;
@@ -55,6 +57,8 @@ public class RobotContainer {
   // ShooterCommand(m_shooterSubsystem);
   private final ArcadeDriveCommand m_arcadeDriveCommand =
       new ArcadeDriveCommand(m_driveSubsystem, m_controller);
+  private final ShooterCustomRPMCommand m_shooterCustomRPMCommand =
+      new ShooterCustomRPMCommand(m_shooterSubsystem, 2000);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -71,13 +75,18 @@ public class RobotContainer {
    * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
+
   private void configureButtonBindings() {
     new JoystickButton(m_controller, XboxController.Button.kA.value)
         .whenPressed(m_visionDriveCommand).whenReleased(m_arcadeDriveCommand);
 
+    JoystickButton m_TuningStartButton =
+        new JoystickButton(m_controller, XboxController.Button.kStart.value);
+    m_TuningStartButton.whenPressed(new ShooterPIDTuningCommand(m_shooterCustomRPMCommand));
+
     JoystickButton m_DriverLBumper =
         new JoystickButton(m_controller, XboxController.Button.kLeftBumper.value);
-    m_DriverLBumper.whenHeld(new ShooterFullPowerCommand(m_shooterSubsystem));
+    m_DriverLBumper.whenHeld(m_shooterCustomRPMCommand);
 
     JoystickButton m_climbJoystickButton =
         new JoystickButton(m_controller, XboxController.Button.kY.value);
