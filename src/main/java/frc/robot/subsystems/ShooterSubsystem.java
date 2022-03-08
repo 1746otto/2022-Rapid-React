@@ -10,12 +10,12 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 
 public class ShooterSubsystem extends SubsystemBase {
-  private TalonSRX master;
+  public TalonSRX master;
   private VictorSPX slave1;
-  private double kP = 0.0639375 * 1.5;
-  private double kF = 0.0561810546;
-  private double kD = kP * 75;
-  private double kI = kP / 250;
+  public double kP = 0.0639375 * 1.5;
+  public double kF = 0.0561810546;
+  public double kD = kP * 75;
+  public double kI = kP / 250;
 
   /** Creates a new ExampleSubsystem. */
   public ShooterSubsystem() {
