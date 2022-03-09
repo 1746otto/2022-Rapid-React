@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.IndexerConstants;
 import frc.robot.subsystems.IndexerSubsystem;
 
 /** An example command that uses an example subsystem. */
@@ -26,8 +27,7 @@ public class TopIndexerIntakeCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_indexer.runBothCustom(0.35, 0.35);
-    m_indexer.omniWheelRun();
+    m_indexer.runBothCustom(IndexerConstants.kLowerCustomPower, IndexerConstants.kUpperCustomPower);
   }
 
   // Called once the command ends or is interrupted.
