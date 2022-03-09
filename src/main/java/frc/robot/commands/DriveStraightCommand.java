@@ -27,6 +27,7 @@ public class DriveStraightCommand extends CommandBase {
     @Override
     public void initialize() {
       m_startingRotations = m_drive.getLeftRotations();
+      System.out.println("StartRot" + m_startingRotations);
     }
     
     @Override
