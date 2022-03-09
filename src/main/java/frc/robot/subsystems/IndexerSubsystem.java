@@ -20,7 +20,7 @@ public class IndexerSubsystem extends SubsystemBase {
   public IndexerSubsystem() {
     m_lower = new VictorSPX(IndexerConstants.kLower);
     m_upper = new VictorSPX(IndexerConstants.kUpper);
-    m_upper.setInverted(true);
+    m_lower.setInverted(true);
     beambreakTop = new AnalogInput(IndexerConstants.kBeamBreakTop);
     beambreakBottom = new AnalogInput(IndexerConstants.kBeamBreakBottom);
   }
@@ -103,6 +103,7 @@ public class IndexerSubsystem extends SubsystemBase {
     stopLowerIndexer();
     stopUpperIndexer();
   }
+
   public boolean topBeamBreakBroken() {
     return beambreakTopLastState;
   }
