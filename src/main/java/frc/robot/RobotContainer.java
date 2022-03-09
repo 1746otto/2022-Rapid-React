@@ -84,7 +84,7 @@ public class RobotContainer {
     xBoxY.whenPressed(new ClimberExtendCommand(m_climberSubsystem));
     xBoxX.whenHeld(new VisionDriveCommand(m_driveSubsystem, m_controller, m_visionSubsystem));
     xBoxStart.whenHeld(new VisionTuningCommand(m_visionTuningCommand));
-    xBoxA.whenHeld(new IntakeCargoCommand(m_indexerSubsystem, m_intakeSubsystem));
+    xBoxA.toggleWhenPressed(new IntakeCargoCommand(m_indexerSubsystem, m_intakeSubsystem));
     xBoxLBumper.whenHeld(new ShooterFullPowerCommand(m_shooterSubsystem)
         .withTimeout(Constants.AutonConstants.kSpeedUpTime)
         .andThen(new IndexerFullForwardCommand(m_indexerSubsystem)
