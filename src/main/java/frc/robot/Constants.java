@@ -34,10 +34,11 @@ public final class Constants {
 
   public static class IntakeConstants {
     public static final int kIntakeMotor = 20;
+    public static final int kIntakeOmniWheels = 21;
     public static final int kIntakeSolenoid = 11;
     public static final int kIntakeFullPower = 1;
     public static final double kIntakerunZeroPower = 0.0;
-    public static final double kIntakeCustomPower = 0.5;
+    public static final double kIntakeCustomPower = 0.50;
     public static final boolean kIntakeExtended = true;
     public static final boolean kIntakeRetracted = false;
   }
@@ -68,13 +69,12 @@ public final class Constants {
     public static final int kShooterSlave2 = 43;
     public static final int kShooterSlave3 = 42;
     public static final int kIndexerMotor = 30;
-    public static final double kFullPower = 1;
+    public static final double kFullPower = 0.9;
     public static final int kZeroPower = 0;
-
   }
 
   public static class IndexerConstants {
-    public static final double kLowerFullForward = 1;
+    public static final double kLowerFullForward = 0.5;
     public static final double kUpperFullForward = 1;
     public static final double kLowerHalfForward = 0.5;
     public static final double kUpperHalfForward = 0.5;
@@ -85,6 +85,8 @@ public final class Constants {
     public static final int kUpper = 31;
     public static final int kBeamBreakTop = 0;
     public static final int kBeamBreakBottom = 1;
+    public static final double kLowerCustomPower = 0.5;
+    public static final double kUpperCustomPower = 0.5;
   }
 
 }

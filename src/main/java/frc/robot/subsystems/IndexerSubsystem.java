@@ -2,8 +2,6 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IndexerConstants;
@@ -14,7 +12,6 @@ public class IndexerSubsystem extends SubsystemBase {
   private final VictorSPX m_upper;
   private final AnalogInput beambreakTop;
   private final AnalogInput beambreakBottom;
-  private final CANSparkMax tempMotor;
 
   private boolean beambreakTopLastState = false;
   private boolean beambreakBottomLastState = false;
@@ -23,11 +20,9 @@ public class IndexerSubsystem extends SubsystemBase {
   public IndexerSubsystem() {
     m_lower = new VictorSPX(IndexerConstants.kLower);
     m_upper = new VictorSPX(IndexerConstants.kUpper);
-    m_upper.setInverted(true);
+    m_lower.setInverted(true);
     beambreakTop = new AnalogInput(IndexerConstants.kBeamBreakTop);
     beambreakBottom = new AnalogInput(IndexerConstants.kBeamBreakBottom);
-    tempMotor = new CANSparkMax(21, MotorType.kBrushless);
-
   }
 
   public void runLowerFullForward() {
@@ -107,14 +102,6 @@ public class IndexerSubsystem extends SubsystemBase {
   public void stopBoth() {
     stopLowerIndexer();
     stopUpperIndexer();
-  }
-
-  public void omniWheelRun() {
-    tempMotor.set(-0.5);
-  }
-
-  public void stopOmniWheels() {
-    tempMotor.stopMotor();
   }
 
   public boolean topBeamBreakBroken() {

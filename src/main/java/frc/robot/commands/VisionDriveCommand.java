@@ -32,7 +32,6 @@ public class VisionDriveCommand extends CommandBase {
     m_controller = controller;
     m_vision = visionSubsystem;
     addRequirements(m_drive, m_vision);
-
   }
 
   // Called every time the scheduler runs while the command is scheduled.

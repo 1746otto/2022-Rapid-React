@@ -12,23 +12,14 @@ public class IntakeSubsystem extends SubsystemBase {
   CANSparkMax intakeMotor;
   Solenoid pistons;
   boolean intakeState = false;
+  CANSparkMax omniWheels;
+  // IndexerSubsystem m_indexer;
 
   public IntakeSubsystem() {
     intakeMotor = new CANSparkMax(IntakeConstants.kIntakeMotor, MotorType.kBrushless);
     pistons = new Solenoid(RobotConstants.kREVPH, PneumaticsModuleType.REVPH,
         IntakeConstants.kIntakeSolenoid);
-  }
-
-  public void runFullPower() {
-    intakeMotor.set(IntakeConstants.kIntakeFullPower);
-  }
-
-  public void runCustomPower(double input) {
-    intakeMotor.set(input);
-  }
-
-  public void runZeroPower() {
-    intakeMotor.set(IntakeConstants.kIntakerunZeroPower);
+    omniWheels = new CANSparkMax(IntakeConstants.kIntakeOmniWheels, MotorType.kBrushless);
   }
 
   public void extend() {
@@ -37,5 +28,34 @@ public class IntakeSubsystem extends SubsystemBase {
 
   public void retract() {
     pistons.set(IntakeConstants.kIntakeRetracted);
+  }
+
+  public void runFullPower() {
+    intakeMotor.set(IntakeConstants.kIntakeFullPower);
+    omniWheels.set(IntakeConstants.kIntakeFullPower);
+  }
+
+  public void runCustomPower(double input) {
+    intakeMotor.set(input);
+    omniWheels.set(input);
+  }
+
+  public void runZeroPower() {
+    intakeMotor.stopMotor();
+    omniWheels.stopMotor();
+  }
+
+  public void turnOnIntake() {
+    extend();
+    runCustomPower(IntakeConstants.kIntakeCustomPower);
+  }
+
+  public void turnOffIntake() {
+    runZeroPower();
+    retract();
+  }
+
+  @Override
+  public void periodic() {
   }
 }
