@@ -33,12 +33,11 @@ public class BottomIndexerIntakeCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     m_indexer.stopLowerIndexer();
-    m_indexer.stopOmniWheels();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_indexer.bottomBeamBreakBroken();
+    return m_indexer.bottomBeamBreakBroken() && m_indexer.topBeamBreakBroken();
   }
 }
