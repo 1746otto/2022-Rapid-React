@@ -19,6 +19,7 @@ import frc.robot.Constants.RobotConstants;
 import frc.robot.commands.AutonDriveCommand;
 import frc.robot.commands.BottomIndexerIntakeCommand;
 import frc.robot.commands.ClimberExtendCommand;
+import frc.robot.commands.ClimberRetractCommand;
 import frc.robot.commands.IndexerFullForwardCommand;
 import frc.robot.commands.IntakeCargoCommand;
 import frc.robot.commands.IntakeCommand;
@@ -76,6 +77,7 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     JoystickButton xBoxY = new JoystickButton(m_controller2, XboxController.Button.kY.value);
+    JoystickButton xBoxA2 = new JoystickButton(m_controller2, XboxController.Button.kY.value);
     JoystickButton xBoxB = new JoystickButton(m_controller, XboxController.Button.kB.value);
     JoystickButton xBoxX = new JoystickButton(m_controller, XboxController.Button.kX.value);
     JoystickButton xBoxA = new JoystickButton(m_controller, XboxController.Button.kA.value);
@@ -83,7 +85,8 @@ public class RobotContainer {
     JoystickButton xBoxLBumper =
         new JoystickButton(m_controller, XboxController.Button.kLeftBumper.value);
 
-    xBoxY.whenPressed(new ClimberExtendCommand(m_climberSubsystem));
+    xBoxY.whenHeld(new ClimberExtendCommand(m_climberSubsystem));
+    xBoxA2.whenHeld(new ClimberRetractCommand(m_climberSubsystem));
     xBoxX.whenHeld(new VisionDriveCommand(m_driveSubsystem, m_controller, m_visionSubsystem));
     xBoxStart.whenHeld(new VisionTuningCommand(m_visionTuningCommand));
     xBoxA.toggleWhenPressed(new IntakeCargoCommand(m_indexerSubsystem, m_intakeSubsystem));
