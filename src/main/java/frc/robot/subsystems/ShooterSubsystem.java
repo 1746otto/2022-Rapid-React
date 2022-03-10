@@ -30,4 +30,9 @@ public class ShooterSubsystem extends SubsystemBase {
   public void setZeroPower() {
     master.set(ControlMode.PercentOutput, ShooterConstants.kZeroPower);
   }
+
+  @Override
+  public void periodic() {
+
+  }
 }

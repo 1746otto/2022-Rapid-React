@@ -43,6 +43,7 @@ import frc.robot.subsystems.Vision;
  */
 public class RobotContainer {
   private final XboxController m_controller = new XboxController(ControllerConstants.kport);
+  private final XboxController m_controller2 = new XboxController(ControllerConstants.kport2);
   // The robot's subsystems and commands are defined here...
   private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
@@ -74,7 +75,7 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    JoystickButton xBoxY = new JoystickButton(m_controller, XboxController.Button.kY.value);
+    JoystickButton xBoxY = new JoystickButton(m_controller2, XboxController.Button.kY.value);
     JoystickButton xBoxB = new JoystickButton(m_controller, XboxController.Button.kB.value);
     JoystickButton xBoxX = new JoystickButton(m_controller, XboxController.Button.kX.value);
     JoystickButton xBoxA = new JoystickButton(m_controller, XboxController.Button.kA.value);
