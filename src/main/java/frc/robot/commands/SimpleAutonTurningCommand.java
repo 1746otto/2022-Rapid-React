@@ -10,30 +10,28 @@ public class SimpleAutonTurningCommand extends CommandBase {
   public final DriveSubsystem m_driveSubsystem;
   public final PigeonIMU m_pigeon;
   public final double m_angle;
-  public final double m_totalRotations;
-  public double m_yaw;
+
 
   public SimpleAutonTurningCommand(DriveSubsystem driveSubsystem, PigeonIMU pigeon, double angle) {
     m_driveSubsystem = driveSubsystem;
     m_pigeon = pigeon;
-    m_angle = angle;
-    m_totalRotations = DriveConstants.kCircumCircleCircumference * DriveConstants.kwheelCircumfrence
-        * DriveConstants.kmotorToWheelRatio;
+    m_angle = Math.abs(angle);
   }
 
   @Override
   public void initialize() {
-
+    m_pigeon.setYaw(0);
+    m_driveSubsystem.arcadeDrive(0, DriveConstants.kSafeTurnSpeed);
   }
 
   @Override
   public void execute() {
-    m_yaw = m_pigeon.getYaw();
+
   }
 
   @Override
   public void end(boolean interrupted) {
-
+    m_driveSubsystem.arcadeDrive(0, 0);
   }
 
   @Override
