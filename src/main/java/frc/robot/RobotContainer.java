@@ -32,6 +32,10 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.commands.DriveStraightCommand;
+import frc.robot.Constants.ControllerConstants;
+import frc.robot.commands.ArcadeDriveCommand;
+import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.Vision;
 
 /**
@@ -44,6 +48,18 @@ public class RobotContainer {
   private final XboxController m_controller = new XboxController(ControllerConstants.kport);
   // The robot's subsystems and commands are defined here...
   private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
+  private final DriveStraightCommand m_driveStraightCommand =
+      new DriveStraightCommand(m_driveSubsystem, Constants.DriveConstants.kautonDistance,
+          Constants.DriveConstants.kautonSpeed);
+  private final ExampleCommand m_nothingCommand = new ExampleCommand();
+  private final Command m_tarmacAuton =
+      new AutonDriveCommand(m_driveSubsystem, 0, Constants.AutonConstants.kautonSpeedBackwards)
+          .withTimeout(Constants.AutonConstants.kautonDriveTime);
+  // private final ShooterCommand m_autoCommand = new ShooterCommand(m_shooterSubsystem);
+  private final ArcadeDriveCommand m_arcadeDriveCommand =
+      new ArcadeDriveCommand(m_driveSubsystem, m_controller);
+
+  /** The container for the robot. Contains subsystems, OI devices, and commands. */
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
   private final ClimberSubsystem m_climberSubsystem = new ClimberSubsystem();
   private final Vision m_visionSubsystem = new Vision();
@@ -117,9 +133,12 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
+
   public Command getAutonomousCommand() {
+    // An ExampleCommand will run in autonomous
     return createAutoCommand();
   }
+
 
   public Command createAutoCommand() {
     return new ShooterFullPowerCommand(m_shooterSubsystem)
@@ -129,6 +148,7 @@ public class RobotContainer {
                 .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem)
                     .withTimeout(Constants.AutonConstants.kShootTime))));
   }
+
 
   public Command getTeleopDrive() {
     return new ArcadeDriveCommand(m_driveSubsystem, m_controller)

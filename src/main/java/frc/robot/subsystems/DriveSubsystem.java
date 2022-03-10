@@ -28,6 +28,14 @@ public class DriveSubsystem extends SubsystemBase {
     m_leftFollow.follow(m_leftLeader);
   }
 
+  public double getLeftRotations() {
+    return m_leftLeader.getEncoder().getPosition();
+  }
+
+  public double getRightRotations() {
+    return m_rightLeader.getEncoder().getPosition();
+  }
+
   public void arcadeDrive(double forward, double rotation) {
     if (Math.abs(forward) < ControllerConstants.kdeadZone) {
       forward = 0;
