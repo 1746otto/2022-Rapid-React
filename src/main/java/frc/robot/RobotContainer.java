@@ -133,32 +133,22 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public Command createAutoCommand() {
-    return new DriveStraightCommand(m_driveSubsystem, Constants.DriveConstants.kautonDistance,
-        Constants.DriveConstants.kautonSpeed)
-            .andThen(new DriveStraightCommand(m_driveSubsystem,
-                -1 * Constants.DriveConstants.kautonDistance, Constants.DriveConstants.kautonSpeed))
-            .andThen(new DriveStraightCommand(m_driveSubsystem,
-                Constants.DriveConstants.kautonDistance, Constants.DriveConstants.kautonSpeed))
-            .andThen(new DriveStraightCommand(m_driveSubsystem,
-                -1 * Constants.DriveConstants.kautonDistance, Constants.DriveConstants.kautonSpeed))
-            .andThen(new DriveStraightCommand(m_driveSubsystem,
-                Constants.DriveConstants.kautonDistance, Constants.DriveConstants.kautonSpeed));
-  }
 
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     return createAutoCommand();
   }
 
-  /*
-   * public Command createAutoCommand() { return new ShooterFullPowerCommand(m_shooterSubsystem)
-   * .withTimeout(Constants.AutonConstants.kSpeedUpTime) .andThen(new
-   * IndexerFullForwardCommand(m_indexerSubsystem) .andThen(new
-   * IntakeExtendCommand(m_intakeSubsystem) .raceWith(new
-   * ShooterFullPowerCommand(m_shooterSubsystem)
-   * .withTimeout(Constants.AutonConstants.kShootTime)))); }
-   */
+
+  public Command createAutoCommand() {
+    return new ShooterFullPowerCommand(m_shooterSubsystem)
+        .withTimeout(Constants.AutonConstants.kSpeedUpTime)
+        .andThen(new IndexerFullForwardCommand(m_indexerSubsystem)
+            .andThen(new IntakeExtendCommand(m_intakeSubsystem)
+                .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem)
+                    .withTimeout(Constants.AutonConstants.kShootTime))));
+  }
+
 
   public Command getTeleopDrive() {
     return new ArcadeDriveCommand(m_driveSubsystem, m_controller)
