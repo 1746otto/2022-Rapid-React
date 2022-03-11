@@ -28,8 +28,8 @@ public class ClimberSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putBoolean("toplimitswitch", topLimitSwitch.get());
-    SmartDashboard.putBoolean("bottomlimitswitch", bottomLimitSwitch.get());
+    SmartDashboard.putBoolean("toplimitswitch", isAtTop());
+    SmartDashboard.putBoolean("bottomlimitswitch", isAtBottom());
   }
 
   public void runExtendClimber() {
@@ -56,13 +56,12 @@ public class ClimberSubsystem extends SubsystemBase {
     return pistons.get() == ClimberConstants.kClimberHookEngaged;
   }
 
-  public boolean isAtTop() {
-    return topLimitSwitch.get();
-    // return motorL.isFwdLimitSwitchClosed() == 1;
+  public boolean isAtBottom() {
+    return motorL.isFwdLimitSwitchClosed() == 0;
   }
 
-  public boolean isAtBottom() {
-    return bottomLimitSwitch.get();
-    // return motorL.isRevLimitSwitchClosed() == 1;
+  public boolean isAtTop() {
+    return motorL.isRevLimitSwitchClosed() == 0;
   }
+
 }

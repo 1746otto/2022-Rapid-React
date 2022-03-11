@@ -21,6 +21,7 @@ import frc.robot.commands.AutonDriveCommand;
 import frc.robot.commands.BottomIndexerIntakeCommand;
 import frc.robot.commands.ClimberExtendCommand;
 import frc.robot.commands.ClimberRetractCommand;
+import frc.robot.commands.ClimberStopCommand;
 import frc.robot.commands.DriveStraightCommand;
 import frc.robot.commands.IndexerFullForwardCommand;
 import frc.robot.commands.IntakeCargoCommand;
@@ -80,6 +81,8 @@ public class RobotContainer {
   private void configureButtonBindings() {
     JoystickButton xBoxY2 = new JoystickButton(m_controller2, XboxController.Button.kY.value);
     JoystickButton xBoxA2 = new JoystickButton(m_controller2, XboxController.Button.kA.value);
+    JoystickButton xBoxSelect2 =
+        new JoystickButton(m_controller2, XboxController.Button.kBack.value);
     JoystickButton xBoxY = new JoystickButton(m_controller, XboxController.Button.kY.value);
     JoystickButton xBoxB = new JoystickButton(m_controller, XboxController.Button.kB.value);
     JoystickButton xBoxX = new JoystickButton(m_controller, XboxController.Button.kX.value);
@@ -90,6 +93,7 @@ public class RobotContainer {
 
     xBoxY2.whenPressed(new ClimberExtendCommand(m_climberSubsystem));
     xBoxA2.whenPressed(new ClimberRetractCommand(m_climberSubsystem));
+    xBoxSelect2.whenPressed(new ClimberStopCommand(m_climberSubsystem));
     xBoxX.whenHeld(new VisionDriveCommand(m_driveSubsystem, m_controller, m_visionSubsystem));
     xBoxStart.whenHeld(new VisionTuningCommand(m_visionTuningCommand));
     xBoxA.toggleWhenPressed(new IntakeCargoCommand(m_indexerSubsystem, m_intakeSubsystem));
@@ -133,28 +137,28 @@ public class RobotContainer {
     return createAutoCommand();
   }
 
+  /*
+   * public Command createAutoCommand() { return new ShooterFullPowerCommand(m_shooterSubsystem)
+   * .withTimeout(Constants.AutonConstants.kSpeedUpTime) .andThen(new
+   * IndexerFullForwardCommand(m_indexerSubsystem) .andThen(new
+   * IntakeExtendCommand(m_intakeSubsystem) .raceWith(new DriveStraightCommand(m_driveSubsystem,
+   * AutonConstants.kDistanceToBall, AutonConstants.kautonVelocity) .andThen(new
+   * DriveStraightCommand(m_driveSubsystem, AutonConstants.kDistanceToBall,
+   * AutonConstants.kautonVelocity)) .andThen(new ShooterFullPowerCommand(m_shooterSubsystem)
+   * .withTimeout(Constants.AutonConstants.kSpeedUpTime) .andThen(new
+   * IndexerFullForwardCommand(m_indexerSubsystem) .raceWith(new
+   * ShooterFullPowerCommand(m_shooterSubsystem))))))); }
+   */
+
   public Command createAutoCommand() {
     return new ShooterFullPowerCommand(m_shooterSubsystem)
         .withTimeout(Constants.AutonConstants.kSpeedUpTime)
         .andThen(new IndexerFullForwardCommand(m_indexerSubsystem)
             .andThen(new IntakeExtendCommand(m_intakeSubsystem)
-                .raceWith(new DriveStraightCommand(m_driveSubsystem, AutonConstants.kDistanceToBall,
-                    AutonConstants.kautonVelocity)
-                        .andThen(new DriveStraightCommand(m_driveSubsystem,
-                            AutonConstants.kDistanceToBall, AutonConstants.kautonVelocity))
-                        .andThen(new ShooterFullPowerCommand(m_shooterSubsystem)
-                            .withTimeout(Constants.AutonConstants.kSpeedUpTime)
-                            .andThen(new IndexerFullForwardCommand(m_indexerSubsystem)
-                                .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem)))))));
+                .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem)
+                    .withTimeout(Constants.AutonConstants.kShootTime))));
   }
-  /*
-   * public Command createAutoCommand() { return new ShooterFullPowerCommand(m_shooterSubsystem)
-   * .withTimeout(Constants.AutonConstants.kSpeedUpTime) .andThen(new
-   * IndexerFullForwardCommand(m_indexerSubsystem) .andThen(new
-   * IntakeExtendCommand(m_intakeSubsystem) .raceWith(new
-   * ShooterFullPowerCommand(m_shooterSubsystem)
-   * .withTimeout(Constants.AutonConstants.kShootTime))));
-   */
+
 
   public Command getTeleopDrive() {
     return new ArcadeDriveCommand(m_driveSubsystem, m_controller)
