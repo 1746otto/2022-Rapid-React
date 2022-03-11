@@ -16,7 +16,6 @@ public class ShooterSubsystem extends SubsystemBase {
   public double kF = 0.0;
   public double kD = 55 * kP;
   public double kI = 0.0;
-  public double m_RPM;
 
   /** Creates a new ExampleSubsystem. */
   public ShooterSubsystem() {
@@ -61,7 +60,6 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public void setRPM(double rpm) {
-    m_RPM = rpm;
     double velRequest = rpm * ShooterConstants.kRPMToTPS / .6;
     master.set(ControlMode.Velocity, velRequest);
 
