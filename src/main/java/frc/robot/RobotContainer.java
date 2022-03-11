@@ -63,6 +63,8 @@ public class RobotContainer {
       new Compressor(RobotConstants.kREVPH, PneumaticsModuleType.REVPH);
   private final VisionTuningCommand m_visionTuningCommand =
       new VisionTuningCommand(m_visionSubsystem, m_driveSubsystem);
+  private final ShooterCustomRPMCommand m_customRPMCommand =
+      new ShooterCustomRPMCommand(m_shooterSubsystem, 4000);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
