@@ -19,7 +19,8 @@ public class ClimberExtendCommand extends CommandBase {
 
   @Override
   public void execute() {
-
+    SmartDashboard.putBoolean("toplimitswitch", m_climber.isAtTop());
+    SmartDashboard.putBoolean("limitswitch", m_climber.isAtTop());
   }
 
   @Override

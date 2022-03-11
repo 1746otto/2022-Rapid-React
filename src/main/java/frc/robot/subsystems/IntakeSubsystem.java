@@ -20,7 +20,9 @@ public class IntakeSubsystem extends SubsystemBase {
     pistons = new Solenoid(RobotConstants.kREVPH, PneumaticsModuleType.REVPH,
         IntakeConstants.kIntakeSolenoid);
     omniWheels = new CANSparkMax(IntakeConstants.kIntakeOmniWheels, MotorType.kBrushless);
+    omniWheels.setInverted(true);
   }
+
 
   public void extend() {
     pistons.set(IntakeConstants.kIntakeExtended);
@@ -56,6 +58,5 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   @Override
-  public void periodic() {
-  }
+  public void periodic() {}
 }

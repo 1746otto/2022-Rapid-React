@@ -69,6 +69,6 @@ public class VisionDriveAutonCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return m_vision.getXOffset() > 0.9;
+    return m_vision.getXOffset() > 0.85;
   }
 }

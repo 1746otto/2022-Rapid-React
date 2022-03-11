@@ -49,8 +49,8 @@ public final class Constants {
     public static final int kMotorL = 50;
     public static final double kClimberExtendSpeed = 0.1;
     public static final double kClimberRetractSpeed = -0.1;
-    public static final int kTopLimitSwitch = 0;
-    public static final int kBottomLimitSwitch = 1;
+    public static final int kTopLimitSwitch = 1;
+    public static final int kBottomLimitSwitch = 0;
     public static final int kChannel = 2;
     public static final boolean kClimberHookEngaged = true;
     public static final boolean kClimberHookReleased = false;
