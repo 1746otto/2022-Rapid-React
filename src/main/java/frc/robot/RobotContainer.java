@@ -18,6 +18,7 @@ import frc.robot.Constants.ControllerConstants;
 import frc.robot.commands.ArcadeDriveCommand;
 import frc.robot.Constants.RobotConstants;
 import frc.robot.commands.OneBallAutonCommand;
+import frc.robot.commands.ShooterCustomRPMCommand;
 import frc.robot.commands.AutonDriveCommand;
 import frc.robot.commands.BottomIndexerIntakeCommand;
 import frc.robot.commands.ClimberExtendCommand;
@@ -89,6 +90,7 @@ public class RobotContainer {
     JoystickButton xBoxX = new JoystickButton(m_controller, XboxController.Button.kX.value);
     JoystickButton xBoxA = new JoystickButton(m_controller, XboxController.Button.kA.value);
     JoystickButton xBoxStart = new JoystickButton(m_controller, XboxController.Button.kStart.value);
+    JoystickButton xBoxX2 = new JoystickButton(m_controller, XboxController.Button.kX.value);
     JoystickButton xBoxLBumper =
         new JoystickButton(m_controller, XboxController.Button.kLeftBumper.value);
 
@@ -108,6 +110,10 @@ public class RobotContainer {
         new LowGoalCommand(m_shooterSubsystem).withTimeout(Constants.AutonConstants.kSpeedUpTime)
             .andThen(new IndexerFullForwardCommand(m_indexerSubsystem)
                 .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem))));
+    xBoxX2.whenHeld(new ShooterCustomRPMCommand(m_shooterSubsystem, 4000)
+        .withTimeout(Constants.AutonConstants.kSpeedUpTime)
+        .andThen(new IndexerFullForwardCommand(m_indexerSubsystem)
+            .raceWith(new ShooterCustomRPMCommand(m_shooterSubsystem, 4000))));
   }
 
   private void configureDefaultCommands() {
