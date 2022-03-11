@@ -34,6 +34,7 @@ public final class Constants {
     public static final double kwheelCircumfrence = 4 * 3.1415926; // in inches.
     public static final double kmotorToWheelRatio = 68 / 12;
     public static final double kSafeTurnSpeed = 0.3;
+    public static final int kPigeon = 50;
   }
 
   public static class IntakeConstants {
