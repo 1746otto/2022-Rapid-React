@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import java.lang.reflect.Type;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -119,6 +120,27 @@ public class DriveSubsystem extends SubsystemBase {
     m_rightLeader.set(forward - rotation);
     m_leftLeader.set(forward + rotation);
   }
+
+
+  public double getLeftRotations() {
+    return m_leftLeader.getEncoder().getPosition();
+  }
+
+  public double getRightRotations() {
+    return m_rightLeader.getEncoder().getPosition();
+  }
+  /*
+   * public enum ParamEnum { YawOffset(160), CompassOffset(160), BetaGain(162), Reserved163(163),
+   * GyroNoMotionCal(164), EnterCalibration(165), FusedHeadingOffset(166), StatusFrameRate(169),
+   * AccumZ(170), TempCompDisable(171); private int value; private ParamEnum(int value) { this.value
+   * = value; } }
+   * 
+   * private enum TareType { SetValue (0x00), AddOffset(0x01), MatchCompass(0x02), SetOffset(0xFF);
+   * private int value; private Tare }
+   * 
+   * public int setYawToComass() { int errCode = ConfigSetParameter(ParamEnum.YawOffset,
+   * Type.MatchCompass, 0); }
+   */
 
   public void stop() {
     m_rightLeader.set(0);
