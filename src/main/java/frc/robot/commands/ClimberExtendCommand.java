@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ClimberSubsystem;
 
@@ -17,13 +18,18 @@ public class ClimberExtendCommand extends CommandBase {
   }
 
   @Override
+  public void execute() {
+
+  }
+
+  @Override
   public void end(boolean interrupted) {
     m_climber.stopClimber();
   }
 
   @Override
   public boolean isFinished() {
-    return m_climber.isAtTop();
+    return !m_climber.isAtTop();
   }
 }
 
