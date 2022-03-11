@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
+import frc.robot.Constants.AutonConstants;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.commands.ArcadeDriveCommand;
 import frc.robot.Constants.RobotConstants;
@@ -20,6 +21,7 @@ import frc.robot.commands.AutonDriveCommand;
 import frc.robot.commands.BottomIndexerIntakeCommand;
 import frc.robot.commands.ClimberExtendCommand;
 import frc.robot.commands.ClimberRetractCommand;
+import frc.robot.commands.DriveStraightCommand;
 import frc.robot.commands.IndexerFullForwardCommand;
 import frc.robot.commands.IntakeCargoCommand;
 import frc.robot.commands.IntakeCommand;
@@ -136,9 +138,23 @@ public class RobotContainer {
         .withTimeout(Constants.AutonConstants.kSpeedUpTime)
         .andThen(new IndexerFullForwardCommand(m_indexerSubsystem)
             .andThen(new IntakeExtendCommand(m_intakeSubsystem)
-                .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem)
-                    .withTimeout(Constants.AutonConstants.kShootTime))));
+                .raceWith(new DriveStraightCommand(m_driveSubsystem, AutonConstants.kDistanceToBall,
+                    AutonConstants.kautonVelocity)
+                        .andThen(new DriveStraightCommand(m_driveSubsystem,
+                            AutonConstants.kDistanceToBall, AutonConstants.kautonVelocity))
+                        .andThen(new ShooterFullPowerCommand(m_shooterSubsystem)
+                            .withTimeout(Constants.AutonConstants.kSpeedUpTime)
+                            .andThen(new IndexerFullForwardCommand(m_indexerSubsystem)
+                                .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem)))))));
   }
+  /*
+   * public Command createAutoCommand() { return new ShooterFullPowerCommand(m_shooterSubsystem)
+   * .withTimeout(Constants.AutonConstants.kSpeedUpTime) .andThen(new
+   * IndexerFullForwardCommand(m_indexerSubsystem) .andThen(new
+   * IntakeExtendCommand(m_intakeSubsystem) .raceWith(new
+   * ShooterFullPowerCommand(m_shooterSubsystem)
+   * .withTimeout(Constants.AutonConstants.kShootTime))));
+   */
 
   public Command getTeleopDrive() {
     return new ArcadeDriveCommand(m_driveSubsystem, m_controller)
