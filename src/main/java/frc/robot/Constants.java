@@ -17,6 +17,7 @@ public final class Constants {
 
   public static class ControllerConstants {
     public static final int kport = 0;
+    public static final int kport2 = 1;
     public static final double kdeadZone = .125;
     public static final double kDriveControl = 2.0;
   }
@@ -69,8 +70,9 @@ public final class Constants {
     public static final int kShooterSlave2 = 43;
     public static final int kShooterSlave3 = 42;
     public static final int kIndexerMotor = 30;
-    public static final double kFullPower = 0.9;
+    public static final double kFullPower = 0.95;
     public static final int kZeroPower = 0;
+    public static final double kLowGoalSpeed = 0.5;
   }
 
   public static class IndexerConstants {

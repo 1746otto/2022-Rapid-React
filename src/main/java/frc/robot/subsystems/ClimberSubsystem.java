@@ -57,11 +57,12 @@ public class ClimberSubsystem extends SubsystemBase {
   }
 
   public boolean isAtTop() {
-    return 
-    //return motorL.isFwdLimitSwitchClosed() == 1;
+    return topLimitSwitch.get();
+    // return motorL.isFwdLimitSwitchClosed() == 1;
   }
 
   public boolean isAtBottom() {
+    return bottomLimitSwitch.get();
     // return motorL.isRevLimitSwitchClosed() == 1;
   }
 }
