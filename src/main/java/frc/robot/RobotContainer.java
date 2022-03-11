@@ -28,6 +28,7 @@ import frc.robot.commands.IntakeCargoCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeExtendCommand;
 import frc.robot.commands.LowGoalCommand;
+import frc.robot.commands.OneBallAutonCommand;
 import frc.robot.commands.ShooterFullPowerCommand;
 import frc.robot.commands.TopIndexerIntakeCommand;
 import frc.robot.commands.VisionDriveCommand;
@@ -134,7 +135,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return createAutoCommand();
+    return new OneBallAutonCommand(m_indexerSubsystem, m_shooterSubsystem, m_driveSubsystem);
   }
 
   /*
