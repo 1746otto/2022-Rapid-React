@@ -120,6 +120,15 @@ public class DriveSubsystem extends SubsystemBase {
     m_leftLeader.set(forward + rotation);
   }
 
+
+  public double getLeftRotations() {
+    return m_leftLeader.getEncoder().getPosition();
+  }
+
+  public double getRightRotations() {
+    return m_rightLeader.getEncoder().getPosition();
+  }
+
   public void stop() {
     m_rightLeader.set(0);
     m_leftLeader.set(0);

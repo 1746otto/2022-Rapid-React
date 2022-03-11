@@ -31,6 +31,8 @@ public final class Constants {
     public static final int kleftDriveFollow = 13;
     public static final int krightDriveLeader = 10;
     public static final int krightDriveFollow = 11;
+    public static final double kwheelCircumfrence = 4;
+    public static final double kmotorToWheelRatio = 68 / 12;
   }
 
   public static class IntakeConstants {
@@ -62,6 +64,7 @@ public final class Constants {
     public static final double kautonSpeedBackwards = 0.7;
     public static double kSpeedUpTime = 0.3;
     public static double kShootTime = 4.0;
+    public static double kDistanceToBall = 25.0;
   }
 
   public static class ShooterConstants {
