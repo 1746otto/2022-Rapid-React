@@ -36,7 +36,7 @@ public class SimpleAutonTurningCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return false;
+    return m_pigeon.getYaw() >= m_angle;
   }
 
 }
