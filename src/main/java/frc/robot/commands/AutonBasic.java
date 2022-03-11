@@ -9,7 +9,7 @@ import frc.robot.subsystems.DriveSubsystem;
 public class AutonBasic extends SequentialCommandGroup {
   public AutonBasic(DriveSubsystem drive) {
     addCommands(
-        // new TimedDrive(drive, AutonConstants.kautonVelocity, AutonConstants.kautonDriveTime));
+        new TimedDrive(drive, AutonConstants.kautonVelocity, AutonConstants.kautonDriveTime),
         new SimpleAutonTurningCommand(drive, new PigeonIMU(DriveConstants.kPigeon), 90));
   }
 }
