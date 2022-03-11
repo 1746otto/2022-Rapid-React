@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.RobotConstants;
@@ -14,15 +15,21 @@ public class ClimberSubsystem extends SubsystemBase {
   private final VictorSPX motorR = new VictorSPX(ClimberConstants.kMotorR);
   private final TalonSRX motorL = new TalonSRX(ClimberConstants.kMotorL);
   private final Solenoid pistons;
-  private final DigitalInput topLimitSwitch = new DigitalInput(ClimberConstants.kTopLimitSwitch);
-  private final DigitalInput bottomLimitSwitch =
+  public final DigitalInput topLimitSwitch = new DigitalInput(ClimberConstants.kTopLimitSwitch);
+  public final DigitalInput bottomLimitSwitch =
       new DigitalInput(ClimberConstants.kBottomLimitSwitch);
 
   public ClimberSubsystem() {
-    motorL.setInverted(true);
+    motorR.setInverted(true);
     motorL.follow(motorR);
     pistons =
         new Solenoid(RobotConstants.kREVPH, PneumaticsModuleType.REVPH, ClimberConstants.kChannel);
+  }
+
+  @Override
+  public void periodic() {
+    SmartDashboard.putBoolean("toplimitswitch", isAtTop());
+    SmartDashboard.putBoolean("bottomlimitswitch", isAtBottom());
   }
 
   public void runExtendClimber() {
@@ -49,11 +56,12 @@ public class ClimberSubsystem extends SubsystemBase {
     return pistons.get() == ClimberConstants.kClimberHookEngaged;
   }
 
-  public boolean isAtTop() {
-    return topLimitSwitch.get();
+  public boolean isAtBottom() {
+    return motorL.isFwdLimitSwitchClosed() == 0;
   }
 
-  public boolean isAtBottom() {
-    return bottomLimitSwitch.get();
+  public boolean isAtTop() {
+    return motorL.isRevLimitSwitchClosed() == 0;
   }
+
 }
