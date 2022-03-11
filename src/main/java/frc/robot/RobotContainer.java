@@ -82,7 +82,7 @@ public class RobotContainer {
     JoystickButton xBoxY2 = new JoystickButton(m_controller2, XboxController.Button.kY.value);
     JoystickButton xBoxA2 = new JoystickButton(m_controller2, XboxController.Button.kA.value);
     JoystickButton xBoxSelect2 =
-        new JoystickButton(m_controller2, XboxController.Button.kBack.value);
+        new JoystickButton(m_controller2, XboxController.Button.kStart.value);
     JoystickButton xBoxY = new JoystickButton(m_controller, XboxController.Button.kY.value);
     JoystickButton xBoxB = new JoystickButton(m_controller, XboxController.Button.kB.value);
     JoystickButton xBoxX = new JoystickButton(m_controller, XboxController.Button.kX.value);
@@ -153,6 +153,7 @@ public class RobotContainer {
   public Command createAutoCommand() {
     return new ShooterFullPowerCommand(m_shooterSubsystem)
         .withTimeout(Constants.AutonConstants.kSpeedUpTime)
+
         .andThen(new IndexerFullForwardCommand(m_indexerSubsystem)
             .andThen(new IntakeExtendCommand(m_intakeSubsystem)
                 .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem)

@@ -21,7 +21,7 @@ public class SimpleAutonTurningCommand extends CommandBase {
 
   @Override
   public void initialize() {
-    //m_pigeon.setYaw(m_pigeon.compa)
+    // m_pigeon.setYaw(m_pigeon.compa)
 
     // m_pigeon.setYaw(0);
 
