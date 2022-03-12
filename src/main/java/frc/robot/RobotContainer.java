@@ -112,10 +112,7 @@ public class RobotContainer {
         new LowGoalCommand(m_shooterSubsystem).withTimeout(Constants.AutonConstants.kSpeedUpTime)
             .andThen(new IndexerFullForwardCommand(m_indexerSubsystem)
                 .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem))));
-    xBoxX2.whenHeld(new ShooterCustomRPMCommand(m_shooterSubsystem, 4000)
-        .withTimeout(Constants.AutonConstants.kSpeedUpTime)
-        .andThen(new IndexerFullForwardCommand(m_indexerSubsystem)
-            .raceWith(new ShooterCustomRPMCommand(m_shooterSubsystem, 4000))));
+    xBoxX2.whenHeld(m_customRPMCommand);
   }
 
   private void configureDefaultCommands() {
