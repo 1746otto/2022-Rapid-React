@@ -83,7 +83,16 @@ jar {
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }
 
+
+
 // Configure jar and deploy tasks
 deployArtifact.jarTask = jar
 wpi.java.configureExecutableTasks(jar)
 wpi.java.configureTestTasks(test)
+// project.version = jar.archiveVersion + '_' + getTimestamp()
+project.version = '1.0.0' + '_' + getTimestamp()
+
+def getTimestamp() {
+  //date_Hours, minutes, and seconds_millisecond
+  return new Date().format('yyyyMMdd_HHmmss_SSS')
+}

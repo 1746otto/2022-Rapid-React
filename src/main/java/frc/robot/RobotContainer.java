@@ -11,22 +11,15 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import frc.robot.Constants.ControllerConstants;
-import frc.robot.commands.ArcadeDriveCommand;
 import frc.robot.Constants.RobotConstants;
-import frc.robot.commands.AutonDriveCommand;
-import frc.robot.commands.BottomIndexerIntakeCommand;
+import frc.robot.commandGroups.CGAuto;
+import frc.robot.commandGroups.CGShoot;
+import frc.robot.commandGroups.CGTeleOpDrive;
 import frc.robot.commands.ClimberExtendCommand;
 import frc.robot.commands.ClimberRetractCommand;
-import frc.robot.commands.IndexerFullForwardCommand;
 import frc.robot.commands.IntakeCargoCommand;
-import frc.robot.commands.IntakeCommand;
-import frc.robot.commands.OneBallAutonCommand;
-import frc.robot.commands.IntakeExtendCommand;
-import frc.robot.commands.ShooterFullPowerCommand;
-import frc.robot.commands.TopIndexerIntakeCommand;
 import frc.robot.commands.VisionDriveCommand;
 import frc.robot.commands.VisionTuningCommand;
 import frc.robot.subsystems.ClimberSubsystem;
@@ -50,8 +43,6 @@ public class RobotContainer {
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
   private final ClimberSubsystem m_climberSubsystem = new ClimberSubsystem();
   private final Vision m_visionSubsystem = new Vision();
-  private final VisionDriveCommand m_visionDriveCommand =
-      new VisionDriveCommand(m_driveSubsystem, m_controller, m_visionSubsystem);
   private final IndexerSubsystem m_indexerSubsystem = new IndexerSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final Compressor compressor =
@@ -90,10 +81,7 @@ public class RobotContainer {
     xBoxX.whenHeld(new VisionDriveCommand(m_driveSubsystem, m_controller, m_visionSubsystem));
     xBoxStart.whenHeld(new VisionTuningCommand(m_visionTuningCommand));
     xBoxA.toggleWhenPressed(new IntakeCargoCommand(m_indexerSubsystem, m_intakeSubsystem));
-    xBoxLBumper.whenHeld(new ShooterFullPowerCommand(m_shooterSubsystem)
-        .withTimeout(Constants.AutonConstants.kSpeedUpTime)
-        .andThen(new IndexerFullForwardCommand(m_indexerSubsystem)
-            .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem))));
+    xBoxLBumper.whenHeld(CGShoot.createShootCommand(m_shooterSubsystem, m_indexerSubsystem));
     xBoxB.toggleWhenPressed(new StartEndCommand(m_intakeSubsystem::extend,
         m_intakeSubsystem::turnOffIntake, m_intakeSubsystem));
   }
@@ -117,32 +105,12 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
   public Command getAutonomousCommand() {
-    return new OneBallAutonCommand(m_indexerSubsystem, m_shooterSubsystem, m_driveSubsystem);
+    return CGAuto.createAutoCommand(m_shooterSubsystem, m_indexerSubsystem, m_driveSubsystem);
   }
-
-  public Command createAutoCommand() {
-    return new ShooterFullPowerCommand(m_shooterSubsystem)
-        .withTimeout(Constants.AutonConstants.kSpeedUpTime)
-        .andThen(new IndexerFullForwardCommand(m_indexerSubsystem)
-            .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem)
-                .withTimeout(Constants.AutonConstants.kShootTime)))
-        .andThen(new AutonDriveCommand(m_driveSubsystem, 0, .5)
-            .withTimeout(Constants.AutonConstants.kautonDriveTime));
-  }
-
 
 
   public Command getTeleopDrive() {
-    return new ArcadeDriveCommand(m_driveSubsystem, m_controller)
-        .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem)
-            .withTimeout(Constants.AutonConstants.kShootTime))
-        .andThen(new AutonDriveCommand(m_driveSubsystem, 0, .5)
-            .withTimeout(Constants.AutonConstants.kautonDriveTime));
+    return CGTeleOpDrive.createDriveCommand(m_driveSubsystem, m_controller, m_shooterSubsystem);
   }
 }
