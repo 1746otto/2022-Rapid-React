@@ -116,7 +116,5 @@ public class IndexerSubsystem extends SubsystemBase {
   public void periodic() {
     beambreakBottomLastState = (Math.floor(beambreakBottom.getVoltage()) == 0);
     beambreakTopLastState = (Math.floor(beambreakTop.getVoltage()) == 0);
-    System.out.println("Bottom state:" + beambreakBottomLastState);
-    System.out.println("Top state" + beambreakTopLastState);
   }
 }

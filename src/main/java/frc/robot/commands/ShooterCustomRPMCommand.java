@@ -39,6 +39,7 @@ public class ShooterCustomRPMCommand extends CommandBase {
     SmartDashboard.putNumber("RPM", m_subsystem.getRPM());
     SmartDashboard.putNumber("Error", m_subsystem.getRPM() - m_RPM);
     SmartDashboard.putNumber("Percent Error", (m_subsystem.getRPM() - m_RPM) / m_RPM);
+    System.out.println(m_subsystem.getRPM());
   }
 
   // Called once the command ends or is interrupted.

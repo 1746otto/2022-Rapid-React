@@ -17,6 +17,7 @@ import frc.robot.Constants.AutonConstants;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.commands.ArcadeDriveCommand;
 import frc.robot.Constants.RobotConstants;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.OneBallAutonCommand;
 import frc.robot.commands.ShooterCustomRPMCommand;
 import frc.robot.commands.AutonDriveCommand;
@@ -116,11 +117,12 @@ public class RobotContainer {
     xBoxX.whenHeld(new VisionDriveCommand(m_driveSubsystem, m_controller, m_visionSubsystem));
     xBoxStart.whenHeld(new VisionTuningCommand(m_visionTuningCommand));
     xBoxA.toggleWhenPressed(new IntakeCargoCommand(m_indexerSubsystem, m_intakeSubsystem));
-    xBoxLBumper.whenHeld(new ShooterCustomRPMCommand(m_shooterSubsystem, 2000)
-        .withTimeout(Constants.AutonConstants.kSpeedUpTime)
-        .andThen(new IndexerFullForwardCommand(m_indexerSubsystem).raceWith(
+    xBoxLBumper
+        .whenHeld(new ShooterCustomRPMCommand(m_shooterSubsystem, ShooterConstants.kHighGoalRPM)
+            .withTimeout(Constants.AutonConstants.kSpeedUpTime)
+            .andThen(new IndexerFullForwardCommand(m_indexerSubsystem).raceWith(
 
-            new ShooterCustomRPMCommand(m_shooterSubsystem, 2000))));
+                new ShooterCustomRPMCommand(m_shooterSubsystem, ShooterConstants.kHighGoalRPM))));
 
     xBoxB.toggleWhenPressed(new StartEndCommand(m_intakeSubsystem::extend,
         m_intakeSubsystem::turnOffIntake, m_intakeSubsystem));
