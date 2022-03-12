@@ -6,7 +6,7 @@ import frc.robot.subsystems.ShooterSubsystem;
 /** An example command that uses an example subsystem. */
 public class ShooterFullPowerCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final ShooterSubsystem m_subsystem;
+  public final ShooterSubsystem m_subsystem;
 
   /**
    * Creates a new ExampleCommand.

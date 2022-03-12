@@ -16,6 +16,7 @@ public class ShooterSubsystem extends SubsystemBase {
   public double kF = 0.0;
   public double kD = 55 * kP;
   public double kI = 0.0;
+  public double m_RPM;
 
   /** Creates a new ExampleSubsystem. */
   public ShooterSubsystem() {
@@ -42,6 +43,14 @@ public class ShooterSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+    SmartDashboard.putNumber("kP", kP);
+    SmartDashboard.putNumber("kI", kI);
+    SmartDashboard.putNumber("kD", kD);
+    SmartDashboard.putNumber("kF", kF);
+    SmartDashboard.putNumber("RPM", getRPM());
+    SmartDashboard.putNumber("Error", getRPM() - m_RPM);
+    SmartDashboard.putNumber("Percent Error", (getRPM() - m_RPM) / m_RPM);
+    System.out.println("RPM: " + getRPM());
 
     // This method will be called once per scheduler run
   }
@@ -60,6 +69,7 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public void setRPM(double rpm) {
+    m_RPM = rpm;
     double velRequest = rpm * ShooterConstants.kRPMToTPS / .6;
     master.set(ControlMode.Velocity, velRequest);
 

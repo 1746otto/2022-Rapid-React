@@ -34,12 +34,25 @@ import frc.robot.commands.ShooterFullPowerCommand;
 import frc.robot.commands.TopIndexerIntakeCommand;
 import frc.robot.commands.VisionDriveCommand;
 import frc.robot.commands.VisionTuningCommand;
+import frc.robot.commands.ShooterCustomRPMCommand;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.Vision;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.ShooterFullPowerCommand;
+import frc.robot.commands.ShooterPIDTuningCommand;
+import frc.robot.commands.ShooterTuning2Command;
+import frc.robot.commands.ShooterTuningCommand;
+import frc.robot.commands.VisionDriveCommand;
+import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.Vision;
+import frc.robot.Constants.ControllerConstants;
+import frc.robot.Constants.RobotConstants;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -64,7 +77,7 @@ public class RobotContainer {
   private final VisionTuningCommand m_visionTuningCommand =
       new VisionTuningCommand(m_visionSubsystem, m_driveSubsystem);
   private final ShooterCustomRPMCommand m_customRPMCommand =
-      new ShooterCustomRPMCommand(m_shooterSubsystem, 4000);
+      new ShooterCustomRPMCommand(m_shooterSubsystem, 2000);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -96,25 +109,24 @@ public class RobotContainer {
     JoystickButton xBoxLBumper =
         new JoystickButton(m_controller, XboxController.Button.kLeftBumper.value);
 
+
     xBoxY2.whenPressed(new ClimberExtendCommand(m_climberSubsystem));
     xBoxA2.whenPressed(new ClimberRetractCommand(m_climberSubsystem));
     xBoxSelect2.whenPressed(new ClimberStopCommand(m_climberSubsystem));
     xBoxX.whenHeld(new VisionDriveCommand(m_driveSubsystem, m_controller, m_visionSubsystem));
     xBoxStart.whenHeld(new VisionTuningCommand(m_visionTuningCommand));
     xBoxA.toggleWhenPressed(new IntakeCargoCommand(m_indexerSubsystem, m_intakeSubsystem));
-    xBoxLBumper.whenHeld(new ShooterFullPowerCommand(m_shooterSubsystem)
+    xBoxLBumper.whenHeld(new ShooterCustomRPMCommand(m_shooterSubsystem, 2000)
         .withTimeout(Constants.AutonConstants.kSpeedUpTime)
-        .andThen(new IndexerFullForwardCommand(m_indexerSubsystem)
-            .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem))));
+        .andThen(new IndexerFullForwardCommand(m_indexerSubsystem).raceWith(
+
+            new ShooterCustomRPMCommand(m_shooterSubsystem, 2000))));
+
     xBoxB.toggleWhenPressed(new StartEndCommand(m_intakeSubsystem::extend,
         m_intakeSubsystem::turnOffIntake, m_intakeSubsystem));
-    xBoxY.whenHeld(
-        new LowGoalCommand(m_shooterSubsystem).withTimeout(Constants.AutonConstants.kSpeedUpTime)
-            .andThen(new IndexerFullForwardCommand(m_indexerSubsystem)
-                .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem))));
-    xBoxX2.whenHeld(m_customRPMCommand);
   }
 
+  // Constants.ShooterConstants.kFullPower - = 1
   private void configureDefaultCommands() {
     m_driveSubsystem.setDefaultCommand(new RunCommand(() -> m_driveSubsystem.arcadeDrive(
         m_controller.getRightTriggerAxis() - m_controller.getLeftTriggerAxis(),
@@ -129,11 +141,6 @@ public class RobotContainer {
     compressor.disable();
   }
 
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
