@@ -102,17 +102,11 @@ public class RobotContainer {
     xBoxX.whenHeld(new VisionDriveCommand(m_driveSubsystem, m_controller, m_visionSubsystem));
     xBoxStart.whenHeld(new VisionTuningCommand(m_visionTuningCommand));
     xBoxA.toggleWhenPressed(new IntakeCargoCommand(m_indexerSubsystem, m_intakeSubsystem));
-    xBoxLBumper.whenHeld(new ShooterFullPowerCommand(m_shooterSubsystem)
-        .withTimeout(Constants.AutonConstants.kSpeedUpTime)
+    xBoxLBumper.whenHeld(m_customRPMCommand.withTimeout(Constants.AutonConstants.kSpeedUpTime)
         .andThen(new IndexerFullForwardCommand(m_indexerSubsystem)
             .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem))));
     xBoxB.toggleWhenPressed(new StartEndCommand(m_intakeSubsystem::extend,
         m_intakeSubsystem::turnOffIntake, m_intakeSubsystem));
-    xBoxY.whenHeld(
-        new LowGoalCommand(m_shooterSubsystem).withTimeout(Constants.AutonConstants.kSpeedUpTime)
-            .andThen(new IndexerFullForwardCommand(m_indexerSubsystem)
-                .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem))));
-    xBoxX2.whenHeld(m_customRPMCommand);
   }
 
   private void configureDefaultCommands() {

@@ -62,7 +62,7 @@ public final class Constants {
         public static final double kautonVelocity = 0.3;
         public static final double kautonDriveTime = 2.0;
         public static final double kautonSpeedBackwards = 0.7;
-        public static double kSpeedUpTime = 0.3;
+        public static double kSpeedUpTime = 0.6;
         public static double kShootTime = 4.0;
         public static double kDistanceToBall = 25.0;
     }
