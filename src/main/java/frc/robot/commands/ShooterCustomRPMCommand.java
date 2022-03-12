@@ -31,7 +31,16 @@ public class ShooterCustomRPMCommand extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {  }
+  public void execute() {
+    SmartDashboard.putNumber("kP", m_subsystem.kP);
+    SmartDashboard.putNumber("kI", m_subsystem.kI);
+    SmartDashboard.putNumber("kD", m_subsystem.kD);
+    SmartDashboard.putNumber("kF", m_subsystem.kF);
+    SmartDashboard.putNumber("RPM", m_subsystem.getRPM());
+    SmartDashboard.putNumber("Error", m_subsystem.getRPM() - m_RPM);
+    SmartDashboard.putNumber("Percent Error", (m_subsystem.getRPM() - m_RPM) / m_RPM);
+    System.out.println(m_subsystem.getRPM());
+  }
 
   // Called once the command ends or is interrupted.
   @Override
