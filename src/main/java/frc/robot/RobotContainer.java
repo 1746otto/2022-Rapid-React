@@ -15,10 +15,12 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import frc.robot.Constants.AutonConstants;
 import frc.robot.Constants.ControllerConstants;
+import frc.robot.Constants.IndexerConstants;
 import frc.robot.commands.ArcadeDriveCommand;
 import frc.robot.Constants.RobotConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.OneBallAutonCommand;
+import frc.robot.commands.OuttakeCommand;
 import frc.robot.commands.ShooterCustomRPMCommand;
 import frc.robot.commands.AutonDriveCommand;
 import frc.robot.commands.BottomIndexerIntakeCommand;
@@ -26,7 +28,10 @@ import frc.robot.commands.ClimberExtendCommand;
 import frc.robot.commands.ClimberRetractCommand;
 import frc.robot.commands.ClimberStopCommand;
 import frc.robot.commands.DriveStraightCommand;
+import frc.robot.commands.HighBarExtendCommand;
+import frc.robot.commands.ReleaseMidBarHook;
 import frc.robot.commands.IndexerFullForwardCommand;
+import frc.robot.commands.IndexerUpperCommand;
 import frc.robot.commands.IntakeCargoCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeExtendCommand;
@@ -78,7 +83,9 @@ public class RobotContainer {
   private final VisionTuningCommand m_visionTuningCommand =
       new VisionTuningCommand(m_visionSubsystem, m_driveSubsystem);
   private final ShooterCustomRPMCommand m_customRPMCommand =
-      new ShooterCustomRPMCommand(m_shooterSubsystem, 2000);
+      new ShooterCustomRPMCommand(m_shooterSubsystem, ShooterConstants.kHighGoalRPM);
+  private final ShooterFullPowerCommand m_shooterFullPower =
+      new ShooterFullPowerCommand(m_shooterSubsystem);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -99,6 +106,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     JoystickButton xBoxY2 = new JoystickButton(m_controller2, XboxController.Button.kY.value);
     JoystickButton xBoxA2 = new JoystickButton(m_controller2, XboxController.Button.kA.value);
+    JoystickButton xBoxB2 = new JoystickButton(m_controller2, XboxController.Button.kB.value);
     JoystickButton xBoxSelect2 =
         new JoystickButton(m_controller2, XboxController.Button.kStart.value);
     JoystickButton xBoxY = new JoystickButton(m_controller, XboxController.Button.kY.value);
@@ -106,26 +114,53 @@ public class RobotContainer {
     JoystickButton xBoxX = new JoystickButton(m_controller, XboxController.Button.kX.value);
     JoystickButton xBoxA = new JoystickButton(m_controller, XboxController.Button.kA.value);
     JoystickButton xBoxStart = new JoystickButton(m_controller, XboxController.Button.kStart.value);
-    JoystickButton xBoxX2 = new JoystickButton(m_controller, XboxController.Button.kX.value);
+    JoystickButton xBoxX2 = new JoystickButton(m_controller2, XboxController.Button.kX.value);
     JoystickButton xBoxLBumper =
         new JoystickButton(m_controller, XboxController.Button.kLeftBumper.value);
+    JoystickButton xBoxLBumper2 =
+        new JoystickButton(m_controller2, XboxController.Button.kLeftBumper.value);
 
 
     xBoxY2.whenPressed(new ClimberExtendCommand(m_climberSubsystem));
     xBoxA2.whenPressed(new ClimberRetractCommand(m_climberSubsystem));
+    xBoxX2.whenPressed(new HighBarExtendCommand(m_climberSubsystem));
+    xBoxB2.whenHeld(new ReleaseMidBarHook(m_climberSubsystem));
     xBoxSelect2.whenPressed(new ClimberStopCommand(m_climberSubsystem));
     xBoxX.whenHeld(new VisionDriveCommand(m_driveSubsystem, m_controller, m_visionSubsystem));
     xBoxStart.whenHeld(new VisionTuningCommand(m_visionTuningCommand));
     xBoxA.toggleWhenPressed(new IntakeCargoCommand(m_indexerSubsystem, m_intakeSubsystem));
+
+    /*
+     * xBoxLBumper.whenHeld(m_customRPMCommand.withTimeout(Constants.AutonConstants.kSpeedUpTime)
+     * .andThen(new IndexerUpperCommand(m_indexerSubsystem)
+     * .withTimeout(IndexerConstants.kTwoBallDelay) .raceWith( new
+     * ShooterCustomRPMCommand(m_shooterSubsystem, ShooterConstants.kHighGoalRPM)) .andThen(new
+     * IndexerFullForwardCommand(m_indexerSubsystem).raceWith( new
+     * ShooterCustomRPMCommand(m_shooterSubsystem, ShooterConstants.kHighGoalRPM)))));
+     */
+
+
     xBoxLBumper
-        .whenHeld(new ShooterCustomRPMCommand(m_shooterSubsystem, ShooterConstants.kHighGoalRPM)
-            .withTimeout(Constants.AutonConstants.kSpeedUpTime)
-            .andThen(new IndexerFullForwardCommand(m_indexerSubsystem).raceWith(
+        .whenHeld(m_shooterFullPower.withTimeout(Constants.AutonConstants.kSpeedUpTime)
+            .andThen(new IndexerUpperCommand(m_indexerSubsystem)
+                .withTimeout(IndexerConstants.kTwoBallDelay)
+                .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem))
+                .andThen(new IndexerFullForwardCommand(m_indexerSubsystem)
+                    .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem)))));
+    xBoxLBumper2.whenHeld(new OuttakeCommand(m_indexerSubsystem, m_intakeSubsystem));
+    /*
+     * xBoxB.toggleWhenPressed(new StartEndCommand(m_intakeSubsystem::extend,
+     * m_intakeSubsystem::turnOffIntake, m_intakeSubsystem));
+     */
 
-                new ShooterCustomRPMCommand(m_shooterSubsystem, ShooterConstants.kHighGoalRPM))));
-
-    xBoxB.toggleWhenPressed(new StartEndCommand(m_intakeSubsystem::extend,
-        m_intakeSubsystem::turnOffIntake, m_intakeSubsystem));
+    /*
+     * xBoxLBumper.whenHeld(m_customRPMCommand.withTimeout(Constants.AutonConstants.kSpeedUpTime)
+     * .andThen(new IndexerUpperCommand(m_indexerSubsystem)
+     * .withTimeout(IndexerConstants.kTwoBallDelay) .raceWith( new
+     * ShooterCustomRPMCommand(m_shooterSubsystem, ShooterConstants.kHighGoalRPM)) .andThen(new
+     * IndexerFullForwardCommand(m_indexerSubsystem).raceWith( new
+     * ShooterCustomRPMCommand(m_shooterSubsystem, ShooterConstants.kHighGoalRPM)))));
+     */
   }
 
   // Constants.ShooterConstants.kFullPower - = 1

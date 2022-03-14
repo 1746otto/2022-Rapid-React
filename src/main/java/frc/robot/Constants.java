@@ -56,6 +56,8 @@ public final class Constants {
         public static final int kChannel = 2;
         public static final boolean kClimberHookEngaged = true;
         public static final boolean kClimberHookReleased = false;
+        public static final int kExtendSolenoidChannel = 12;
+        public static final int kRetractSolenoidChannel = 13;
     }
 
     public static class AutonConstants {
@@ -73,11 +75,11 @@ public final class Constants {
         public static final int kShooterSlave2 = 43;
         public static final int kShooterSlave3 = 42;
         public static final int kIndexerMotor = 30;
-        public static final double kFullPower = 0.92;
+        public static final double kFullPower = 0.75;
         public static final int kZeroPower = 0;
         public static final double kLowGoalSpeed = 0.5;
         public static final double kRPMToTPS = 4096 / 600;
-        public static final double kHighGoalRPM = 2800;
+        public static final double kHighGoalRPM = 1000;
     }
 
 
@@ -96,6 +98,7 @@ public final class Constants {
         public static final int kBeamBreakBottom = 1;
         public static final double kLowerCustomPower = 0.5;
         public static final double kUpperCustomPower = 0.5;
+        public static final double kTwoBallDelay = 0.7;
     }
 
 }
