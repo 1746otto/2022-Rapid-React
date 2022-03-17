@@ -65,18 +65,18 @@ public class ClimberSubsystem extends SubsystemBase {
   }
 
   public void extendHighbar() {
-    extend.set(false);
-  }
-
-  public void lockHighBar() {
     extend.set(true);
   }
 
+  public void lockHighBar() {
+    extend.set(false);
+  }
+
   public void disEngageMidPistons() {
-    disengage.set(false);
+    disengage.set(true);
   }
 
   public void engageMidPistons() {
-    disengage.set(true);
+    disengage.set(false);
   }
 }
