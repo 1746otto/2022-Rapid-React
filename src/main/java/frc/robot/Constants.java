@@ -54,8 +54,8 @@ public final class Constants {
         public static final int kTopLimitSwitch = 1;
         public static final int kBottomLimitSwitch = 0;
         public static final int kChannel = 2;
-        public static final boolean kClimberHookEngaged = true;
-        public static final boolean kClimberHookReleased = false;
+        public static final boolean kClimberHookEngaged = false;
+        public static final boolean kClimberHookReleased = true;
         public static final int kExtendSolenoidChannel = 12;
         public static final int kRetractSolenoidChannel = 13;
     }

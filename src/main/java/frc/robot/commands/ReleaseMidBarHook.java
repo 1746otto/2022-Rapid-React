@@ -14,7 +14,7 @@ public class ReleaseMidBarHook extends CommandBase {
 
   @Override
   public void initialize() {
-    m_climber.disEngageHighPistons();
+    m_climber.disEngageMidPistons();
   }
 
   @Override

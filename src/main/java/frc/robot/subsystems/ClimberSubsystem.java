@@ -51,13 +51,6 @@ public class ClimberSubsystem extends SubsystemBase {
     motorR.set(ControlMode.PercentOutput, 0);
   }
 
-  public void engageClimberHook() {
-    pistons.set(ClimberConstants.kClimberHookEngaged);
-  }
-
-  public void releaseClimberHook() {
-    pistons.set(ClimberConstants.kClimberHookReleased);
-  }
 
   public boolean getEngaged() {
     return pistons.get() == ClimberConstants.kClimberHookEngaged;
@@ -75,15 +68,15 @@ public class ClimberSubsystem extends SubsystemBase {
     extend.set(false);
   }
 
-  public void stopExtendHigh() {
+  public void lockHighBar() {
     extend.set(true);
   }
 
-  public void disEngageHighPistons() {
-    disengage.set(true);
+  public void disEngageMidPistons() {
+    disengage.set(false);
   }
 
-  public void engageHighPistons() {
-    disengage.set(false);
+  public void engageMidPistons() {
+    disengage.set(true);
   }
 }
