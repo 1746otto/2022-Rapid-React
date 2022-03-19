@@ -77,7 +77,7 @@ public final class Constants {
         public static final int kIndexerMotor = 30;
         public static final double kFullPower = 0.5;
         public static final int kZeroPower = 0;
-        public static final double kLowGoalSpeed = 0.45;
+        public static final double kLowGoalSpeed = 0.4;
         public static final double kRPMToTPS = 4096 / 600;
         public static final double kHighGoalRPM = 1000;
     }
