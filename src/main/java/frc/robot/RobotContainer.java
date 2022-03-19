@@ -86,6 +86,7 @@ public class RobotContainer {
       new ShooterCustomRPMCommand(m_shooterSubsystem, ShooterConstants.kHighGoalRPM);
   private final ShooterFullPowerCommand m_shooterFullPower =
       new ShooterFullPowerCommand(m_shooterSubsystem);
+  private final LowGoalCommand m_lowGoalCommand = new LowGoalCommand(m_shooterSubsystem);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -131,7 +132,7 @@ public class RobotContainer {
     xBoxA.toggleWhenPressed(new IntakeCargoCommand(m_indexerSubsystem, m_intakeSubsystem));
 
     /*
-     * xBoxLBumper.whenHeld(m_customRPMCommand.withTimeout(Constants.AutonConstants.kSpeedUpTime)
+     * xBoxLBumper.whenHeld(m_customRPMCommand.withTimeout(Constants.AutonConstants. kSpeedUpTime)
      * .andThen(new IndexerUpperCommand(m_indexerSubsystem)
      * .withTimeout(IndexerConstants.kTwoBallDelay) .raceWith( new
      * ShooterCustomRPMCommand(m_shooterSubsystem, ShooterConstants.kHighGoalRPM)) .andThen(new
@@ -148,19 +149,8 @@ public class RobotContainer {
                 .andThen(new IndexerFullForwardCommand(m_indexerSubsystem)
                     .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem)))));
     xBoxLBumper2.whenHeld(new OuttakeCommand(m_indexerSubsystem, m_intakeSubsystem));
-    /*
-     * xBoxB.toggleWhenPressed(new StartEndCommand(m_intakeSubsystem::extend,
-     * m_intakeSubsystem::turnOffIntake, m_intakeSubsystem));
-     */
 
-    /*
-     * xBoxLBumper.whenHeld(m_customRPMCommand.withTimeout(Constants.AutonConstants.kSpeedUpTime)
-     * .andThen(new IndexerUpperCommand(m_indexerSubsystem)
-     * .withTimeout(IndexerConstants.kTwoBallDelay) .raceWith( new
-     * ShooterCustomRPMCommand(m_shooterSubsystem, ShooterConstants.kHighGoalRPM)) .andThen(new
-     * IndexerFullForwardCommand(m_indexerSubsystem).raceWith( new
-     * ShooterCustomRPMCommand(m_shooterSubsystem, ShooterConstants.kHighGoalRPM)))));
-     */
+
   }
 
   // Constants.ShooterConstants.kFullPower - = 1
