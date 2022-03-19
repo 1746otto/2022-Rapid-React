@@ -38,11 +38,12 @@ public class VisionDriveCommand extends CommandBase {
   @Override
   public void execute() {
     m_vision.fetchvision();
+    if (Math.abs(m_controller.getLeftX()) >= 0.5) {
 
+    }
     if (m_vision.isTargetValid()) {
       System.out.println("Target Valid!");
       double target = 0;
-
       if (target - m_vision.getYOffset() != error) {
         error = target - m_vision.getYOffset();
         deltaError = error - prevError;
