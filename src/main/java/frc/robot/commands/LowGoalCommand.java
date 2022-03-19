@@ -14,7 +14,7 @@ public class LowGoalCommand extends CommandBase {
   private final ShooterSubsystem m_shooter;
 
   /**
-   * Creates a new ExampleCommand.
+   * Creates a new LowGoalCommand.
    *
    * @param subsystem The subsystem used by this command.
    */

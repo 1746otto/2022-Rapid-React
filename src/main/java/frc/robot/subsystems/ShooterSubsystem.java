@@ -41,6 +41,9 @@ public class ShooterSubsystem extends SubsystemBase {
     master.set(ControlMode.PercentOutput, ShooterConstants.kFullPower);
   }
 
+  /**
+   * Sets shooter power for lowgoal shot
+   */
   public void setLowPower() {
     master.set(ControlMode.PercentOutput, ShooterConstants.kLowGoalSpeed);
   }
