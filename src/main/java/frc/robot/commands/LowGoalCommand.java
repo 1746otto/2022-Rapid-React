@@ -27,7 +27,7 @@ public class LowGoalCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
+    m_shooter.setLowPower();
   }
 
   // Called once the command ends or is interrupted.

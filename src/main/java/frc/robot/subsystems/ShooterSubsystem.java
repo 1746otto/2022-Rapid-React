@@ -41,6 +41,9 @@ public class ShooterSubsystem extends SubsystemBase {
     master.set(ControlMode.PercentOutput, ShooterConstants.kFullPower);
   }
 
+  public void setLowPower() {
+    master.set(ControlMode.PercentOutput, ShooterConstants.kLowGoalSpeed);
+  }
 
 
   @Override
@@ -75,4 +78,6 @@ public class ShooterSubsystem extends SubsystemBase {
     double velRequest = rpm * ShooterConstants.kRPMToTPS / .6;
     master.set(ControlMode.Velocity, velRequest);
   }
+
+
 }
