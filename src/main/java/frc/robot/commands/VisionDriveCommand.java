@@ -3,6 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.VisionConstants;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.Vision;
 
@@ -38,8 +39,9 @@ public class VisionDriveCommand extends CommandBase {
   @Override
   public void execute() {
     m_vision.fetchvision();
-    if (Math.abs(m_controller.getLeftX()) >= 0.5) {
-
+    if (Math.abs(m_controller.getLeftX()) >= VisionConstants.kVisionThreshold) {
+      m_drive.arcadeDrive(m_controller.getRightTriggerAxis() - m_controller.getLeftTriggerAxis(),
+          m_controller.getLeftX());
     }
     if (m_vision.isTargetValid()) {
       System.out.println("Target Valid!");

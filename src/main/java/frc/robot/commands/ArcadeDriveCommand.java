@@ -27,5 +27,6 @@ public class ArcadeDriveCommand extends CommandBase {
   public void execute() {
     m_drive.arcadeDrive(m_controller.getRightTriggerAxis() - m_controller.getLeftTriggerAxis(),
         m_controller.getLeftX());
+    System.out.println(m_controller.getLeftX());
   }
 }

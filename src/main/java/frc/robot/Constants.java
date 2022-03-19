@@ -101,4 +101,7 @@ public final class Constants {
         public static final double kTwoBallDelay = 0.7;
     }
 
+    public static class VisionConstants {
+        public static final double kVisionThreshold = 0.5;
+    }
 }
