@@ -23,11 +23,19 @@ public class ShooterFullPowerCommand extends CommandBase {
   @Override
   public void initialize() {
     m_subsystem.setFullPower();
-}
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    if (m_subsystem.getRPMShotValue()) {
+      m_subsystem.setFullPower();
+
+    } else if (!m_subsystem.getRPMShotValue()) {
+      m_subsystem.setHalfPower();
+    }
+  }
+
 
   // Called once the command ends or is interrupted.
   @Override

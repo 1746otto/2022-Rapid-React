@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 public class ShooterSubsystem extends SubsystemBase {
   private VictorSPX master;
   private TalonSRX slave1;
+  private boolean RPMShot;
 
 
 
@@ -31,6 +32,9 @@ public class ShooterSubsystem extends SubsystemBase {
     master.set(ControlMode.PercentOutput, ShooterConstants.kFullPower);
   }
 
+  public void setHalfPower() {
+    master.set(ControlMode.PercentOutput, ShooterConstants.kHalfPower);
+  }
 
   public void setCustomPower(double input) {
     master.set(ControlMode.PercentOutput, input);
@@ -38,5 +42,22 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public void setZeroPower() {
     master.set(ControlMode.PercentOutput, ShooterConstants.kZeroPower);
+  }
+
+  public boolean getRPMShotValue() {
+    return RPMShot;
+  }
+
+  @Override
+  public void periodic() {
+    if (master.getSelectedSensorVelocity() < 2000) {
+      RPMShot = false;
+    } else if (master.getSelectedSensorVelocity() > 3000) {
+      RPMShot = true;
+    } else if (master.getSelectedSensorVelocity() > 2000
+        && master.getSelectedSensorVelocity() < 3000) {
+
+    }
+
   }
 }

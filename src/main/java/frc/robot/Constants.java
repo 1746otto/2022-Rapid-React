@@ -64,6 +64,7 @@ public final class Constants {
         public static final int kIndexerMotor = 30;
         public static final double kFullPower = 1;
         public static final int kZeroPower = 0;
+        public static final double kHalfPower = 0.5;
 
     }
 
