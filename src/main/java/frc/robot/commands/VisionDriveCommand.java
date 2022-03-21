@@ -39,11 +39,11 @@ public class VisionDriveCommand extends CommandBase {
   @Override
   public void execute() {
     m_vision.fetchvision();
-    if (Math.abs(m_controller.getLeftX()) >= VisionConstants.kVisionThreshold) {
+    if (Math.abs(m_controller.getLeftX()) >= VisionConstants.kVisionThreshold
+        || !m_vision.isTargetValid()) {
       m_drive.arcadeDrive(m_controller.getRightTriggerAxis() - m_controller.getLeftTriggerAxis(),
           m_controller.getLeftX());
-    }
-    if (m_vision.isTargetValid()) {
+    } else {
       System.out.println("Target Valid!");
       double target = 0;
       if (target - m_vision.getYOffset() != error) {
@@ -65,10 +65,6 @@ public class VisionDriveCommand extends CommandBase {
           rotationSignal * -1);
       deltaError = 0;
       return;
-    } else {
-      m_drive.arcadeDrive(m_controller.getRightTriggerAxis() - m_controller.getLeftTriggerAxis(),
-          m_controller.getLeftX());
-      System.out.println("Target Not Valid!");
     }
 
     error = 0;
