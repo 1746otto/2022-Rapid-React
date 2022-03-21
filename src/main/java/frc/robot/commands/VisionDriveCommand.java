@@ -65,7 +65,11 @@ public class VisionDriveCommand extends CommandBase {
           rotationSignal * -1);
       deltaError = 0;
       return;
-    }
+    } /*
+       * else { m_drive.arcadeDrive(m_controller.getRightTriggerAxis() -
+       * m_controller.getLeftTriggerAxis(), m_controller.getLeftX());
+       * System.out.println("Target Not Valid!"); }
+       */
 
     error = 0;
     prevError = 0;
