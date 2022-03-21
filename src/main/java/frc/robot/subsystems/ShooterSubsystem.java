@@ -1,8 +1,11 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.Constants.RobotConstants;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -17,6 +20,8 @@ public class ShooterSubsystem extends SubsystemBase {
   public double kD = 55 * kP;
   public double kI = 0.0;
   public double m_RPM;
+  public boolean shooterHoodOpen = false;
+  private final Solenoid shooterHood;
 
   /** Creates a new ExampleSubsystem. */
   public ShooterSubsystem() {
@@ -29,6 +34,9 @@ public class ShooterSubsystem extends SubsystemBase {
     master.config_kP(0, kP);
     master.config_kI(0, kI);
     master.config_kD(0, kD);
+
+    shooterHood = new Solenoid(RobotConstants.kREVPH, PneumaticsModuleType.REVPH,
+        ShooterConstants.kShooterHoodChannel);
   }
 
   public double getRPM() {
@@ -82,5 +90,12 @@ public class ShooterSubsystem extends SubsystemBase {
     master.set(ControlMode.Velocity, velRequest);
   }
 
+  public void enableHood() {
+    shooterHood.set(true);
+  }
+
+  public void disableHood() {
+    shooterHood.set(false);
+  }
 
 }

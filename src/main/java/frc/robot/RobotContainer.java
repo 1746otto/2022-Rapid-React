@@ -37,6 +37,7 @@ import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeExtendCommand;
 import frc.robot.commands.LowGoalCommand;
 import frc.robot.commands.ShooterFullPowerCommand;
+import frc.robot.commands.ShooterHighLowCommand;
 import frc.robot.commands.TopIndexerIntakeCommand;
 import frc.robot.commands.VisionDriveCommand;
 import frc.robot.commands.VisionTuningCommand;
@@ -120,6 +121,8 @@ public class RobotContainer {
         new JoystickButton(m_controller, XboxController.Button.kLeftBumper.value);
     JoystickButton xBoxLBumper2 =
         new JoystickButton(m_controller2, XboxController.Button.kLeftBumper.value);
+    JoystickButton xBoxRBumper2 =
+        new JoystickButton(m_controller2, XboxController.Button.kRightBumper.value);
 
 
     xBoxY2.whenPressed(new ClimberExtendCommand(m_climberSubsystem));
@@ -130,6 +133,7 @@ public class RobotContainer {
     xBoxX.whenHeld(new VisionDriveCommand(m_driveSubsystem, m_controller, m_visionSubsystem));
     xBoxStart.whenHeld(new VisionTuningCommand(m_visionTuningCommand));
     xBoxA.toggleWhenPressed(new IntakeCargoCommand(m_indexerSubsystem, m_intakeSubsystem));
+    xBoxRBumper2.toggleWhenPressed(new ShooterHighLowCommand(m_shooterSubsystem));
 
     /*
      * xBoxLBumper.whenHeld(m_customRPMCommand.withTimeout(Constants.AutonConstants. kSpeedUpTime)
@@ -145,9 +149,9 @@ public class RobotContainer {
         .whenHeld(m_shooterFullPower.withTimeout(Constants.AutonConstants.kSpeedUpTime)
             .andThen(new IndexerUpperCommand(m_indexerSubsystem)
                 .withTimeout(IndexerConstants.kTwoBallDelay)
-                .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem))
+                .raceWith(new ShooterHighLowCommand(m_shooterSubsystem))
                 .andThen(new IndexerFullForwardCommand(m_indexerSubsystem)
-                    .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem)))));
+                    .raceWith(new ShooterHighLowCommand(m_shooterSubsystem)))));
     xBoxLBumper2.whenHeld(new OuttakeCommand(m_indexerSubsystem, m_intakeSubsystem));
 
 
