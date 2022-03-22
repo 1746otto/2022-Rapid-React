@@ -11,7 +11,7 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 public class ShooterSubsystem extends SubsystemBase {
   private VictorSPX master;
   private TalonSRX slave1;
-  private boolean RPMShot;
+  private boolean RPMShot = true;
 
 
 
@@ -50,14 +50,16 @@ public class ShooterSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if (master.getSelectedSensorVelocity() < 2000) {
+    if (master.getSelectedSensorVelocity() < 8000 && master.getSelectedSensorVelocity() > 2000) {
       RPMShot = false;
-    } else if (master.getSelectedSensorVelocity() > 3000) {
+    } else if (master.getSelectedSensorVelocity() > 9000) {
       RPMShot = true;
-    } else if (master.getSelectedSensorVelocity() > 2000
-        && master.getSelectedSensorVelocity() < 3000) {
-
+    } else if (master.getSelectedSensorVelocity() > 8000
+        && master.getSelectedSensorVelocity() < 9000) {
     }
+    System.out.println(master.getSelectedSensorVelocity());
+
+
 
   }
 }
