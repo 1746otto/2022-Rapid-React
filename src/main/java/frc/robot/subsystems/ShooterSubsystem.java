@@ -9,16 +9,16 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 
 public class ShooterSubsystem extends SubsystemBase {
-  private VictorSPX master;
-  private TalonSRX slave1;
+  private TalonSRX master;
+  private VictorSPX slave1;
   private boolean RPMShot = true;
 
 
 
   /** Creates a new ExampleSubsystem. */
   public ShooterSubsystem() {
-    master = new VictorSPX(ShooterConstants.kShooterMaster);
-    slave1 = new TalonSRX(ShooterConstants.kShooterSlave1);
+    master = new TalonSRX(ShooterConstants.kShooterSlave1);
+    slave1 = new VictorSPX(ShooterConstants.kShooterMaster);
 
     slave1.setInverted(false);
     slave1.follow(master);
@@ -50,15 +50,13 @@ public class ShooterSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if (master.getSelectedSensorVelocity() < 8000 && master.getSelectedSensorVelocity() > 2000) {
+    if (master.getSelectedSensorVelocity() < 8000) {
       RPMShot = false;
     } else if (master.getSelectedSensorVelocity() > 9000) {
       RPMShot = true;
-    } else if (master.getSelectedSensorVelocity() > 8000
-        && master.getSelectedSensorVelocity() < 9000) {
     }
     System.out.println(master.getSelectedSensorVelocity());
-
+    System.out.println(RPMShot);
 
 
   }
