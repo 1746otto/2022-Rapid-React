@@ -9,16 +9,16 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 
 public class ShooterSubsystem extends SubsystemBase {
-  private VictorSPX master;
-  private TalonSRX slave1;
-  private boolean RPMShot;
+  private TalonSRX master;
+  private VictorSPX slave1;
+  private boolean RPMShot = true;
 
 
 
   /** Creates a new ExampleSubsystem. */
   public ShooterSubsystem() {
-    master = new VictorSPX(ShooterConstants.kShooterMaster);
-    slave1 = new TalonSRX(ShooterConstants.kShooterSlave1);
+    master = new TalonSRX(ShooterConstants.kShooterSlave1);
+    slave1 = new VictorSPX(ShooterConstants.kShooterMaster);
 
     slave1.setInverted(false);
     slave1.follow(master);
