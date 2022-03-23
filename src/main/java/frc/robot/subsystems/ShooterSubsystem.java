@@ -50,14 +50,12 @@ public class ShooterSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if (master.getSelectedSensorVelocity() < 2000) {
+    if (master.getSelectedSensorVelocity() < 10000) {
       RPMShot = false;
-    } else if (master.getSelectedSensorVelocity() > 3000) {
+    } else if (master.getSelectedSensorVelocity() > 15000) {
       RPMShot = true;
-    } else if (master.getSelectedSensorVelocity() > 2000
-        && master.getSelectedSensorVelocity() < 3000) {
-
     }
-
+    System.out.println(RPMShot);
+    System.out.println(master.getSelectedSensorVelocity());
   }
 }

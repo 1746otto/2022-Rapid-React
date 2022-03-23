@@ -29,10 +29,10 @@ public class ShooterFullPowerCommand extends CommandBase {
   @Override
   public void execute() {
     if (m_subsystem.getRPMShotValue()) {
-      m_subsystem.setFullPower();
+      m_subsystem.setHalfPower();
 
     } else if (!m_subsystem.getRPMShotValue()) {
-      m_subsystem.setHalfPower();
+      m_subsystem.setFullPower();
     }
   }
 
