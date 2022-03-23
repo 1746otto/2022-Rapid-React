@@ -133,9 +133,9 @@ public class RobotContainer {
 
     /*
      * xBoxLBumper.whenHeld(m_customRPMCommand.withTimeout(Constants.AutonConstants. kSpeedUpTime)
-     * .andThen(new IndexerUpperCommand(m_indexerSubsystem)
-     * .withTimeout(IndexerConstants.kTwoBallDelay) .raceWith( new
-     * ShooterCustomRPMCommand(m_shooterSubsystem, ShooterConstants.kHighGoalRPM)) .andThen(new
+     * .withTimeout(IndexerConstant * .andThen(new IndexerUpperCommand(m_indexerSubsystem)
+     * s.kTwoBallDelay) .raceWith( new ShooterCustomRPMCommand(m_shooterSubsystem,
+     * ShooterConstants.kHighGoalRPM)) .andThen(new
      * IndexerFullForwardCommand(m_indexerSubsystem).raceWith( new
      * ShooterCustomRPMCommand(m_shooterSubsystem, ShooterConstants.kHighGoalRPM)))));
      */
@@ -196,8 +196,10 @@ public class RobotContainer {
         .andThen(new IndexerFullForwardCommand(m_indexerSubsystem)
             .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem)
                 .withTimeout(Constants.AutonConstants.kShootTime)))
-        .andThen(new AutonDriveCommand(m_driveSubsystem, 0, .5)
-            .withTimeout(Constants.AutonConstants.kautonDriveTime));
+    /*
+     * .andThen(new AutonDriveCommand(m_driveSubsystem, 0, .5)
+     * .withTimeout(Constants.AutonConstants.kautonDriveTime))
+     */;
   }
 
 

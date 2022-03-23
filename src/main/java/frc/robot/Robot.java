@@ -66,6 +66,7 @@ public class Robot extends TimedRobot {
     } else {
       System.out.println("asdf");
     }
+
   }
 
   /** This function is called periodically during autonomous. */
