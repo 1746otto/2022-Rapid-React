@@ -25,6 +25,16 @@ public class ShooterFullPowerCommand extends CommandBase {
     m_subsystem.setFullPower();
   }
 
+  @Override
+  public void execute() {
+    if (m_subsystem.getRPMShot()) {
+      m_subsystem.setFullPower();
+    } else {
+      m_subsystem.setLowPower();
+    }
+
+  }
+
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {

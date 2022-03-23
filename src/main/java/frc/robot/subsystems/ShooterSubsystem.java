@@ -17,6 +17,8 @@ public class ShooterSubsystem extends SubsystemBase {
   public double kD = 55 * kP;
   public double kI = 0.0;
   public double m_RPM;
+  public boolean RPMShot;
+
 
   /** Creates a new ExampleSubsystem. */
   public ShooterSubsystem() {
@@ -33,7 +35,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public double getRPM() {
 
-    return slave1.getSelectedSensorVelocity();
+    return master.getSelectedSensorVelocity();
 
   }
 
@@ -48,6 +50,9 @@ public class ShooterSubsystem extends SubsystemBase {
     master.set(ControlMode.PercentOutput, ShooterConstants.kLowGoalSpeed);
   }
 
+  public boolean getRPMShot() {
+    return RPMShot;
+  }
 
   @Override
   public void periodic() {
@@ -58,7 +63,9 @@ public class ShooterSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("RPM", getRPM());
     SmartDashboard.putNumber("Error", getRPM() - m_RPM);
     SmartDashboard.putNumber("Percent Error", (getRPM() - m_RPM) / m_RPM);
+
     System.out.println("RPM: " + getRPM());
+    RPMShot = getRPM() < 11500;
 
     // This method will be called once per scheduler run
   }
