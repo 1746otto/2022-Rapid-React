@@ -1,8 +1,17 @@
 package frc.robot.subsystems;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+import com.ctre.phoenix.sensors.PigeonIMU;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.DriveConstants;
@@ -20,6 +29,8 @@ public class DriveSubsystem extends SubsystemBase {
   private double forwardComponent;
   private double rotationComponent;
   private double sumComponents;
+  private final PigeonIMU m_pigeon = new PigeonIMU(DriveConstants.kPigeonPort);
+
 
   public DriveSubsystem() {
     m_leftLeader.setInverted(true);
@@ -147,4 +158,19 @@ public class DriveSubsystem extends SubsystemBase {
     m_leftLeader.set(0);
   }
 
+  public void generateTrajectory() {
+    var sideStart =
+        new Pose2d(Units.feetToMeters(0), Units.feetToMeters(0), Rotation2d.fromDegrees(-180));
+    var crossScale =
+        new Pose2d(Units.feetToMeters(5), Units.feetToMeters(5), Rotation2d.fromDegrees(-160));
+    var interiorWaypoints = new ArrayList<Translation2d>();
+    interiorWaypoints.add(new Translation2d(Units.feetToMeters(2), Units.feetToMeters(3)));
+    interiorWaypoints.add(new Translation2d(Units.feetToMeters(3), Units.feetToMeters(4)));
+
+    TrajectoryConfig config = new TrajectoryConfig(Units.feetToMeters(1), Units.feetToMeters(0.5));
+    config.setReversed(true);
+
+    var trajectory =
+        TrajectoryGenerator.generateTrajectory(sideStart, interiorWaypoints, crossScale, config);
+  }
 }
