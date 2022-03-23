@@ -28,6 +28,7 @@ import frc.robot.commands.ClimberExtendCommand;
 import frc.robot.commands.ClimberRetractCommand;
 import frc.robot.commands.ClimberStopCommand;
 import frc.robot.commands.DriveStraightCommand;
+import frc.robot.commands.HeartOfForsythOnCommand;
 import frc.robot.commands.HighBarExtendCommand;
 import frc.robot.commands.ReleaseMidBarHook;
 import frc.robot.commands.IndexerFullForwardCommand;
@@ -59,6 +60,9 @@ import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.Vision;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.RobotConstants;
+import frc.robot.commands.HeartOfForsythOnCommand;
+import frc.robot.commands.HeartOfForsythOffCommand;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -87,6 +91,10 @@ public class RobotContainer {
   private final ShooterFullPowerCommand m_shooterFullPower =
       new ShooterFullPowerCommand(m_shooterSubsystem);
   private final LowGoalCommand m_lowGoalCommand = new LowGoalCommand(m_shooterSubsystem);
+  private final HeartOfForsythOnCommand m_HeartOfForsythOn =
+      new HeartOfForsythOnCommand(m_indexerSubsystem, m_shooterSubsystem, m_intakeSubsystem);
+  private final HeartOfForsythOffCommand m_HeartOfForsythOff =
+      new HeartOfForsythOffCommand(m_indexerSubsystem, m_shooterSubsystem, m_intakeSubsystem);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -105,31 +113,11 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    JoystickButton xBoxY2 = new JoystickButton(m_controller2, XboxController.Button.kY.value);
-    JoystickButton xBoxA2 = new JoystickButton(m_controller2, XboxController.Button.kA.value);
-    JoystickButton xBoxB2 = new JoystickButton(m_controller2, XboxController.Button.kB.value);
-    JoystickButton xBoxSelect2 =
-        new JoystickButton(m_controller2, XboxController.Button.kStart.value);
-    JoystickButton xBoxY = new JoystickButton(m_controller, XboxController.Button.kY.value);
-    JoystickButton xBoxB = new JoystickButton(m_controller, XboxController.Button.kB.value);
-    JoystickButton xBoxX = new JoystickButton(m_controller, XboxController.Button.kX.value);
     JoystickButton xBoxA = new JoystickButton(m_controller, XboxController.Button.kA.value);
-    JoystickButton xBoxStart = new JoystickButton(m_controller, XboxController.Button.kStart.value);
-    JoystickButton xBoxX2 = new JoystickButton(m_controller2, XboxController.Button.kX.value);
-    JoystickButton xBoxLBumper =
-        new JoystickButton(m_controller, XboxController.Button.kLeftBumper.value);
-    JoystickButton xBoxLBumper2 =
-        new JoystickButton(m_controller2, XboxController.Button.kLeftBumper.value);
+
+    xBoxA.whenPressed(m_HeartOfForsythOn).whenReleased(m_HeartOfForsythOff);
 
 
-    xBoxY2.whenPressed(new ClimberExtendCommand(m_climberSubsystem));
-    xBoxA2.whenPressed(new ClimberRetractCommand(m_climberSubsystem));
-    xBoxX2.whenPressed(new HighBarExtendCommand(m_climberSubsystem));
-    xBoxB2.whenHeld(new ReleaseMidBarHook(m_climberSubsystem));
-    xBoxSelect2.whenPressed(new ClimberStopCommand(m_climberSubsystem));
-    xBoxX.whenHeld(new VisionDriveCommand(m_driveSubsystem, m_controller, m_visionSubsystem));
-    xBoxStart.whenHeld(new VisionTuningCommand(m_visionTuningCommand));
-    xBoxA.toggleWhenPressed(new IntakeCargoCommand(m_indexerSubsystem, m_intakeSubsystem));
 
     /*
      * xBoxLBumper.whenHeld(m_customRPMCommand.withTimeout(Constants.AutonConstants. kSpeedUpTime)
@@ -140,15 +128,6 @@ public class RobotContainer {
      * ShooterCustomRPMCommand(m_shooterSubsystem, ShooterConstants.kHighGoalRPM)))));
      */
 
-
-    xBoxLBumper
-        .whenHeld(m_shooterFullPower.withTimeout(Constants.AutonConstants.kSpeedUpTime)
-            .andThen(new IndexerUpperCommand(m_indexerSubsystem)
-                .withTimeout(IndexerConstants.kTwoBallDelay)
-                .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem))
-                .andThen(new IndexerFullForwardCommand(m_indexerSubsystem)
-                    .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem)))));
-    xBoxLBumper2.whenHeld(new OuttakeCommand(m_indexerSubsystem, m_intakeSubsystem));
 
 
   }

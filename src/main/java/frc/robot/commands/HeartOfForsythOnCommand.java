@@ -8,13 +8,14 @@ import frc.robot.subsystems.IntakeSubsystem;
 
 
 
-public class HeartOfForsyth extends SequentialCommandGroup {
-  public HeartOfForsyth(IndexerSubsystem indexerSubsystem, ShooterSubsystem shooterSubsystem,
-      IntakeSubsystem intakeSubsystem) {
+public class HeartOfForsythOnCommand extends SequentialCommandGroup {
+  public HeartOfForsythOnCommand(IndexerSubsystem indexerSubsystem,
+      ShooterSubsystem shooterSubsystem, IntakeSubsystem intakeSubsystem) {
     addCommands(new ParallelRaceGroup(new IndexerFullForwardCommand(indexerSubsystem),
         new ShooterFullPowerCommand(shooterSubsystem),
         new IntakeFullPowerCommand(intakeSubsystem)));
   }
+
 }
 
 
