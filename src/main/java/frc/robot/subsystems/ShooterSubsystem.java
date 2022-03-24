@@ -17,7 +17,8 @@ public class ShooterSubsystem extends SubsystemBase {
   public double kD = 55 * kP;
   public double kI = 0.0;
   public double m_RPM;
-  public boolean RPMShot;
+  public boolean RPMShotTune;
+  public boolean RPMShotValid;
 
 
   /** Creates a new ExampleSubsystem. */
@@ -51,7 +52,11 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public boolean getRPMShot() {
-    return RPMShot;
+    return RPMShotTune;
+  }
+
+  public boolean getRPMValid() {
+    return RPMShotValid;
   }
 
   @Override
@@ -65,7 +70,8 @@ public class ShooterSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Percent Error", (getRPM() - m_RPM) / m_RPM);
 
     System.out.println("RPM: " + getRPM());
-    RPMShot = getRPM() < 11500;
+    RPMShotTune = getRPM() < 11500;
+    RPMShotValid = getRPM() < 12000 && getRPM() > 11000;
 
     // This method will be called once per scheduler run
   }
