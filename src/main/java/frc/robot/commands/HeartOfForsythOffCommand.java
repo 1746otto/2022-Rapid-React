@@ -13,7 +13,6 @@ public class HeartOfForsythOffCommand extends SequentialCommandGroup {
   public HeartOfForsythOffCommand(IndexerSubsystem indexerSubsystem,
       ShooterSubsystem shooterSubsystem, IntakeSubsystem intakeSubsystem) {
     addCommands(new ParallelRaceGroup(new IndexerStopBothCommand(indexerSubsystem),
-        new ShooterSetZeroPowerCommand(shooterSubsystem),
-        new IntakeRetractAndStopCommand(intakeSubsystem)));
+        new ShooterSetZeroPowerCommand(shooterSubsystem)));
   }
 }
