@@ -36,6 +36,16 @@ public class IndexerFullForwardCommand extends CommandBase {
     m_subsystem.stopBoth();
   }
 
+  @Override
+  public void execute() {
+    if (m_subsystem2.getRPMValid()) {
+      m_subsystem.runBothFullForward();
+
+    } else {
+      m_subsystem.stopBoth();
+    }
+  }
+
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {

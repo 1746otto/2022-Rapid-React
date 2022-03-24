@@ -11,15 +11,16 @@ import frc.robot.subsystems.ShooterSubsystem;
 
 
 public class OneBallAutonCommand extends SequentialCommandGroup {
-  public OneBallAutonCommand(IndexerSubsystem indexerSubsystem, ShooterSubsystem shooterSubsystem,
-      DriveSubsystem driveSubsystem) {
-    addCommands(
-        new ShooterCustomRPMCommand(shooterSubsystem, ShooterConstants.kHighGoalRPM)
-            .withTimeout(AutonConstants.kSpeedUpTime),
-        new ParallelRaceGroup(new IndexerFullForwardCommand(indexerSubsystem),
-            new ShooterCustomRPMCommand(shooterSubsystem, ShooterConstants.kHighGoalRPM)
-                .withTimeout(AutonConstants.kShootTime)),
-        new TimedDrive(driveSubsystem, AutonConstants.kautonVelocity,
-            AutonConstants.kautonDriveTime));
-  }
+    public OneBallAutonCommand(IndexerSubsystem indexerSubsystem, ShooterSubsystem shooterSubsystem,
+            DriveSubsystem driveSubsystem) {
+        addCommands(
+                new ShooterCustomRPMCommand(shooterSubsystem, ShooterConstants.kHighGoalRPM)
+                        .withTimeout(AutonConstants.kSpeedUpTime),
+                new ParallelRaceGroup(
+                        new IndexerFullForwardCommand(indexerSubsystem, shooterSubsystem),
+                        new ShooterCustomRPMCommand(shooterSubsystem, ShooterConstants.kHighGoalRPM)
+                                .withTimeout(AutonConstants.kShootTime)),
+                new TimedDrive(driveSubsystem, AutonConstants.kautonVelocity,
+                        AutonConstants.kautonDriveTime));
+    }
 }
