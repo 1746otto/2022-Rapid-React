@@ -9,20 +9,28 @@ public class ShooterHoodToggleCommand extends CommandBase {
     private final ShooterHoodSubsystem m_subsystem;
 
     /**
-     * Creates a new ExampleCommand.
+     * Creates new ShooterHoodToggleCommand
      *
      * @param subsystem The subsystem used by this command.
      */
-    public ShooterHoodExtendCommand(ShooterHoodSubsystem subsystem) {
+    public ShooterHoodToggleCommand(ShooterHoodSubsystem subsystem) {
         m_subsystem = subsystem;
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(subsystem);
     }
 
-    // Called when the command is initially scheduled.
+    /**
+     * Called when the command is initially scheduled. If the hood is extended, it retracts the
+     * hood. If the hood is retracted it extends the hood.
+     */
     @Override
     public void initialize() {
-        m_subsystem.Extend();
+        if (m_subsystem.isRetracted() == true) {
+            m_subsystem.Extend();
+        } else if (m_subsystem.isRetracted() == false) {
+            m_subsystem.Retract();
+        }
+
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -38,6 +46,4 @@ public class ShooterHoodToggleCommand extends CommandBase {
     public boolean isFinished() {
         return false;
     }
-}
-
 }

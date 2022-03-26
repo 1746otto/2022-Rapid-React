@@ -32,6 +32,7 @@ import frc.robot.commands.LowGoalCommand;
 import frc.robot.commands.ShooterFullPowerCommand;
 import frc.robot.commands.ShooterHoodExtendCommand;
 import frc.robot.commands.ShooterHoodRetractCommand;
+import frc.robot.commands.ShooterHoodToggleCommand;
 import frc.robot.commands.VisionDriveCommand;
 import frc.robot.commands.VisionTuningCommand;
 import frc.robot.subsystems.ClimberSubsystem;
@@ -122,7 +123,7 @@ public class RobotContainer {
     xBoxX.whenHeld(new VisionDriveCommand(m_driveSubsystem, m_controller, m_visionSubsystem));
     xBoxStart.whenHeld(new VisionTuningCommand(m_visionTuningCommand));
     xBoxA.toggleWhenPressed(new IntakeCargoCommand(m_indexerSubsystem, m_intakeSubsystem));
-    xBoxRBumper2.toggleWhenPressed(new )
+    xBoxRBumper2.toggleWhenPressed(new ShooterHoodToggleCommand(m_shooterHoodSubsystem));
 
     /*
      * xBoxLBumper.whenHeld(m_customRPMCommand.withTimeout(Constants.AutonConstants. kSpeedUpTime)
