@@ -5,13 +5,18 @@ import java.util.ArrayList;
 import java.util.List;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.DriveConstants;
@@ -30,7 +35,10 @@ public class DriveSubsystem extends SubsystemBase {
   private double rotationComponent;
   private double sumComponents;
   private final PigeonIMU m_pigeon = new PigeonIMU(DriveConstants.kPigeonPort);
-
+  private final DifferentialDrive m_differentialDrive =
+      new DifferentialDrive(m_rightLeader, m_leftLeader);
+  private final DifferentialDriveOdometry m_odometry;
+  private final DifferentialDrive m_drive = new DifferentialDrive(m_leftLeader, m_rightLeader);
 
   public DriveSubsystem() {
     m_leftLeader.setInverted(true);
@@ -38,6 +46,24 @@ public class DriveSubsystem extends SubsystemBase {
 
     m_rightFollow.follow(m_rightLeader);
     m_leftFollow.follow(m_leftLeader);
+
+    m_odometry = new DifferentialDriveOdometry(new Rotation2d(m_pigeon.getFusedHeading()));
+  }
+
+  @Override
+  public void periodic() {
+    // Update the odometry in the periodic block
+    m_odometry.update(new Rotation2d(m_pigeon.getFusedHeading()),
+        m_leftLeader.getEncoder().getPosition(), m_rightLeader.getEncoder().getPosition());
+  }
+
+  public Pose2d getPose() {
+    return m_odometry.getPoseMeters();
+  }
+
+  public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+    return new DifferentialDriveWheelSpeeds(m_leftLeader.getEncoder().getVelocity(),
+        m_rightLeader.getEncoder().getVelocity());
   }
 
   public void arcadeDrive(double forward, double rotation) {
@@ -132,6 +158,12 @@ public class DriveSubsystem extends SubsystemBase {
     m_leftLeader.set(forward + rotation);
   }
 
+  public void tankDriveVolts(double leftVolts, double rightVolts) {
+    m_leftLeader.setVoltage(leftVolts);
+    m_rightLeader.setVoltage(rightVolts);
+    m_drive.feed();
+  }
+
 
   public double getLeftRotations() {
     return m_leftLeader.getEncoder().getPosition();
@@ -156,6 +188,24 @@ public class DriveSubsystem extends SubsystemBase {
   public void stop() {
     m_rightLeader.set(0);
     m_leftLeader.set(0);
+  }
+
+  public void resetEncoders() {
+    m_leftLeader.getEncoder().setPosition(0);
+    m_rightLeader.getEncoder().setPosition(0);
+  }
+
+  public double getAverageEncoderDistance() {
+    return (m_leftLeader.getEncoder().getPosition() + m_rightLeader.getEncoder().getPosition())
+        / 2.0;
+  }
+
+  public RelativeEncoder getLeftEncoder() {
+    return m_leftLeader.getEncoder();
+  }
+
+  public RelativeEncoder getRightEncoder() {
+    return m_rightLeader.getEncoder();
   }
 
   public void generateTrajectory() {
