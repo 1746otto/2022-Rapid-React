@@ -208,6 +208,10 @@ public class DriveSubsystem extends SubsystemBase {
     return m_rightLeader.getEncoder();
   }
 
+  public double getHeading() {
+    return m_pigeon.getFusedHeading();
+  }
+
   public void generateTrajectory() {
     var sideStart =
         new Pose2d(Units.feetToMeters(0), Units.feetToMeters(0), Rotation2d.fromDegrees(-180));
