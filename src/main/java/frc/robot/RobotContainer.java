@@ -80,7 +80,7 @@ public class RobotContainer {
   private final Vision m_visionSubsystem = new Vision();
   private final VisionDriveCommand m_visionDriveCommand =
       new VisionDriveCommand(m_driveSubsystem, m_controller, m_visionSubsystem);
-  private final IndexerSubsystem m_indexerSubsystem = new IndexerSubsystem();
+  private final IndexerSubsystem m_indexerSubsystem = new IndexerSubsystem(m_shooterSubsystem);
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final Compressor compressor =
       new Compressor(RobotConstants.kREVPH, PneumaticsModuleType.REVPH);
@@ -148,6 +148,7 @@ public class RobotContainer {
 
     xBoxLBumper.whenHeld(new ShooterFullPowerCommand(m_shooterSubsystem));
 
+
     /*
      * .andThen(new IndexerUpperCommand(m_indexerSubsystem)
      * .withTimeout(IndexerConstants.kTwoBallDelay) .raceWith(new
@@ -164,10 +165,11 @@ public class RobotContainer {
   private void configureDefaultCommands() {
     // v1 indexer check
     // v2 will check for both balls
-    m_indexerSubsystem.setDefaultCommand(new ConditionalCommand(
-        (new IndexerUpperCommand(m_indexerSubsystem))
-            .andThen(new IndexerFullForwardCommand(m_indexerSubsystem)),
-        (new IndexerStopCommand(m_indexerSubsystem)), (m_shooterSubsystem::getRPMValid)));
+    /*
+     * m_indexerSubsystem .setDefaultCommand(new ConditionalCommand(new
+     * IndexerFullForwardCommand(m_indexerSubsystem), new IndexerStopCommand(m_indexerSubsystem),
+     * ShooterSubsystem::getRPMValid));
+     */
 
     m_driveSubsystem.setDefaultCommand(new RunCommand(() -> m_driveSubsystem.arcadeDrive(
         m_controller.getRightTriggerAxis() - m_controller.getLeftTriggerAxis(),

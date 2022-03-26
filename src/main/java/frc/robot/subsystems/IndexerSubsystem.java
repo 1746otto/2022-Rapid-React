@@ -12,17 +12,19 @@ public class IndexerSubsystem extends SubsystemBase {
   private final VictorSPX m_upper;
   private final AnalogInput beambreakTop;
   private final AnalogInput beambreakBottom;
+  private final ShooterSubsystem m_shooter;
 
   private boolean beambreakTopLastState = false;
   private boolean beambreakBottomLastState = false;
 
   /** Creates a new ExampleSubsystem. */
-  public IndexerSubsystem() {
+  public IndexerSubsystem(ShooterSubsystem shooter) {
     m_lower = new VictorSPX(IndexerConstants.kLower);
     m_upper = new VictorSPX(IndexerConstants.kUpper);
     m_lower.setInverted(true);
     beambreakTop = new AnalogInput(IndexerConstants.kBeamBreakTop);
     beambreakBottom = new AnalogInput(IndexerConstants.kBeamBreakBottom);
+    m_shooter = shooter;
   }
 
   public void runLowerFullForward() {
@@ -35,8 +37,10 @@ public class IndexerSubsystem extends SubsystemBase {
   }
 
   public void runBothFullForward() {
-    runLowerFullForward();
-    runUpperFullForward();
+    if (ShooterSubsystem.getRPMValid()) {
+      runLowerFullForward();
+      runUpperFullForward();
+    }
   }
 
   public void runLowerHalfForward() {

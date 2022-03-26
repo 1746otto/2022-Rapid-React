@@ -18,7 +18,7 @@ public class ShooterSubsystem extends SubsystemBase {
   public double kI = 0.0;
   public double m_RPM;
   public boolean RPMShotTune;
-  public boolean RPMShotValid;
+  public static boolean RPMShotValid = false;
 
 
   /** Creates a new ExampleSubsystem. */
@@ -55,7 +55,7 @@ public class ShooterSubsystem extends SubsystemBase {
     return RPMShotTune;
   }
 
-  public boolean getRPMValid() {
+  public static boolean getRPMValid() {
     return RPMShotValid;
   }
 
@@ -71,7 +71,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     System.out.println("RPM: " + getRPM());
     RPMShotTune = getRPM() < 11500;
-    RPMShotValid = getRPM() < 12000 && getRPM() > 11000;
+    RPMShotValid = !(getRPM() < 12000 && getRPM() > 11000);
     System.out.println("RPM shot valid" + RPMShotValid);
 
     // This method will be called once per scheduler run
