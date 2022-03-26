@@ -11,9 +11,6 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.StartEndCommand;
-import frc.robot.Constants.AutonConstants;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.IndexerConstants;
 import frc.robot.commands.ArcadeDriveCommand;
@@ -23,42 +20,27 @@ import frc.robot.commands.OneBallAutonCommand;
 import frc.robot.commands.OuttakeCommand;
 import frc.robot.commands.ShooterCustomRPMCommand;
 import frc.robot.commands.AutonDriveCommand;
-import frc.robot.commands.BottomIndexerIntakeCommand;
 import frc.robot.commands.ClimberExtendCommand;
 import frc.robot.commands.ClimberRetractCommand;
 import frc.robot.commands.ClimberStopCommand;
-import frc.robot.commands.DriveStraightCommand;
 import frc.robot.commands.HighBarExtendCommand;
 import frc.robot.commands.ReleaseMidBarHook;
 import frc.robot.commands.IndexerFullForwardCommand;
 import frc.robot.commands.IndexerUpperCommand;
 import frc.robot.commands.IntakeCargoCommand;
-import frc.robot.commands.IntakeCommand;
-import frc.robot.commands.IntakeExtendCommand;
 import frc.robot.commands.LowGoalCommand;
 import frc.robot.commands.ShooterFullPowerCommand;
-import frc.robot.commands.TopIndexerIntakeCommand;
+import frc.robot.commands.ShooterHoodExtendCommand;
+import frc.robot.commands.ShooterHoodRetractCommand;
 import frc.robot.commands.VisionDriveCommand;
 import frc.robot.commands.VisionTuningCommand;
-import frc.robot.commands.ShooterCustomRPMCommand;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ShooterHoodSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.Vision;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.ShooterFullPowerCommand;
-import frc.robot.commands.ShooterPIDTuningCommand;
-import frc.robot.commands.ShooterTuning2Command;
-import frc.robot.commands.ShooterTuningCommand;
-import frc.robot.commands.VisionDriveCommand;
-import frc.robot.subsystems.ShooterSubsystem;
-import frc.robot.subsystems.Vision;
-import frc.robot.Constants.ControllerConstants;
-import frc.robot.Constants.RobotConstants;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -73,12 +55,16 @@ public class RobotContainer {
   private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
   private final ClimberSubsystem m_climberSubsystem = new ClimberSubsystem();
+  private final ShooterHoodSubsystem m_shooterHoodSubsystem = new ShooterHoodSubsystem();
   private final Vision m_visionSubsystem = new Vision();
   private final VisionDriveCommand m_visionDriveCommand =
       new VisionDriveCommand(m_driveSubsystem, m_controller, m_visionSubsystem);
   private final IndexerSubsystem m_indexerSubsystem = new IndexerSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
+
+
   private final Compressor compressor =
+
       new Compressor(RobotConstants.kREVPH, PneumaticsModuleType.REVPH);
   private final VisionTuningCommand m_visionTuningCommand =
       new VisionTuningCommand(m_visionSubsystem, m_driveSubsystem);
@@ -87,6 +73,10 @@ public class RobotContainer {
   private final ShooterFullPowerCommand m_shooterFullPower =
       new ShooterFullPowerCommand(m_shooterSubsystem);
   private final LowGoalCommand m_lowGoalCommand = new LowGoalCommand(m_shooterSubsystem);
+  private final ShooterHoodExtendCommand m_shooterHoodExtendCommand =
+      new ShooterHoodExtendCommand(m_shooterHoodSubsystem);
+  private final ShooterHoodRetractCommand m_shooterHoodRetractCommand =
+      new ShooterHoodRetractCommand(m_shooterHoodSubsystem);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -120,6 +110,8 @@ public class RobotContainer {
         new JoystickButton(m_controller, XboxController.Button.kLeftBumper.value);
     JoystickButton xBoxLBumper2 =
         new JoystickButton(m_controller2, XboxController.Button.kLeftBumper.value);
+    JoystickButton xBoxRBumper2 =
+        new JoystickButton(m_controller2, XboxController.Button.kRightBumper.value);
 
 
     xBoxY2.whenPressed(new ClimberExtendCommand(m_climberSubsystem));
@@ -130,6 +122,7 @@ public class RobotContainer {
     xBoxX.whenHeld(new VisionDriveCommand(m_driveSubsystem, m_controller, m_visionSubsystem));
     xBoxStart.whenHeld(new VisionTuningCommand(m_visionTuningCommand));
     xBoxA.toggleWhenPressed(new IntakeCargoCommand(m_indexerSubsystem, m_intakeSubsystem));
+    xBoxRBumper2.toggleWhenPressed(new )
 
     /*
      * xBoxLBumper.whenHeld(m_customRPMCommand.withTimeout(Constants.AutonConstants. kSpeedUpTime)

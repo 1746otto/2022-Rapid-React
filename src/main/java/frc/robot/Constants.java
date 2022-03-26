@@ -101,4 +101,12 @@ public final class Constants {
         public static final double kTwoBallDelay = 1.3;
     }
 
+
+
+    public static class ShooterHoodConstants {
+        // Test these constants later. Then delete comment.
+        public static final boolean kShooterHoodExtended = true;
+        public static final boolean kShooterHoodRetracted = false;
+        public static final int kShooterHood = 14;
+    }
 }
