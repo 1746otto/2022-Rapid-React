@@ -126,7 +126,7 @@ public class RobotContainer {
     xBoxX.whenHeld(new VisionDriveCommand(m_driveSubsystem, m_controller, m_visionSubsystem));
     xBoxStart.whenHeld(new VisionTuningCommand(m_visionTuningCommand));
     xBoxA.toggleWhenPressed(new IntakeCargoCommand(m_indexerSubsystem, m_intakeSubsystem));
-    xBoxRBumper2.toggleWhenPressed(new ShooterHoodToggleCommand(m_shooterHoodSubsystem));
+    xBoxRBumper2.whenPressed(new ShooterHoodToggleCommand(m_shooterHoodSubsystem));
 
     /*
      * xBoxLBumper.whenHeld(m_customRPMCommand.withTimeout(Constants.AutonConstants. kSpeedUpTime)
