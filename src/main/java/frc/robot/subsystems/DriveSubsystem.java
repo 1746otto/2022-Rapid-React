@@ -7,6 +7,8 @@ import com.ctre.phoenix.sensors.PigeonIMU;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -20,6 +22,7 @@ import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstrai
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.DriveConstants;
@@ -42,15 +45,6 @@ public class DriveSubsystem extends SubsystemBase {
       new DifferentialDrive(m_rightLeader, m_leftLeader);
   private final DifferentialDriveOdometry m_odometry;
   private final DifferentialDrive m_drive = new DifferentialDrive(m_leftLeader, m_rightLeader);
-
-  DifferentialDriveVoltageConstraint autoVoltageConstraint = new DifferentialDriveVoltageConstraint(
-      new SimpleMotorFeedforward(DriveConstants.kVolts, DriveConstants.kVoltSecondsPerMeter,
-          DriveConstants.kVoltSecondsSquaredPerMeter),
-      DriveConstants.kDriveKinematics, 10);
-
-  TrajectoryConfig config = new TrajectoryConfig(DriveConstants.kMaxSpeedMetersPerSecond,
-      DriveConstants.kMaxAccelerationMetersPerSecondPerSecond)
-          .setKinematics(DriveConstants.kDriveKinematics).addConstraint(autoVoltageConstraint);
 
   public DriveSubsystem() {
     m_leftLeader.setInverted(true);
@@ -224,8 +218,8 @@ public class DriveSubsystem extends SubsystemBase {
     return m_pigeon.getFusedHeading();
   }
 
-  Trajectory newTrajectory =
-      TrajectoryGenerator.generateTrajectory(new Pose2d(0, 0, new Rotation2d(0)),
-          List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
-          new Pose2d(3, 0, new Rotation2d(0)), config);
+  public void resetOdometry(Pose2d pose) {
+    resetEncoders();
+    m_odometry.resetPosition(pose, new Rotation2d(m_pigeon.getFusedHeading()));
+  }
 }
