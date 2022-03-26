@@ -30,6 +30,7 @@ import frc.robot.commands.IndexerUpperCommand;
 import frc.robot.commands.IntakeCargoCommand;
 import frc.robot.commands.LowGoalCommand;
 import frc.robot.commands.ShooterFullPowerCommand;
+import frc.robot.commands.ShooterHighLowCommand;
 import frc.robot.commands.ShooterHoodExtendCommand;
 import frc.robot.commands.ShooterHoodRetractCommand;
 import frc.robot.commands.ShooterHoodToggleCommand;
@@ -65,7 +66,6 @@ public class RobotContainer {
 
 
   private final Compressor compressor =
-
       new Compressor(RobotConstants.kREVPH, PneumaticsModuleType.REVPH);
   private final VisionTuningCommand m_visionTuningCommand =
       new VisionTuningCommand(m_visionSubsystem, m_driveSubsystem);
@@ -78,6 +78,9 @@ public class RobotContainer {
       new ShooterHoodExtendCommand(m_shooterHoodSubsystem);
   private final ShooterHoodRetractCommand m_shooterHoodRetractCommand =
       new ShooterHoodRetractCommand(m_shooterHoodSubsystem);
+  private final ShooterHighLowCommand m_shooterHighLowCommand =
+      new ShooterHighLowCommand(m_shooterHoodSubsystem, m_shooterSubsystem);
+
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -134,14 +137,16 @@ public class RobotContainer {
      * ShooterCustomRPMCommand(m_shooterSubsystem, ShooterConstants.kHighGoalRPM)))));
      */
 
-
+    /**
+     *
+     */
     xBoxLBumper
-        .whenHeld(m_shooterFullPower.withTimeout(Constants.AutonConstants.kSpeedUpTime)
+        .whenHeld(m_shooterHighLowCommand.withTimeout(Constants.AutonConstants.kSpeedUpTime)
             .andThen(new IndexerUpperCommand(m_indexerSubsystem)
                 .withTimeout(IndexerConstants.kTwoBallDelay)
-                .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem))
-                .andThen(new IndexerFullForwardCommand(m_indexerSubsystem)
-                    .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem)))));
+                .raceWith(new ShooterHighLowCommand(m_shooterHoodSubsystem, m_shooterSubsystem))
+                .andThen(new IndexerFullForwardCommand(m_indexerSubsystem).raceWith(
+                    new ShooterHighLowCommand(m_shooterHoodSubsystem, m_shooterSubsystem)))));
     xBoxLBumper2.whenHeld(new OuttakeCommand(m_indexerSubsystem, m_intakeSubsystem));
 
 

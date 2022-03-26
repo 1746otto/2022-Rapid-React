@@ -3,7 +3,6 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterHoodConstants;
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import frc.robot.Constants.RobotConstants;
 
@@ -12,28 +11,32 @@ public class ShooterHoodSubsystem extends SubsystemBase {
     private static Solenoid pistons;
     private static boolean retracted = true;
 
-
+    /**
+     * Creates new ShooterHoodSubsystem
+     */
     public ShooterHoodSubsystem() {
         pistons = new Solenoid(RobotConstants.kREVPH, PneumaticsModuleType.REVPH,
                 ShooterHoodConstants.kShooterHood);
-
-        /*
-         * name variables here master = new TalonSRX(ShooterConstants.kShooterMaster);
-         */
     }
 
-
+    /**
+     * Creates method that checks if hood is retracted or not. If hood is retracted it will return
+     * true. If hood is extended it will return false.
+     */
     public boolean isRetracted() {
         return retracted;
     }
 
+    /**
+     * Retracts (moves back) hood
+     */
     public void Retract() {
         pistons.set(ShooterHoodConstants.kShooterHoodRetracted);
         retracted = true;
     }
 
     /**
-     * Sets shooter power for lowgoal shot
+     * Extends (moves forward) hood
      */
     public void Extend() {
         pistons.set(ShooterHoodConstants.kShooterHoodExtended);

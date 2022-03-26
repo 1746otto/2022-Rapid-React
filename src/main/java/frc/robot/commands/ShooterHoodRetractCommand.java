@@ -3,13 +3,12 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShooterHoodSubsystem;
 
-/** An example command that uses an example subsystem. */
 public class ShooterHoodRetractCommand extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final ShooterHoodSubsystem m_subsystem;
 
     /**
-     * Creates a new ExampleCommand.
+     * Creates a new ShooterHoodRetractCommand.
      *
      * @param subsystem The subsystem used by this command.
      */
@@ -19,7 +18,10 @@ public class ShooterHoodRetractCommand extends CommandBase {
         addRequirements(subsystem);
     }
 
-    // Called when the command is initially scheduled.
+    /**
+     * Called when the command is initially scheduled. Retracts hood.
+     */
+
     @Override
     public void initialize() {
         m_subsystem.Retract();

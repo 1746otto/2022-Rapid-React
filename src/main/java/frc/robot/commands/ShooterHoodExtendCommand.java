@@ -23,7 +23,9 @@ public class ShooterHoodExtendCommand extends CommandBase {
         addRequirements(subsystem);
     }
 
-    // Called when the command is initially scheduled.
+    /**
+     * Called when the command is initially scheduled. Extends hood.
+     */
     @Override
     public void initialize() {
         m_subsystem.Extend();
