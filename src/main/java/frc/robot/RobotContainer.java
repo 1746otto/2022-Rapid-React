@@ -55,6 +55,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ShooterFullPowerCommand;
 import frc.robot.commands.ShooterPIDTuningCommand;
+import frc.robot.commands.ShooterStopCommand;
 import frc.robot.commands.ShooterTuning2Command;
 import frc.robot.commands.ShooterTuningCommand;
 import frc.robot.commands.VisionDriveCommand;
@@ -161,14 +162,13 @@ public class RobotContainer {
 
   // Constants.ShooterConstants.kFullPower - = 1
   private void configureDefaultCommands() {
-    new ConditionalCommand(
-        (new IndexerUpperCommand(m_indexerSubsystem)
-            .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem))),
-        (new IndexerStopCommand(m_indexerSubsystem)), (m_shooterSubsystem::getRPMValid));
-    new ConditionalCommand(
-        (new IndexerFullForwardCommand(m_indexerSubsystem)
-            .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem))),
-        (new IndexerStopCommand(m_indexerSubsystem)), (m_shooterSubsystem::getRPMValid));
+    // v1 indexer check
+    // v2 will check for both balls
+    m_indexerSubsystem.setDefaultCommand(new ConditionalCommand(
+        (new IndexerUpperCommand(m_indexerSubsystem))
+            .andThen(new IndexerFullForwardCommand(m_indexerSubsystem)),
+        (new IndexerStopCommand(m_indexerSubsystem)), (m_shooterSubsystem::getRPMValid)));
+
     m_driveSubsystem.setDefaultCommand(new RunCommand(() -> m_driveSubsystem.arcadeDrive(
         m_controller.getRightTriggerAxis() - m_controller.getLeftTriggerAxis(),
         m_controller.getLeftX()), m_driveSubsystem));
