@@ -88,6 +88,7 @@ public class RobotContainer {
       new ShooterFullPowerCommand(m_shooterSubsystem);
   private final LowGoalCommand m_lowGoalCommand = new LowGoalCommand(m_shooterSubsystem);
 
+
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -141,12 +142,13 @@ public class RobotContainer {
      */
 
 
-    xBoxLBumper.whenHeld(m_shooterFullPower.withTimeout(Constants.AutonConstants.kSpeedUpTime)
-        .andThen(new IndexerUpperCommand(m_indexerSubsystem, m_shooterSubsystem)
-            .withTimeout(IndexerConstants.kTwoBallDelay)
-            .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem))
-            .andThen(new IndexerFullForwardCommand(m_indexerSubsystem, m_shooterSubsystem)
-                .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem)))));
+    xBoxLBumper
+        .whenHeld(m_shooterFullPower.withTimeout(Constants.AutonConstants.kSpeedUpTime)
+            .andThen(new IndexerUpperCommand(m_indexerSubsystem)
+                .withTimeout(IndexerConstants.kTwoBallDelay)
+                .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem))
+                .andThen(new IndexerFullForwardCommand(m_indexerSubsystem)
+                    .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem)))));
     xBoxLBumper2.whenHeld(new OuttakeCommand(m_indexerSubsystem, m_intakeSubsystem));
 
 
@@ -192,7 +194,7 @@ public class RobotContainer {
   public Command createAutoCommand() {
     return new ShooterFullPowerCommand(m_shooterSubsystem)
         .withTimeout(Constants.AutonConstants.kSpeedUpTime)
-        .andThen(new IndexerFullForwardCommand(m_indexerSubsystem, m_shooterSubsystem)
+        .andThen(new IndexerFullForwardCommand(m_indexerSubsystem)
             .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem)
                 .withTimeout(Constants.AutonConstants.kShootTime)))
         .andThen(new AutonDriveCommand(m_driveSubsystem, 0, .5)
