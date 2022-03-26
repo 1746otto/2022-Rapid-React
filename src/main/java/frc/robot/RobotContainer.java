@@ -145,15 +145,8 @@ public class RobotContainer {
      */
 
 
-    xBoxLBumper.whenHeld(m_shooterFullPower.withTimeout(Constants.AutonConstants.kSpeedUpTime));
-    new ConditionalCommand(
-        (new IndexerUpperCommand(m_indexerSubsystem)
-            .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem))),
-        (new IndexerStopCommand(m_indexerSubsystem)), (m_shooterSubsystem::getRPMValid));
-    new ConditionalCommand(
-        (new IndexerFullForwardCommand(m_indexerSubsystem)
-            .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem))),
-        (new IndexerStopCommand(m_indexerSubsystem)), (m_shooterSubsystem::getRPMValid));
+    xBoxLBumper.whileHeld(new ShooterFullPowerCommand(m_shooterSubsystem));
+
     /*
      * .andThen(new IndexerUpperCommand(m_indexerSubsystem)
      * .withTimeout(IndexerConstants.kTwoBallDelay) .raceWith(new
@@ -168,6 +161,14 @@ public class RobotContainer {
 
   // Constants.ShooterConstants.kFullPower - = 1
   private void configureDefaultCommands() {
+    new ConditionalCommand(
+        (new IndexerUpperCommand(m_indexerSubsystem)
+            .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem))),
+        (new IndexerStopCommand(m_indexerSubsystem)), (m_shooterSubsystem::getRPMValid));
+    new ConditionalCommand(
+        (new IndexerFullForwardCommand(m_indexerSubsystem)
+            .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem))),
+        (new IndexerStopCommand(m_indexerSubsystem)), (m_shooterSubsystem::getRPMValid));
     m_driveSubsystem.setDefaultCommand(new RunCommand(() -> m_driveSubsystem.arcadeDrive(
         m_controller.getRightTriggerAxis() - m_controller.getLeftTriggerAxis(),
         m_controller.getLeftX()), m_driveSubsystem));
