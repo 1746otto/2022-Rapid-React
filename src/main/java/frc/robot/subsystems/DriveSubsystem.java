@@ -7,13 +7,16 @@ import com.ctre.phoenix.sensors.PigeonIMU;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -39,6 +42,15 @@ public class DriveSubsystem extends SubsystemBase {
       new DifferentialDrive(m_rightLeader, m_leftLeader);
   private final DifferentialDriveOdometry m_odometry;
   private final DifferentialDrive m_drive = new DifferentialDrive(m_leftLeader, m_rightLeader);
+
+  DifferentialDriveVoltageConstraint autoVoltageConstraint = new DifferentialDriveVoltageConstraint(
+      new SimpleMotorFeedforward(DriveConstants.kVolts, DriveConstants.kVoltSecondsPerMeter,
+          DriveConstants.kVoltSecondsSquaredPerMeter),
+      DriveConstants.kDriveKinematics, 10);
+
+  TrajectoryConfig config = new TrajectoryConfig(DriveConstants.kMaxSpeedMetersPerSecond,
+      DriveConstants.kMaxAccelerationMetersPerSecondPerSecond)
+          .setKinematics(DriveConstants.kDriveKinematics).addConstraint(autoVoltageConstraint);
 
   public DriveSubsystem() {
     m_leftLeader.setInverted(true);
@@ -212,19 +224,8 @@ public class DriveSubsystem extends SubsystemBase {
     return m_pigeon.getFusedHeading();
   }
 
-  public void generateTrajectory() {
-    var sideStart =
-        new Pose2d(Units.feetToMeters(0), Units.feetToMeters(0), Rotation2d.fromDegrees(-180));
-    var crossScale =
-        new Pose2d(Units.feetToMeters(5), Units.feetToMeters(5), Rotation2d.fromDegrees(-160));
-    var interiorWaypoints = new ArrayList<Translation2d>();
-    interiorWaypoints.add(new Translation2d(Units.feetToMeters(2), Units.feetToMeters(3)));
-    interiorWaypoints.add(new Translation2d(Units.feetToMeters(3), Units.feetToMeters(4)));
-
-    TrajectoryConfig config = new TrajectoryConfig(Units.feetToMeters(1), Units.feetToMeters(0.5));
-    config.setReversed(true);
-
-    var trajectory =
-        TrajectoryGenerator.generateTrajectory(sideStart, interiorWaypoints, crossScale, config);
-  }
+  Trajectory newTrajectory =
+      TrajectoryGenerator.generateTrajectory(new Pose2d(0, 0, new Rotation2d(0)),
+          List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
+          new Pose2d(3, 0, new Rotation2d(0)), config);
 }
