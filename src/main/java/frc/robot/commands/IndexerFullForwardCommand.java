@@ -24,7 +24,7 @@ public class IndexerFullForwardCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_subsystem.runBothFullForward();
+    m_subsystem.runBothWithIndexer();
   }
 
   // Called once the command ends or is interrupted.

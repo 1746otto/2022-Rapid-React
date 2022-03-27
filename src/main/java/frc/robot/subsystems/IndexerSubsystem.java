@@ -37,9 +37,14 @@ public class IndexerSubsystem extends SubsystemBase {
   }
 
   public void runBothFullForward() {
-    if (ShooterSubsystem.getRPMValid()) {
-      runLowerFullForward();
-      runUpperFullForward();
+    runLowerFullForward();
+    runUpperFullForward();
+
+  }
+
+  public void runBothWithIndexer() {
+    if (m_shooter.getRPMValid()) {
+      runBothFullForward();
     }
   }
 

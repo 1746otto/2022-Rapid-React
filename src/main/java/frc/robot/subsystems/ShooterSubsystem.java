@@ -72,7 +72,7 @@ public class ShooterSubsystem extends SubsystemBase {
     System.out.println("RPM: " + getRPM());
     RPMShotTune = getRPM() < 11500;
     RPMShotValid = !(getRPM() < 12000 && getRPM() > 11000);
-    System.out.println("RPM shot valid" + RPMShotValid);
+    System.out.println("RPM shot valid: " + RPMShotValid);
 
     // This method will be called once per scheduler run
   }
