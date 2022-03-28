@@ -81,6 +81,10 @@ public final class Constants {
         public static final double kRPMToTPS = 4096 / 600;
         public static final double kTPSToRPM = 1 / kRPMToTPS;
         public static final double kHighGoalRPM = 1000;
+        public static final double kHGHighRPM = 1600;
+        public static final double HGLowRPM = 1800;
+        public static final double LGHighRPM = 1000;
+        public static final double LGLowRPM = 1200;
     }
 
 
@@ -102,4 +106,12 @@ public final class Constants {
         public static final double kTwoBallDelay = 1.3;
     }
 
+
+
+    public static class ShooterHoodConstants {
+        // Test these constants later. Then delete comment.
+        public static final boolean kShooterHoodExtended = true;
+        public static final boolean kShooterHoodRetracted = false;
+        public static final int kShooterHood = 14;
+    }
 }
