@@ -146,7 +146,8 @@ public class RobotContainer {
      */
 
 
-    xBoxLBumper.whenHeld(new ShooterFullPowerCommand(m_shooterSubsystem));
+    xBoxLBumper.whenHeld(new ShooterFullPowerCommand(m_shooterSubsystem)
+        .raceWith(new IndexerFullForwardCommand(m_indexerSubsystem)));
 
 
     /*

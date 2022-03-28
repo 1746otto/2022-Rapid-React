@@ -34,7 +34,9 @@ public class IndexerFullForwardCommand extends CommandBase {
   }
 
   @Override
-  public void execute() {}
+  public void execute() {
+    m_subsystem.runBothWithIndexer();
+  }
 
   // Returns true when the command should end.
   @Override
