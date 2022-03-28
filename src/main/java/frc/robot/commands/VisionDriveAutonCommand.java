@@ -49,12 +49,12 @@ public class VisionDriveAutonCommand extends CommandBase {
         } else if (rotationSignal > 0.5) {
           rotationSignal = 0.5;
         }
-        m_drive.arcadeDrive((2 - (m_vision.getXOffset() + 1)) * .6 + .2, rotationSignal * -1);
+        m_drive.arcadeDrive(((2 - (m_vision.getXOffset() + 1)) * .6 + .2)*-1, rotationSignal * -1);
         prevError = error;
 
         return;
       }
-      m_drive.arcadeDrive((2 - (m_vision.getXOffset() + 1) * .6) + .2, rotationSignal * -1);
+      m_drive.arcadeDrive(((2 - (m_vision.getXOffset() + 1) * .6) + .2)*-1, rotationSignal * -1);
       deltaError = 0;
       return;
     } else {
