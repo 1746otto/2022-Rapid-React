@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.sensors.PigeonIMU;
+import com.fasterxml.jackson.databind.deser.std.ThrowableDeserializer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
@@ -33,6 +35,7 @@ import frc.robot.commands.IntakeExtendCommand;
 import frc.robot.commands.LowGoalCommand;
 import frc.robot.commands.ShooterFullPowerCommand;
 import frc.robot.commands.TopIndexerIntakeCommand;
+import frc.robot.commands.TwoBallAutonCommand;
 import frc.robot.commands.VisionDriveCommand;
 import frc.robot.commands.VisionTuningCommand;
 import frc.robot.commands.ShooterCustomRPMCommand;
@@ -45,6 +48,7 @@ import frc.robot.subsystems.Vision;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.TwoBallAutonCommand;
 import frc.robot.commands.ShooterFullPowerCommand;
 import frc.robot.commands.ShooterPIDTuningCommand;
 import frc.robot.commands.ShooterTuning2Command;
@@ -79,6 +83,7 @@ public class RobotContainer {
       new VisionTuningCommand(m_visionSubsystem, m_driveSubsystem);
   private final ShooterCustomRPMCommand m_customRPMCommand =
       new ShooterCustomRPMCommand(m_shooterSubsystem, 2000);
+  private final PigeonIMU m_pigeon = new PigeonIMU(6);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -149,7 +154,9 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return new OneBallAutonCommand(m_indexerSubsystem, m_shooterSubsystem, m_driveSubsystem);
+    // return new OneBallAutonCommand(m_indexerSubsystem, m_shooterSubsystem, m_driveSubsystem);
+    return new TwoBallAutonCommand(m_indexerSubsystem, m_intakeSubsystem, m_shooterSubsystem,
+        m_driveSubsystem, m_visionSubsystem, m_pigeon);
   }
 
   /*
