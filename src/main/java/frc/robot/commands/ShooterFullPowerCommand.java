@@ -27,9 +27,9 @@ public class ShooterFullPowerCommand extends CommandBase {
 
   @Override
   public void execute() {
-    if (m_subsystem.getRPMShot()) {
+    if (m_subsystem.getRPM() < 1600) {
       m_subsystem.setFullPower();
-    } else {
+    } else if (m_subsystem.getRPM() > 1800) {
       m_subsystem.setLowPower();
     }
 

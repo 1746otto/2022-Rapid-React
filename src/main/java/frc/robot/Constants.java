@@ -79,6 +79,7 @@ public final class Constants {
         public static final int kZeroPower = 0;
         public static final double kLowGoalSpeed = 0.5;
         public static final double kRPMToTPS = 4096 / 600;
+        public static final double kTPSToRPM = 1 / kRPMToTPS;
         public static final double kHighGoalRPM = 1000;
     }
 

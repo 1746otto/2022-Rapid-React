@@ -42,8 +42,8 @@ public class IndexerSubsystem extends SubsystemBase {
 
   }
 
-  public void runBothWithIndexer() {
-    if (m_shooter.getRPMValid()) {
+  public void runHighGoalIndexer() {
+    if (m_shooter.getRPM() > 1600) {
       runBothFullForward();
     }
   }

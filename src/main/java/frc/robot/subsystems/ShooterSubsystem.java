@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Constants.ShooterConstants;
 import java.util.function.BooleanSupplier;
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -36,7 +37,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public double getRPM() {
 
-    return master.getSelectedSensorVelocity();
+    return master.getSelectedSensorVelocity() * ShooterConstants.kTPSToRPM;
 
   }
 
@@ -70,8 +71,8 @@ public class ShooterSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Percent Error", (getRPM() - m_RPM) / m_RPM);
 
     System.out.println("RPM: " + getRPM());
-    RPMShotTune = getRPM() < 11500;
-    RPMShotValid = getRPM() > 11000;
+    RPMShotTune = getRPM() < 1800;
+    RPMShotValid = getRPM() > 1600;
     System.out.println("RPM shot valid: " + RPMShotValid);
 
     // This method will be called once per scheduler run
