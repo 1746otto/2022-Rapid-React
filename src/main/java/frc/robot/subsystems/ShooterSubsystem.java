@@ -49,16 +49,16 @@ public class ShooterSubsystem extends SubsystemBase {
     if (getRPM() < ShooterConstants.kHGHighRPM) {
       setFullPower();
 
-    } else if (getRPM() > ShooterConstants.HGLowRPM) {
+    } else if (getRPM() > ShooterConstants.kHGLowRPM) {
       setLowPower();
 
     }
   }
 
   public void lowGoalShooter() {
-    if (getRPM() < ShooterConstants.LGHighRPM) {
+    if (getRPM() < ShooterConstants.kLGHighRPM) {
       setFullPower();
-    } else if (getRPM() > ShooterConstants.LGLowRPM) {
+    } else if (getRPM() > ShooterConstants.kLGLowRPM) {
       setLowPower();
     }
   }
