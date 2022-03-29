@@ -7,6 +7,11 @@ import frc.robot.subsystems.ClimberSubsystem;
 public class ClimberExtendCommand extends CommandBase {
   private final ClimberSubsystem m_climber;
 
+  /**
+   * This command extends the climber until both limit switches are at the top.
+   * 
+   * @param subsystem
+   */
   public ClimberExtendCommand(ClimberSubsystem subsystem) {
     m_climber = subsystem;
     addRequirements(subsystem);

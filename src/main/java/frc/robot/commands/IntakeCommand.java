@@ -12,21 +12,22 @@ import frc.robot.subsystems.IntakeSubsystem;
 public class IntakeCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final IntakeSubsystem m_intake;
-  
+
 
   /**
-   * Creates a new ExampleCommand.
+   * This command is used to extend and run the intake, and stops and retracts the intake once the
+   * command ends.
    *
-   * @param subsystem The subsystem used by this command.
+   * @param subsystemIntake The subsystem used by this command.
    */
   public IntakeCommand(IntakeSubsystem subsystemIntake) {
     m_intake = subsystemIntake;
-    
+
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystemIntake);
   }
 
-  // Called when the command is initially scheduled.
+  // Extends and runs intake at a custom power defined by a constant.
   @Override
   public void initialize() {
     m_intake.extend();
@@ -38,5 +39,5 @@ public class IntakeCommand extends CommandBase {
   public void end(boolean interrupted) {
     m_intake.runZeroPower();
     m_intake.retract();
-  } 
+  }
 }

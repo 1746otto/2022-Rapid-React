@@ -23,7 +23,7 @@ public class BottomIndexerIntakeCommand extends CommandBase {
     addRequirements(subsystem);
   }
 
-  // Called when the command is initially scheduled.
+  // Runs the lower indexer at full power.
   @Override
   public void initialize() {
     m_indexer.runLowerFullForward();

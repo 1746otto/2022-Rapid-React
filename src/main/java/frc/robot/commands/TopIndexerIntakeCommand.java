@@ -24,7 +24,10 @@ public class TopIndexerIntakeCommand extends CommandBase {
     addRequirements(subsystem);
   }
 
-  // Called when the command is initially scheduled.
+  /*
+   * Called when the command is initially scheduled. Runs the upper and lower indexers at values
+   * defined by different constants.
+   */
   @Override
   public void initialize() {
     m_indexer.runBothCustom(IndexerConstants.kLowerCustomPower, IndexerConstants.kUpperCustomPower);
