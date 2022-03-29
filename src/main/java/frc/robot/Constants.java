@@ -32,7 +32,7 @@ public final class Constants {
         public static final int krightDriveLeader = 10;
         public static final int krightDriveFollow = 11;
         public static final int kpigeon = 6;
-        public static final double kwheelCircumfrence = 4;
+        public static final double kwheelCircumfrence = 4 * Math.PI;
         public static final double kmotorToWheelRatio = 68 / 12;
         public static final double kSafeTurnSpeed = 0.3;
     }
