@@ -24,33 +24,34 @@ public class SimpleAutonTurningCommand extends CommandBase {
 
 
     m_pigeon.setYaw(0);
-    m_pigeon.setYawToCompass();
     m_driveSubsystem.arcadeDrive(0, (m_angle <= 0 ? -1 : 1) * DriveConstants.kSafeTurnSpeed);
   }
 
+  // look over this code again it is probably wrong
   @Override
   public void execute() {
-    m_pigeon.getYaw();
     if (m_pigeon.getState() != PigeonIMU.PigeonState.Ready) {
       System.out.println("invalid state");
     }
     if (m_passedFinish) {
       m_driveSubsystem.arcadeDrive(0,
-          (m_angle - (m_pigeon.getYaw() * 360)) / 180 * DriveConstants.kSafeTurnSpeed
+          (m_angle - m_pigeon.getYaw()) / 360 * DriveConstants.kSafeTurnSpeed
               + DriveConstants.kSafeTurnSpeed);
 
     } else {
-      if (m_angle <= 0) {
-        if (m_pigeon.getYaw() * 360 >= m_angle) {
+      if (m_angle < 0) {
+        if (m_pigeon.getYaw() >= m_angle) {
           m_passedFinish = true;
         } else {
-          m_driveSubsystem.arcadeDrive(0, (m_angle <= 0 ? -1 : 1) * DriveConstants.kSafeTurnSpeed);
+          m_driveSubsystem.arcadeDrive(0,
+              -1 * ((m_angle - m_pigeon.getYaw()) / 360 * DriveConstants.kSafeTurnSpeed
+                  + DriveConstants.kSafeTurnSpeed));
         }
-      } else if (m_pigeon.getYaw() * 360 <= m_angle) {
+      } else if (m_pigeon.getYaw() >= m_angle) {
         m_passedFinish = true;
       } else {
         m_driveSubsystem.arcadeDrive(0,
-            (m_angle - (m_pigeon.getYaw() * 360)) / 180 * DriveConstants.kSafeTurnSpeed
+            (m_angle - m_pigeon.getYaw()) / 360 * DriveConstants.kSafeTurnSpeed
                 + DriveConstants.kSafeTurnSpeed);
       }
     }
