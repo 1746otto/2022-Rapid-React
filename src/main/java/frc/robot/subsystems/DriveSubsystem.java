@@ -32,12 +32,20 @@ public class DriveSubsystem extends SubsystemBase {
   public void arcadeDrive(double forward, double rotation) {
     // squaring inputs
 
-    /*
-     * forward *= Math.abs(forward); rotation *= Math.abs(rotation);
-     */
 
-    // proportional steering:
-    if (rotation != 0) {
+    forward *= Math.abs(forward);
+    rotation *= Math.abs(rotation);
+
+
+
+    if (Math.abs(forward) < ControllerConstants.kdeadZone) {
+      forward = 0;
+    }
+    if (Math.abs(rotation) < ControllerConstants.kdeadZone) {
+      rotation = 0;
+    }
+
+    if (rotation != 0 && forward != 0) {
       if (forward < 0.5) {
         if (rotation > 0) {
           rotation = Math.max(rotation + DriveConstants.kProportionalConstant * forward, 1);
@@ -52,12 +60,7 @@ public class DriveSubsystem extends SubsystemBase {
         }
       }
     }
-    if (Math.abs(forward) < ControllerConstants.kdeadZone) {
-      forward = 0;
-    }
-    if (Math.abs(rotation) < ControllerConstants.kdeadZone) {
-      rotation = 0;
-    }
+
     if (forward > 0 && rotation > 0) { // Quadrant 1
       if (Math.abs(forward) >= Math.abs(rotation)) {
         forwardComponent = 1;
@@ -139,6 +142,11 @@ public class DriveSubsystem extends SubsystemBase {
       forward /= sumComponents;
       rotation /= sumComponents;
     }
+
+    // if (Math.abs(forward) > 0.8) {
+    // rotation /= 2;
+    // }
+
     m_rightLeader.set(forward - rotation);
     m_leftLeader.set(forward + rotation);
   }
