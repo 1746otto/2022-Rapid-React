@@ -29,7 +29,7 @@ public class IndexerFullForwardCommand extends CommandBase {
   public void initialize() {
     m_timer.start();
     if (((m_subsystem.topBeamBreakBroken()) && !(m_subsystem.bottomBeamBreakBroken()))
-        && (m_timer.getFPGATimestamp() == 0.1 && m_timer.getFPGATimestamp() <= 0.5)) {
+        && (m_timer.getFPGATimestamp() == 0.1 && m_timer.getFPGATimestamp() <= 1)) {
       m_subsystem.runHighGoalIndexer();
       m_timer.reset();
     }
@@ -45,7 +45,7 @@ public class IndexerFullForwardCommand extends CommandBase {
   public void execute() {
     m_timer.start();
     if (((m_subsystem.topBeamBreakBroken()) && !(m_subsystem.bottomBeamBreakBroken()))
-        && (m_timer.getFPGATimestamp() >= 0.1 && m_timer.getFPGATimestamp() <= 0.5)) {
+        && (m_timer.getFPGATimestamp() >= 0.1 && m_timer.getFPGATimestamp() <= 1)) {
       m_subsystem.runHighGoalIndexer();
       m_timer.reset();
     }
