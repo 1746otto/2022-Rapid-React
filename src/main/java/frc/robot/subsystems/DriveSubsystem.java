@@ -45,21 +45,21 @@ public class DriveSubsystem extends SubsystemBase {
       rotation = 0;
     }
 
-    if (rotation != 0 && forward != 0) {
-      if (forward < 0.5) {
-        if (rotation > 0) {
-          rotation = Math.max(rotation + DriveConstants.kProportionalConstant * forward, 1);
-        } else {
-          rotation = Math.min(rotation - DriveConstants.kProportionalConstant * forward, -1);
-        }
-      } else {
-        if (rotation > 0) {
-          rotation = Math.min(rotation - DriveConstants.kProportionalConstant * forward, 0);
-        } else {
-          rotation = Math.max(rotation + DriveConstants.kProportionalConstant * forward, 0);
-        }
-      }
-    }
+    // if (rotation != 0 && forward != 0) {
+    // if (forward < 0.5) {
+    // if (rotation > 0) {
+    // rotation = Math.max(rotation + DriveConstants.kProportionalConstant * forward, 1);
+    // } else {
+    // rotation = Math.min(rotation - DriveConstants.kProportionalConstant * forward, -1);
+    // }
+    // } else {
+    // if (rotation > 0) {
+    // rotation = Math.min(rotation - DriveConstants.kProportionalConstant * forward, 0);
+    // } else {
+    // rotation = Math.max(rotation + DriveConstants.kProportionalConstant * forward, 0);
+    // }
+    // }
+    // }
 
     if (forward > 0 && rotation > 0) { // Quadrant 1
       if (Math.abs(forward) >= Math.abs(rotation)) {
