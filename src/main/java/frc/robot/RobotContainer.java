@@ -155,7 +155,7 @@ public class RobotContainer {
 
 
                 xBoxLBumper.whenHeld(new ShooterHighLowCommand(m_shooterHoodSubsystem,
-                                m_shooterSubsystem).withTimeout(0.05).raceWith(
+                                m_shooterSubsystem).raceWith(
                                                 new IndexerFullForwardCommand(m_indexerSubsystem)));
 
 

@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -22,9 +23,13 @@ public class IndexerFullForwardCommand extends CommandBase {
   }
 
   // Called when the command is initially scheduled.
+  Timer m_timer;
+
   @Override
   public void initialize() {
-    m_subsystem.runHighGoalIndexer();
+    if ((m_subsystem.topBeamBreakBroken()) && !(m_subsystem.bottomBeamBreakBroken())) {
+      m_subsystem.runHighGoalIndexer();
+    }
   }
 
   // Called once the command ends or is interrupted.
