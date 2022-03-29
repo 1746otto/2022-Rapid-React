@@ -50,7 +50,7 @@ public class ShooterSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("RPM", getRPM());
     SmartDashboard.putNumber("Error", getRPM() - m_RPM);
     SmartDashboard.putNumber("Percent Error", (getRPM() - m_RPM) / m_RPM);
-    System.out.println("RPM: " + getRPM());
+    // System.out.println("RPM: " + getRPM());
 
     // This method will be called once per scheduler run
   }
