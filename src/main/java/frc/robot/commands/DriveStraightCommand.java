@@ -29,6 +29,7 @@ public class DriveStraightCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void initialize() {
+    m_drive.arcadeDrive(m_speed, 0);
     m_startingRotations = m_drive.getLeftRotations();
     System.out.println("StartRot" + m_startingRotations);
   }
