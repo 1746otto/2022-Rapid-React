@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IndexerConstants;
+import frc.robot.Constants.ShooterConstants;
 
 public class IndexerSubsystem extends SubsystemBase {
 
@@ -43,11 +44,26 @@ public class IndexerSubsystem extends SubsystemBase {
   }
 
   public void runHighGoalIndexer() {
-    if (m_shooter.getRPM() > 1600 && m_shooter.getRPM() < 2000) {
-      runBothFullForward();
-    } else {
-      stopBoth();
+    if (m_shooter.getRPM() > ShooterConstants.kHGLowRPM
+        && m_shooter.getRPM() < ShooterConstants.kHGHighRPM) {
+      if (topBeamBreakBroken()) {
+        runUpperFullForward();
+      } else {
+        runBothFullForward();
+      }
     }
+  }
+
+  public void runLowGoalIndexer() {
+    runBothFullForward();
+    // if (m_shooter.getRPM() > ShooterConstants.kLGLowRPM
+    // && m_shooter.getRPM() < ShooterConstants.kLGHighRPM) {
+    // if (topBeamBreakBroken()) {
+    // runUpperFullForward();
+    // } else {
+    // runBothFullForward();
+    // }
+    // }
   }
 
   public void runLowerHalfForward() {
