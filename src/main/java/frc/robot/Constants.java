@@ -33,6 +33,7 @@ public final class Constants {
         public static final int krightDriveFollow = 11;
         public static final double kwheelCircumfrence = 4;
         public static final double kmotorToWheelRatio = 68 / 12;
+        public static final double kProportionalConstant = 0.05;
     }
 
     public static class IntakeConstants {
