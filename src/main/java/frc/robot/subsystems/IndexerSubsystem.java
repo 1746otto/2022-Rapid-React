@@ -43,8 +43,10 @@ public class IndexerSubsystem extends SubsystemBase {
   }
 
   public void runHighGoalIndexer() {
-    if (m_shooter.getRPM() > 1600) {
+    if (m_shooter.getRPM() > 1600 && m_shooter.getRPM() < 2000) {
       runBothFullForward();
+    } else {
+      stopBoth();
     }
   }
 
