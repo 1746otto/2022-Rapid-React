@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -20,6 +21,7 @@ public class ShooterSubsystem extends SubsystemBase {
   public double m_RPM;
   public boolean RPMShotTune;
   public static boolean RPMShotValid = false;
+  public static Timer timer;
 
 
   /** Creates a new ExampleSubsystem. */
