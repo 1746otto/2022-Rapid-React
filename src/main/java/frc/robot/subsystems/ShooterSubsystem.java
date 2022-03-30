@@ -43,34 +43,36 @@ public class ShooterSubsystem extends SubsystemBase {
 
   }
 
-  public void setFullPower() {
+  public void setFullPowerHigh() {
     master.set(ControlMode.PercentOutput, ShooterConstants.kFullPower);
+  }
+
+  public void setLowPowerHigh() {
+    master.set(ControlMode.PercentOutput, ShooterConstants.kLowGoalSpeed);
   }
 
   public void highGoalShooter() {
     if (getRPM() < ShooterConstants.kHGHighRPM) {
-      setFullPower();
+      setFullPowerHigh();
 
     } else if (getRPM() > ShooterConstants.kHGLowRPM) {
-      setLowPower();
+      setLowPowerHigh();
 
     }
   }
+  // Sets shooter power for high goal shot.
 
   public void lowGoalShooter() {
     if (getRPM() < ShooterConstants.kLGHighRPM) {
-      setFullPower();
+      setFullPowerHigh();
     } else if (getRPM() > ShooterConstants.kLGLowRPM) {
-      setLowPower();
+      setLowPowerHigh();
     }
   }
 
   /**
    * Sets shooter power for lowgoal shot
    */
-  public void setLowPower() {
-    master.set(ControlMode.PercentOutput, ShooterConstants.kLowGoalSpeed);
-  }
 
   public boolean getRPMShot() {
     return RPMShotTune;

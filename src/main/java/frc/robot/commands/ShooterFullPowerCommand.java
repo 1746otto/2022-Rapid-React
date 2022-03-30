@@ -22,15 +22,15 @@ public class ShooterFullPowerCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_subsystem.setFullPower();
+    m_subsystem.setFullPowerHigh();
   }
 
   @Override
   public void execute() {
     if (m_subsystem.getRPM() < 1600) {
-      m_subsystem.setFullPower();
+      m_subsystem.setFullPowerHigh();
     } else if (m_subsystem.getRPM() > 1800) {
-      m_subsystem.setLowPower();
+      m_subsystem.setLowPowerHigh();
     }
 
   }
