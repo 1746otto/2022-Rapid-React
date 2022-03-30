@@ -48,8 +48,8 @@ public class DriveStraightPIDCommand extends CommandBase {
 
   @Override
   public void execute() {
-    m_drive.arcadeDrive(m_speed, 0);
-
+    if (m_pigeon.getState() != PigeonIMU.PigeonState.Ready)
+      System.out.println("no");
     m_error = m_target - m_pigeon.getYaw();
     m_deltaError = m_error - m_prevError;
     m_rotationSignal = -(m_kP * m_error + m_kD * m_deltaError);

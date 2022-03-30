@@ -64,7 +64,7 @@ public final class Constants {
   }
 
   public static class AutonConstants {
-    public static final double kautonVelocity = 0.3;
+    public static final double kautonVelocity = 0.6;
     public static final double kautonDriveTime = 2.0;
     public static final double kautonSpeedBackwards = 0.7;
     public static double kSpeedUpTime = 2;
