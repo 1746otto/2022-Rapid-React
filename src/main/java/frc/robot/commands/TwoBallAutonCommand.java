@@ -30,7 +30,7 @@ public class TwoBallAutonCommand extends SequentialCommandGroup {
         // out because we are not testin with vision
         new ShooterCustomRPMCommand(shooterSubsystem, ShooterConstants.kHighGoalRPM)
             .withTimeout(AutonConstants.kSpeedUpTime),
-        new ParallelRaceGroup(new IndexerFullForwardCommand(indexerSubsystem),
+        new ParallelRaceGroup(new IndexerFullForwardCommand(indexerSubsystem, true),
             new ShooterCustomRPMCommand(shooterSubsystem, ShooterConstants.kHighGoalRPM)
                 .withTimeout(AutonConstants.kShootTime)));
   }
