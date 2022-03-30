@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IndexerSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 
 /** An example command that uses an example subsystem. */
 public class IndexerUpperCommand extends CommandBase {
@@ -31,6 +32,9 @@ public class IndexerUpperCommand extends CommandBase {
   public void end(boolean interrupted) {
     m_subsystem.stopBoth();
   }
+
+  @Override
+  public void execute() {}
 
   // Returns true when the command should end.
   @Override

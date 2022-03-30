@@ -29,13 +29,22 @@ public class ShooterHighLowCommand extends CommandBase {
     @Override
     public void initialize() {
         if (m_hood.isRetracted() == true) {
-            m_shooter.setFullPower();
+            m_shooter.highGoalShooter();
         } else if (m_hood.isRetracted() == false) {
-            m_shooter.setLowPower();
+            m_shooter.lowGoalShooter();
         }
     }
 
     // Called once the command ends or is interrupted.
+    @Override
+    public void execute() {
+        if (m_hood.isRetracted() == true) {
+            m_shooter.highGoalShooter();
+        } else if (m_hood.isRetracted() == false) {
+            m_shooter.lowGoalShooter();
+        }
+    }
+
     @Override
     public void end(boolean interrupted) {
         m_shooter.setZeroPower();

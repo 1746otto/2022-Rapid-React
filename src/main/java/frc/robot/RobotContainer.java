@@ -6,11 +6,13 @@ package frc.robot;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.fasterxml.jackson.databind.deser.std.ThrowableDeserializer;
+import org.ejml.equation.IntegerSequence.Explicit;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.ControllerConstants;
@@ -28,6 +30,7 @@ import frc.robot.commands.ClimberStopCommand;
 import frc.robot.commands.HighBarExtendCommand;
 import frc.robot.commands.ReleaseMidBarHook;
 import frc.robot.commands.IndexerFullForwardCommand;
+import frc.robot.commands.IndexerStopCommand;
 import frc.robot.commands.IndexerUpperCommand;
 import frc.robot.commands.IntakeCargoCommand;
 import frc.robot.commands.LowGoalCommand;
@@ -78,7 +81,7 @@ public class RobotContainer {
   private final Vision m_visionSubsystem = new Vision();
   private final VisionDriveCommand m_visionDriveCommand =
       new VisionDriveCommand(m_driveSubsystem, m_controller, m_visionSubsystem);
-  private final IndexerSubsystem m_indexerSubsystem = new IndexerSubsystem();
+  private final IndexerSubsystem m_indexerSubsystem = new IndexerSubsystem(m_shooterSubsystem);
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
 
 
@@ -98,6 +101,7 @@ public class RobotContainer {
   private final ShooterHighLowCommand m_shooterHighLowCommand =
       new ShooterHighLowCommand(m_shooterHoodSubsystem, m_shooterSubsystem);
   private final PigeonIMU m_pigeon = new PigeonIMU(6);
+
 
 
   /**
@@ -155,26 +159,48 @@ public class RobotContainer {
      * ShooterCustomRPMCommand(m_shooterSubsystem, ShooterConstants.kHighGoalRPM)))));
      */
 
+
+    xBoxLBumper.whenHeld(new ShooterHighLowCommand(m_shooterHoodSubsystem, m_shooterSubsystem)
+        .raceWith(new IndexerFullForwardCommand(m_indexerSubsystem,
+            m_shooterHoodSubsystem.isRetracted())));
+
+
+    /*
+     * .andThen(new IndexerUpperCommand(m_indexerSubsystem)
+     * .withTimeout(IndexerConstants.kTwoBallDelay) .raceWith(new
+     * ShooterFullPowerCommand(m_shooterSubsystem)) .andThen(new
+     * IndexerFullForwardCommand(m_indexerSubsystem) .raceWith(new
+     * ShooterFullPowerCommand(m_shooterSubsystem)))));
+     */
     /**
      *
      */
-    xBoxLBumper
-        .whenHeld(m_shooterHighLowCommand.withTimeout(Constants.AutonConstants.kSpeedUpTime)
-            .andThen(new IndexerUpperCommand(m_indexerSubsystem)
-                .withTimeout(IndexerConstants.kTwoBallDelay)
-                .raceWith(new ShooterHighLowCommand(m_shooterHoodSubsystem, m_shooterSubsystem))
-                .andThen(new IndexerFullForwardCommand(m_indexerSubsystem).raceWith(
-                    new ShooterHighLowCommand(m_shooterHoodSubsystem, m_shooterSubsystem)))));
-    xBoxLBumper2.whenHeld(new OuttakeCommand(m_indexerSubsystem, m_intakeSubsystem));
-
+    /*
+     * xBoxLBumper .whenHeld(m_shooterHighLowCommand.withTimeout(Constants.AutonConstants.
+     * kSpeedUpTime) .andThen(new IndexerUpperCommand(m_indexerSubsystem)
+     * .withTimeout(IndexerConstants.kTwoBallDelay) .raceWith(new
+     * ShooterHighLowCommand(m_shooterHoodSubsystem, m_shooterSubsystem)) .andThen(new
+     * IndexerFullForwardCommand(m_indexerSubsystem).raceWith( new
+     * ShooterHighLowCommand(m_shooterHoodSubsystem, m_shooterSubsystem)))));
+     * xBoxLBumper2.whenHeld(new OuttakeCommand(m_indexerSubsystem, m_intakeSubsystem));
+     */
 
   }
 
   // Constants.ShooterConstants.kFullPower - = 1
   private void configureDefaultCommands() {
+    // v1 indexer check
+    // v2 will check for both balls
+    /*
+     * m_indexerSubsystem .setDefaultCommand(new ConditionalCommand(new
+     * IndexerFullForwardCommand(m_indexerSubsystem), new IndexerStopCommand(m_indexerSubsystem),
+     * ShooterSubsystem::getRPMValid));
+     */
+
     m_driveSubsystem.setDefaultCommand(new RunCommand(() -> m_driveSubsystem.arcadeDrive(
         m_controller.getRightTriggerAxis() - m_controller.getLeftTriggerAxis(),
         m_controller.getLeftX()), m_driveSubsystem));
+
   }
 
   public void enableCompressor() {
@@ -212,9 +238,10 @@ public class RobotContainer {
   public Command createAutoCommand() {
     return new ShooterFullPowerCommand(m_shooterSubsystem)
         .withTimeout(Constants.AutonConstants.kSpeedUpTime)
-        .andThen(new IndexerFullForwardCommand(m_indexerSubsystem)
-            .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem)
-                .withTimeout(Constants.AutonConstants.kShootTime)))
+        .andThen(
+            new IndexerFullForwardCommand(m_indexerSubsystem, m_shooterHoodSubsystem.isRetracted())
+                .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem)
+                    .withTimeout(Constants.AutonConstants.kShootTime)))
         .andThen(new AutonDriveCommand(m_driveSubsystem, 0, .5)
             .withTimeout(Constants.AutonConstants.kautonDriveTime));
   }
