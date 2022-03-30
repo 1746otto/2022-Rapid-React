@@ -45,10 +45,12 @@ public class IndexerFullForwardCommand extends CommandBase {
 
   @Override
   public void execute() {
+    System.out.println(ShooterHoodSubsystem.isRetracted());
     if (ShooterHoodSubsystem.isRetracted()) {
       m_subsystem.runHighGoalIndexer();
     } else {
       m_subsystem.runLowGoalIndexer();
+      System.out.println("LowGoalrunning");
     }
   }
 
