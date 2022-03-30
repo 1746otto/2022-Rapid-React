@@ -109,4 +109,11 @@ public final class Constants {
         public static final boolean kShooterHoodRetracted = false;
         public static final int kShooterHood = 14;
     }
+
+    public static class ColorSensorConstants {
+
+        public static int kRawHigh = 200;
+        public static int kRawLowValue = 100;
+    }
+
 }
