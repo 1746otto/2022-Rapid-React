@@ -86,6 +86,8 @@ public final class Constants {
         public static final double kHGLowRPM = 1600;
         public static final double kLGHighRPM = 900;
         public static final double kLGLowRPM = 700;
+        public static final double kFullPowerLow = 0.4;
+        public static final double kLowPowerLow = 0.2;
     }
 
 
