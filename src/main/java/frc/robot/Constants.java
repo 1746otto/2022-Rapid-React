@@ -33,6 +33,7 @@ public final class Constants {
         public static final int krightDriveFollow = 11;
         public static final double kwheelCircumfrence = 4;
         public static final double kmotorToWheelRatio = 68 / 12;
+        public static final double kProportionalConstant = 0.05;
     }
 
     public static class IntakeConstants {
@@ -81,10 +82,10 @@ public final class Constants {
         public static final double kRPMToTPS = 4096 / 600;
         public static final double kTPSToRPM = 1 / kRPMToTPS;
         public static final double kHighGoalRPM = 1000;
-        public static final double kHGHighRPM = 1800;
-        public static final double kHGLowRPM = 1700;
-        public static final double kLGHighRPM = 1000;
-        public static final double kLGLowRPM = 1200;
+        public static final double kHGHighRPM = 1750;
+        public static final double kHGLowRPM = 1600;
+        public static final double kLGHighRPM = 900;
+        public static final double kLGLowRPM = 700;
     }
 
 

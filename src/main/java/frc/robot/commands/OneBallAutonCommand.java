@@ -6,18 +6,21 @@ import frc.robot.Constants.AutonConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
+import frc.robot.subsystems.ShooterHoodSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 
 
 public class OneBallAutonCommand extends SequentialCommandGroup {
         public OneBallAutonCommand(IndexerSubsystem indexerSubsystem,
-                        ShooterSubsystem shooterSubsystem, DriveSubsystem driveSubsystem) {
+                        ShooterSubsystem shooterSubsystem, DriveSubsystem driveSubsystem,
+                        ShooterHoodSubsystem hoodSubsystem) {
                 addCommands(new ShooterCustomRPMCommand(shooterSubsystem,
                                 ShooterConstants.kHighGoalRPM)
                                                 .withTimeout(AutonConstants.kSpeedUpTime),
                                 new ParallelRaceGroup(
-                                                new IndexerFullForwardCommand(indexerSubsystem),
+                                                new IndexerFullForwardCommand(indexerSubsystem,
+                                                                hoodSubsystem.isRetracted()),
                                                 new ShooterCustomRPMCommand(shooterSubsystem,
                                                                 ShooterConstants.kHighGoalRPM)
                                                                                 .withTimeout(AutonConstants.kShootTime)),
