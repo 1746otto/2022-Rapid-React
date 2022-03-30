@@ -143,8 +143,7 @@ public class RobotContainer {
 
 
     xBoxLBumper.whenHeld(new ShooterHighLowCommand(m_shooterHoodSubsystem, m_shooterSubsystem)
-        .raceWith(new IndexerFullForwardCommand(m_indexerSubsystem,
-            m_shooterHoodSubsystem.isRetracted())));
+        .raceWith(new IndexerFullForwardCommand(m_indexerSubsystem)));
 
 
     /*
@@ -219,10 +218,9 @@ public class RobotContainer {
   public Command createAutoCommand() {
     return new ShooterFullPowerCommand(m_shooterSubsystem)
         .withTimeout(Constants.AutonConstants.kSpeedUpTime)
-        .andThen(
-            new IndexerFullForwardCommand(m_indexerSubsystem, m_shooterHoodSubsystem.isRetracted())
-                .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem)
-                    .withTimeout(Constants.AutonConstants.kShootTime)))
+        .andThen(new IndexerFullForwardCommand(m_indexerSubsystem)
+            .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem)
+                .withTimeout(Constants.AutonConstants.kShootTime)))
         .andThen(new AutonDriveCommand(m_driveSubsystem, 0, .5)
             .withTimeout(Constants.AutonConstants.kautonDriveTime));
   }
