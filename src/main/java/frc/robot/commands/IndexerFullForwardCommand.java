@@ -3,6 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.ShooterHoodSubsystem;
 
 /** An example command that uses an example subsystem. */
 public class IndexerFullForwardCommand extends CommandBase {
@@ -10,17 +11,18 @@ public class IndexerFullForwardCommand extends CommandBase {
   private final IndexerSubsystem m_subsystem;
   private boolean highGoal;
 
+
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
 
-  public IndexerFullForwardCommand(IndexerSubsystem subsystem, boolean isHighGoal) {
+  public IndexerFullForwardCommand(IndexerSubsystem subsystem) {
     m_subsystem = subsystem;
-    highGoal = isHighGoal;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
+
   }
 
   // Called when the command is initially scheduled.
@@ -43,12 +45,14 @@ public class IndexerFullForwardCommand extends CommandBase {
 
   @Override
   public void execute() {
-    if (highGoal) {
+    if (ShooterHoodSubsystem.isRetracted()) {
       m_subsystem.runHighGoalIndexer();
     } else {
       m_subsystem.runLowGoalIndexer();
     }
   }
+
+
 
   // Returns true when the command should end.
   @Override
