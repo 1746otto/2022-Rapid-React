@@ -32,13 +32,21 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public double getRPM() {
-    return master.getSelectedSensorVelocity() * 600 / 4096;
+
+    return slave1.getSelectedSensorVelocity();
+
   }
 
   public void setFullPower() {
     master.set(ControlMode.PercentOutput, ShooterConstants.kFullPower);
   }
 
+  /**
+   * Sets shooter power for lowgoal shot
+   */
+  public void setLowPower() {
+    master.set(ControlMode.PercentOutput, ShooterConstants.kLowGoalSpeed);
+  }
 
 
   @Override
@@ -72,6 +80,7 @@ public class ShooterSubsystem extends SubsystemBase {
     m_RPM = rpm;
     double velRequest = rpm * ShooterConstants.kRPMToTPS / .6;
     master.set(ControlMode.Velocity, velRequest);
-
   }
+
+
 }

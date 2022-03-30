@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.PneumaticsControlModule;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -18,12 +19,18 @@ public class ClimberSubsystem extends SubsystemBase {
   public final DigitalInput topLimitSwitch = new DigitalInput(ClimberConstants.kTopLimitSwitch);
   public final DigitalInput bottomLimitSwitch =
       new DigitalInput(ClimberConstants.kBottomLimitSwitch);
+  private final Solenoid extend;
+  private final Solenoid disengage;
 
   public ClimberSubsystem() {
     motorR.setInverted(true);
     motorL.follow(motorR);
     pistons =
         new Solenoid(RobotConstants.kREVPH, PneumaticsModuleType.REVPH, ClimberConstants.kChannel);
+    extend = new Solenoid(RobotConstants.kREVPH, PneumaticsModuleType.REVPH,
+        ClimberConstants.kExtendSolenoidChannel);
+    disengage = new Solenoid(RobotConstants.kREVPH, PneumaticsModuleType.REVPH,
+        ClimberConstants.kRetractSolenoidChannel);
   }
 
   @Override
@@ -64,4 +71,19 @@ public class ClimberSubsystem extends SubsystemBase {
     return motorL.isRevLimitSwitchClosed() == 0;
   }
 
+  public void extendHighbar() {
+    extend.set(false);
+  }
+
+  public void stopExtendHigh() {
+    extend.set(true);
+  }
+
+  public void disEngageHighPistons() {
+    disengage.set(true);
+  }
+
+  public void engageHighPistons() {
+    disengage.set(false);
+  }
 }
