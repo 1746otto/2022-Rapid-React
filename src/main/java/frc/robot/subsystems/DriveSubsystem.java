@@ -159,6 +159,7 @@ public class DriveSubsystem extends SubsystemBase {
   public double getRightRotations() {
     return m_rightLeader.getEncoder().getPosition();
   }
+
   /*
    * public enum ParamEnum { YawOffset(160), CompassOffset(160), BetaGain(162), Reserved163(163),
    * GyroNoMotionCal(164), EnterCalibration(165), FusedHeadingOffset(166), StatusFrameRate(169),
@@ -171,6 +172,12 @@ public class DriveSubsystem extends SubsystemBase {
    * public int setYawToComass() { int errCode = ConfigSetParameter(ParamEnum.YawOffset,
    * Type.MatchCompass, 0); }
    */
+  public void stupidArcadeDrive(double forward, double rotation) {
+    m_rightLeader.set((forward - rotation) / 2);
+    m_leftLeader.set((forward + rotation) / 2);
+  }
+
+
 
   public void stop() {
     m_rightLeader.set(0);

@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.sensors.PigeonIMU;
+import com.fasterxml.jackson.databind.deser.std.ThrowableDeserializer;
 import org.ejml.equation.IntegerSequence.Explicit;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -33,6 +35,8 @@ import frc.robot.commands.IndexerUpperCommand;
 import frc.robot.commands.IntakeCargoCommand;
 import frc.robot.commands.LowGoalCommand;
 import frc.robot.commands.ShooterFullPowerCommand;
+import frc.robot.commands.TopIndexerIntakeCommand;
+import frc.robot.commands.TwoBallAutonCommand;
 import frc.robot.commands.ShooterHighLowCommand;
 import frc.robot.commands.ShooterHoodExtendCommand;
 import frc.robot.commands.ShooterHoodRetractCommand;
@@ -46,6 +50,19 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterHoodSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.Vision;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.TwoBallAutonCommand;
+import frc.robot.commands.ShooterFullPowerCommand;
+import frc.robot.commands.ShooterPIDTuningCommand;
+import frc.robot.commands.ShooterTuning2Command;
+import frc.robot.commands.ShooterTuningCommand;
+import frc.robot.commands.VisionDriveCommand;
+import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.Vision;
+import frc.robot.Constants.ControllerConstants;
+import frc.robot.Constants.RobotConstants;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -83,6 +100,7 @@ public class RobotContainer {
       new ShooterHoodRetractCommand(m_shooterHoodSubsystem);
   private final ShooterHighLowCommand m_shooterHighLowCommand =
       new ShooterHighLowCommand(m_shooterHoodSubsystem, m_shooterSubsystem);
+  private final PigeonIMU m_pigeon = new PigeonIMU(6);
 
 
 
@@ -198,8 +216,9 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return new OneBallAutonCommand(m_indexerSubsystem, m_shooterSubsystem, m_driveSubsystem,
-        m_shooterHoodSubsystem);
+    // return new OneBallAutonCommand(m_indexerSubsystem, m_shooterSubsystem, m_driveSubsystem);
+    return new TwoBallAutonCommand(m_indexerSubsystem, m_intakeSubsystem, m_shooterSubsystem,
+        m_driveSubsystem, m_visionSubsystem, m_pigeon);
   }
 
   /*
