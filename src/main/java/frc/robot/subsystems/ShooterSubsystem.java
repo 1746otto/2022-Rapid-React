@@ -71,12 +71,20 @@ public class ShooterSubsystem extends SubsystemBase {
   // Sets shooter power for high goal shot.
 
   public void lowGoalShooter() {
-    setFullPowerLow();
-    /*
-     * if (getRPM() < ShooterConstants.kLGHighRPM) { setFullPowerLow(); } else if (getRPM() >
-     * ShooterConstants.kLGLowRPM) { setLowPowerLow(); }
-     */
+    if (getRPM() < ShooterConstants.kLGHighRPM) {
+      setFullPowerLow();
+
+    } else if (getRPM() > ShooterConstants.kLGLowRPM) {
+      setLowPowerLow();
+
+    }
   }
+
+  /*
+   * if (getRPM() < ShooterConstants.kLGHighRPM) { setFullPowerLow(); } else if (getRPM() >
+   * ShooterConstants.kLGLowRPM) { setLowPowerLow(); }
+   */
+
 
   /**
    * Sets shooter power for lowgoal shot
