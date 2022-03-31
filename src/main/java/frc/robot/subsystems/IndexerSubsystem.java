@@ -55,15 +55,19 @@ public class IndexerSubsystem extends SubsystemBase {
   }
 
   public void runLowGoalIndexer() {
-    runBothFullForward();
-    // if (m_shooter.getRPM() > ShooterConstants.kLGLowRPM
-    // && m_shooter.getRPM() < ShooterConstants.kLGHighRPM) {
-    // if (topBeamBreakBroken()) {
-    // runUpperFullForward();
-    // } else {
-    // runBothFullForward();
-    // }
-    // }
+    if (m_shooter.getRPM() > ShooterConstants.kLGLowRPM
+        && m_shooter.getRPM() < ShooterConstants.kLGHighRPM) {
+      if (topBeamBreakBroken()) {
+        runUpperFullForward();
+      } else {
+        runBothFullForward();
+      }
+    }
+    /*
+     * if (m_shooter.getRPM() > ShooterConstants.kLGLowRPM && m_shooter.getRPM() <
+     * ShooterConstants.kLGHighRPM) { if (topBeamBreakBroken()) { runUpperFullForward(); } else {
+     * runBothFullForward(); } }
+     */
   }
 
   public void runLowerHalfForward() {
@@ -143,5 +147,6 @@ public class IndexerSubsystem extends SubsystemBase {
   public void periodic() {
     beambreakBottomLastState = (Math.floor(beambreakBottom.getVoltage()) == 0);
     beambreakTopLastState = (Math.floor(beambreakTop.getVoltage()) == 0);
+
   }
 }

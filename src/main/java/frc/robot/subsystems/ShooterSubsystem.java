@@ -43,34 +43,52 @@ public class ShooterSubsystem extends SubsystemBase {
 
   }
 
-  public void setFullPower() {
+  public void setFullPowerHigh() {
     master.set(ControlMode.PercentOutput, ShooterConstants.kFullPower);
+  }
+
+  public void setLowPowerHigh() {
+    master.set(ControlMode.PercentOutput, ShooterConstants.kLowGoalSpeed);
+  }
+
+  public void setFullPowerLow() {
+    master.set(ControlMode.PercentOutput, ShooterConstants.kFullPowerLow);
+  }
+
+  public void setLowPowerLow() {
+    master.set(ControlMode.PercentOutput, ShooterConstants.kLowPowerLow);
   }
 
   public void highGoalShooter() {
     if (getRPM() < ShooterConstants.kHGHighRPM) {
-      setFullPower();
+      setFullPowerHigh();
 
     } else if (getRPM() > ShooterConstants.kHGLowRPM) {
-      setLowPower();
+      setLowPowerHigh();
 
     }
   }
+  // Sets shooter power for high goal shot.
 
   public void lowGoalShooter() {
     if (getRPM() < ShooterConstants.kLGHighRPM) {
-      setFullPower();
+      setFullPowerLow();
+
     } else if (getRPM() > ShooterConstants.kLGLowRPM) {
-      setLowPower();
+      setLowPowerLow();
+
     }
   }
+
+  /*
+   * if (getRPM() < ShooterConstants.kLGHighRPM) { setFullPowerLow(); } else if (getRPM() >
+   * ShooterConstants.kLGLowRPM) { setLowPowerLow(); }
+   */
+
 
   /**
    * Sets shooter power for lowgoal shot
    */
-  public void setLowPower() {
-    master.set(ControlMode.PercentOutput, ShooterConstants.kLowGoalSpeed);
-  }
 
   public boolean getRPMShot() {
     return RPMShotTune;
@@ -93,6 +111,7 @@ public class ShooterSubsystem extends SubsystemBase {
     // System.out.println("RPM: " + getRPM());
     RPMShotTune = getRPM() < 1800;
     RPMShotValid = getRPM() > 1600;
+    System.out.println(getRPM());
     // System.out.println("RPM shot valid: " + RPMShotValid);
 
     // This method will be called once per scheduler run

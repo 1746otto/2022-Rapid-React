@@ -44,7 +44,7 @@ public final class Constants {
     public static final int kIntakeSolenoid = 11;
     public static final int kIntakeFullPower = 1;
     public static final double kIntakerunZeroPower = 0.0;
-    public static final double kIntakeCustomPower = 0.50;
+    public static final double kIntakeCustomPower = 0.83;
     public static final boolean kIntakeExtended = true;
     public static final boolean kIntakeRetracted = false;
   }
@@ -85,9 +85,11 @@ public final class Constants {
     public static final double kTPSToRPM = 1 / kRPMToTPS;
     public static final double kHighGoalRPM = 1000;
     public static final double kHGHighRPM = 1750;
-    public static final double kHGLowRPM = 1600;
+    public static final double kHGLowRPM = 1650;
     public static final double kLGHighRPM = 900;
     public static final double kLGLowRPM = 700;
+    public static final double kFullPowerLow = 0.45;
+    public static final double kLowPowerLow = 0.2;
   }
 
 
