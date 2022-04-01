@@ -80,14 +80,14 @@ public final class Constants {
     public static final int kIndexerMotor = 30;
     public static final double kFullPower = 0.7;
     public static final int kZeroPower = 0;
-    public static final double kLowGoalSpeed = 0.4;
+    public static final double kLowGoalSpeed = 0.3;
     public static final double kRPMToTPS = 4096 / 600;
     public static final double kTPSToRPM = 1 / kRPMToTPS;
     public static final double kHighGoalRPM = 1000;
-    public static final double kHGHighRPM = 1750;
-    public static final double kHGLowRPM = 1650;
-    public static final double kLGHighRPM = 900;
-    public static final double kLGLowRPM = 700;
+    public static final double kHGHighRPM = 1800;
+    public static final double kHGLowRPM = 1700;
+    public static final double kLGHighRPM = 1000;
+    public static final double kLGLowRPM = 800;
     public static final double kFullPowerLow = 0.45;
     public static final double kLowPowerLow = 0.2;
   }

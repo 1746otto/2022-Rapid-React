@@ -68,6 +68,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     }
   }
+
   // Sets shooter power for high goal shot.
 
   public void lowGoalShooter() {

@@ -168,9 +168,8 @@ public class RobotContainer {
     /*
      * .andThen(new IndexerUpperCommand(m_indexerSubsystem)
      * .withTimeout(IndexerConstants.kTwoBallDelay) .raceWith(new
-     * ShooterFullPowerCommand(m_shooterSubsystem)) .andThen(new
-     * IndexerFullForwardCommand(m_indexerSubsystem) .raceWith(new
-     * ShooterFullPowerCommand(m_shooterSubsystem)))));
+     * ShooterFullPowerCommand(m_shooterSubsystem)) .andThen(new IndexerFullForwardCommand(m_01
+     * indexerSubsystem) .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem)))));
      */
     /**
      *
@@ -217,9 +216,13 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // return new OneBallAutonCommand(m_indexerSubsystem, m_shooterSubsystem, m_driveSubsystem);
-    return new TwoBallAutonCommand(m_indexerSubsystem, m_intakeSubsystem, m_shooterSubsystem,
-        m_driveSubsystem, m_visionSubsystem, m_pigeon);
+    return new OneBallAutonCommand(m_indexerSubsystem, m_shooterSubsystem, m_driveSubsystem,
+        m_shooterHoodSubsystem);
+    /*
+     * return new TwoBallAutonCommand(m_indexerSubsystem, m_intakeSubsystem, m_shooterSubsystem,
+     * m_driveSubsystem, m_visionSubsystem, m_pigeon);
+     */
+
   }
 
   /*
