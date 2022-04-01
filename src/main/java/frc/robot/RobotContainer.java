@@ -27,12 +27,14 @@ import frc.robot.commands.AutonDriveCommand;
 import frc.robot.commands.ClimberExtendCommand;
 import frc.robot.commands.ClimberRetractCommand;
 import frc.robot.commands.ClimberStopCommand;
+import frc.robot.commands.DriveStraightCommand;
 import frc.robot.commands.HighBarExtendCommand;
 import frc.robot.commands.ReleaseMidBarHook;
 import frc.robot.commands.IndexerFullForwardCommand;
 import frc.robot.commands.IndexerStopCommand;
 import frc.robot.commands.IndexerUpperCommand;
 import frc.robot.commands.IntakeCargoCommand;
+import frc.robot.commands.IntakeExtendAndRun;
 import frc.robot.commands.LowGoalCommand;
 import frc.robot.commands.ShooterFullPowerCommand;
 import frc.robot.commands.TopIndexerIntakeCommand;
@@ -101,6 +103,11 @@ public class RobotContainer {
   private final ShooterHighLowCommand m_shooterHighLowCommand =
       new ShooterHighLowCommand(m_shooterHoodSubsystem, m_shooterSubsystem);
   private final PigeonIMU m_pigeon = new PigeonIMU(6);
+  private final DriveStraightCommand m_driveStraightCommand =
+      new DriveStraightCommand(m_driveSubsystem, 9.5, .6);
+  private final IntakeExtendAndRun m_intakeExtendAndRun = new IntakeExtendAndRun(m_intakeSubsystem);
+  private final IntakeCargoCommand m_intakeCargoCommand =
+      new IntakeCargoCommand(m_indexerSubsystem, m_intakeSubsystem);
 
 
 
@@ -254,4 +261,15 @@ public class RobotContainer {
         .andThen(new AutonDriveCommand(m_driveSubsystem, 0, .5)
             .withTimeout(Constants.AutonConstants.kautonDriveTime));
   }
-}
+
+  public Command TwoBallAutonCommand() {
+    return new ShooterHoodExtendCommand(m_shooterHoodSubsystem)
+                .andThen(new ShooterHighLowCommand(m_shooterHoodSubsystem, m_shooterSubsystem))
+                    .andThen(new DriveStraightCommand(m_driveSubsystem, 9.5, .6))
+                    .raceWith(new IntakeCargoCommand(m_indexerSubsystem, m_intakeSubsystem))
+                        .andThen(new DriveStraightCommand(m_driveSubsystem, -9.5, .6)) 
+                            .andThen(new ShooterHighLowCommand(m_shooterHoodSubsystem, m_shooterSubsystem));    
+  }
+
+
+}}
