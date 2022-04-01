@@ -1,9 +1,11 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Constants.ShooterConstants;
-
+import java.util.function.BooleanSupplier;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
@@ -17,6 +19,10 @@ public class ShooterSubsystem extends SubsystemBase {
   public double kD = 55 * kP;
   public double kI = 0.0;
   public double m_RPM;
+  public boolean RPMShotTune;
+  public static boolean RPMShotValid = false;
+  public static Timer timer;
+
 
   /** Creates a new ExampleSubsystem. */
   public ShooterSubsystem() {
@@ -33,15 +39,64 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public double getRPM() {
 
-    return slave1.getSelectedSensorVelocity();
+    return master.getSelectedSensorVelocity() * ShooterConstants.kTPSToRPM;
 
   }
 
-  public void setFullPower() {
+  public void setFullPowerHigh() {
     master.set(ControlMode.PercentOutput, ShooterConstants.kFullPower);
   }
 
+  public void setLowPowerHigh() {
+    master.set(ControlMode.PercentOutput, ShooterConstants.kLowGoalSpeed);
+  }
 
+  public void setFullPowerLow() {
+    master.set(ControlMode.PercentOutput, ShooterConstants.kFullPowerLow);
+  }
+
+  public void setLowPowerLow() {
+    master.set(ControlMode.PercentOutput, ShooterConstants.kLowPowerLow);
+  }
+
+  public void highGoalShooter() {
+    if (getRPM() < ShooterConstants.kHGHighRPM) {
+      setFullPowerHigh();
+
+    } else if (getRPM() > ShooterConstants.kHGLowRPM) {
+      setLowPowerHigh();
+
+    }
+  }
+  // Sets shooter power for high goal shot.
+
+  public void lowGoalShooter() {
+    if (getRPM() < ShooterConstants.kLGHighRPM) {
+      setFullPowerLow();
+
+    } else if (getRPM() > ShooterConstants.kLGLowRPM) {
+      setLowPowerLow();
+
+    }
+  }
+
+  /*
+   * if (getRPM() < ShooterConstants.kLGHighRPM) { setFullPowerLow(); } else if (getRPM() >
+   * ShooterConstants.kLGLowRPM) { setLowPowerLow(); }
+   */
+
+
+  /**
+   * Sets shooter power for lowgoal shot
+   */
+
+  public boolean getRPMShot() {
+    return RPMShotTune;
+  }
+
+  public boolean getRPMValid() {
+    return RPMShotValid;
+  }
 
   @Override
   public void periodic() {
@@ -52,7 +107,12 @@ public class ShooterSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("RPM", getRPM());
     SmartDashboard.putNumber("Error", getRPM() - m_RPM);
     SmartDashboard.putNumber("Percent Error", (getRPM() - m_RPM) / m_RPM);
-    System.out.println("RPM: " + getRPM());
+
+    // System.out.println("RPM: " + getRPM());
+    RPMShotTune = getRPM() < 1800;
+    RPMShotValid = getRPM() > 1600;
+    System.out.println(getRPM());
+    // System.out.println("RPM shot valid: " + RPMShotValid);
 
     // This method will be called once per scheduler run
   }
@@ -75,4 +135,6 @@ public class ShooterSubsystem extends SubsystemBase {
     double velRequest = rpm * ShooterConstants.kRPMToTPS / .6;
     master.set(ControlMode.Velocity, velRequest);
   }
+
+
 }

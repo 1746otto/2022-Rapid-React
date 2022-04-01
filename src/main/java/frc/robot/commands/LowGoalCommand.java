@@ -14,7 +14,7 @@ public class LowGoalCommand extends CommandBase {
   private final ShooterSubsystem m_shooter;
 
   /**
-   * Creates a new ExampleCommand.
+   * Creates a new LowGoalCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
@@ -27,7 +27,7 @@ public class LowGoalCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
+    m_shooter.setLowPowerHigh();
   }
 
   // Called once the command ends or is interrupted.

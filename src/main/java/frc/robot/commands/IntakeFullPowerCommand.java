@@ -3,6 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 
 /** An example command that uses an example subsystem. */
 public class IntakeFullPowerCommand extends CommandBase {
@@ -24,6 +25,11 @@ public class IntakeFullPowerCommand extends CommandBase {
   @Override
   public void initialize() {
     m_subsystem.runCustomPower(IntakeConstants.kIntakeCustomPower);
+  }
+
+  @Override
+  public void execute() {
+
   }
 
   // Called once the command ends or is interrupted.
