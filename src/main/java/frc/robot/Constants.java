@@ -52,8 +52,8 @@ public final class Constants {
   public static class ClimberConstants {
     public static final int kMotorR = 51;
     public static final int kMotorL = 50;
-    public static final double kClimberExtendSpeed = 0.5;
-    public static final double kClimberRetractSpeed = -0.5;
+    public static final double kClimberExtendSpeed = 0.7;
+    public static final double kClimberRetractSpeed = -0.7;
     public static final int kTopLimitSwitch = 1;
     public static final int kBottomLimitSwitch = 0;
     public static final int kChannel = 2;
