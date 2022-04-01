@@ -25,7 +25,7 @@ public class HighBarExtendCommand extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
-    m_climber.lockHighBar();
+
   }
 
   @Override
