@@ -24,8 +24,8 @@ public class TwoBallAutonCommand extends SequentialCommandGroup {
         new ParallelRaceGroup(
             new DriveStraightPIDCommand(driveSubsystem, pigeon, 9.5, AutonConstants.kautonVelocity),
             new IntakeCargoCommand(indexerSubsystem, intakeSubsystem)),
-        // new DriveStraightPIDCommand(driveSubsystem, pigeon, -9.5, AutonConstants.kautonVelocity),
-        new VisionDriveAutonCommand(driveSubsystem, visionSubsystem),
+        new DriveStraightPIDCommand(driveSubsystem, pigeon, -9.5, AutonConstants.kautonVelocity),
+        // new VisionDriveAutonCommand(driveSubsystem, visionSubsystem),
         // //temporary comment
         // out because we are not testin with vision
         new ShooterCustomRPMCommand(shooterSubsystem, ShooterConstants.kHighGoalRPM)

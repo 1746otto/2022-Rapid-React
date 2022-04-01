@@ -39,7 +39,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public double getRPM() {
 
-    return master.getSelectedSensorVelocity() * ShooterConstants.kTPSToRPM;
+    return master.getSelectedSensorVelocity(1) * ShooterConstants.kTPSToRPM;
 
   }
 
