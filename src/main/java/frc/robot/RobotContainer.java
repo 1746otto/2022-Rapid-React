@@ -149,6 +149,7 @@ public class RobotContainer {
     xBoxStart.whenHeld(new VisionTuningCommand(m_visionTuningCommand));
     xBoxA.toggleWhenPressed(new IntakeCargoCommand(m_indexerSubsystem, m_intakeSubsystem));
     xBoxRBumper2.whenPressed(new ShooterHoodToggleCommand(m_shooterHoodSubsystem));
+    xBoxLBumper2.whenHeld(new OuttakeCommand(m_indexerSubsystem, m_intakeSubsystem));
 
     /*
      * xBoxLBumper.whenHeld(m_customRPMCommand.withTimeout(Constants.AutonConstants. kSpeedUpTime)
@@ -182,7 +183,7 @@ public class RobotContainer {
      * ShooterHighLowCommand(m_shooterHoodSubsystem, m_shooterSubsystem)) .andThen(new
      * IndexerFullForwardCommand(m_indexerSubsystem).raceWith( new
      * ShooterHighLowCommand(m_shooterHoodSubsystem, m_shooterSubsystem)))));
-     * xBoxLBumper2.whenHeld(new OuttakeCommand(m_indexerSubsystem, m_intakeSubsystem));
+     * 
      */
 
   }
