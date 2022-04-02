@@ -19,9 +19,15 @@ public class ShooterSubsystem extends SubsystemBase {
   public double kD = 55 * kP;
   public double kI = 0.0;
   public double m_RPM;
+  public double feedForwardVoltage = 0.5;
+  public double error = 0;
+  public double gain = 0.2;
   public boolean RPMShotTune;
   public static boolean RPMShotValid = false;
   public static Timer timer;
+  public double setValue;
+  public double slope = 0.3;
+  public double intercept = 0.1;
 
 
   /** Creates a new ExampleSubsystem. */
@@ -67,6 +73,20 @@ public class ShooterSubsystem extends SubsystemBase {
       setLowPowerHigh();
 
     }
+  }
+
+  public void exponentialShooter() {
+    setValue = feedForwardVoltage + gain * Math.exp(error - 1);
+    master.set(ControlMode.PercentOutput, setValue);
+  }
+
+  public void linearShooter() {
+    setValue = slope * error + intercept;
+    master.set(ControlMode.PercentOutput, setValue);
+  }
+
+  public void quadraticShooter() {
+    setValue = (error *= Math.abs(error)) * slope + intercept;
   }
 
   // Sets shooter power for high goal shot.
@@ -117,6 +137,7 @@ public class ShooterSubsystem extends SubsystemBase {
     // System.out.println("RPM shot valid: " + RPMShotValid);
 
     // This method will be called once per scheduler run
+    error = ((ShooterConstants.kHGHighRPM) - getRPM()) / (ShooterConstants.kHGHighRPM);
   }
 
   @Override
