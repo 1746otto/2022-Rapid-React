@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -25,10 +26,18 @@ public class ShooterSubsystem extends SubsystemBase {
   public boolean RPMShotTune;
   public static boolean RPMShotValid = false;
   public static Timer timer;
-  public double setValue;
   public double slope = 0.3;
   public double intercept = 0.1;
 
+  // Calculate manually or with https://www.reca.lc/flywheel
+  public double kS = 1;
+  public double kV = 1;
+  public double kA = 1;
+
+  public double velocity = 10; // units/second
+  public double accel = 10; // units/second/second
+
+  SimpleMotorFeedforward m_feedforward = new SimpleMotorFeedforward(kS, kV, kA);
 
   /** Creates a new ExampleSubsystem. */
   public ShooterSubsystem() {
@@ -75,18 +84,20 @@ public class ShooterSubsystem extends SubsystemBase {
     }
   }
 
+  public void runFeedForward() {
+    master.set(ControlMode.PercentOutput, m_feedforward.calculate(velocity, accel));
+  }
+
   public void exponentialShooter() {
-    setValue = feedForwardVoltage + gain * Math.exp(error - 1);
-    master.set(ControlMode.PercentOutput, setValue);
+    master.set(ControlMode.PercentOutput, feedForwardVoltage + gain * Math.exp(error - 1));
   }
 
   public void linearShooter() {
-    setValue = slope * error + intercept;
-    master.set(ControlMode.PercentOutput, setValue);
+    master.set(ControlMode.PercentOutput, slope * error + intercept);
   }
 
   public void quadraticShooter() {
-    setValue = (error *= Math.abs(error)) * slope + intercept;
+    master.set(ControlMode.PercentOutput, (error *= Math.abs(error)) * slope + intercept);
   }
 
   // Sets shooter power for high goal shot.
