@@ -17,6 +17,11 @@ public class TwoBallAutonCommand extends SequentialCommandGroup {
       ShooterSubsystem shooterSubsystem, DriveSubsystem driveSubsystem, Vision visionSubsystem,
       PigeonIMU pigeon) {
     addCommands(
+        new ShooterCustomRPMCommand(shooterSubsystem, ShooterConstants.kHighGoalRPM)
+            .withTimeout(AutonConstants.kSpeedUpTime),
+        new ParallelRaceGroup(new IndexerFullForwardCommand(indexerSubsystem),
+            new ShooterCustomRPMCommand(shooterSubsystem, ShooterConstants.kHighGoalRPM)
+                .withTimeout(AutonConstants.kShootTime)),
         /*
          * new DriveStraightCommand(driveSubsystem, 6.5, AutonConstants.kautonVelocity), new
          * SimpleAutonTurningCommand(driveSubsystem, pigeon, 30),

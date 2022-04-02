@@ -84,10 +84,10 @@ public final class Constants {
     public static final double kRPMToTPS = 4096 / 600;
     public static final double kTPSToRPM = 1 / kRPMToTPS;
     public static final double kHighGoalRPM = 1000;
-    public static final double kHGHighRPM = 1800;
-    public static final double kHGLowRPM = 1700;
-    public static final double kLGHighRPM = 1000;
-    public static final double kLGLowRPM = 800;
+    public static final double kHGHighRPM = 1700;
+    public static final double kHGLowRPM = 1600;
+    public static final double kLGHighRPM = 1100;
+    public static final double kLGLowRPM = 1000;
     public static final double kFullPowerLow = 0.45;
     public static final double kLowPowerLow = 0.2;
   }
