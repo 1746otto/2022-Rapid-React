@@ -18,16 +18,12 @@ public class OneBallAutonCommand extends SequentialCommandGroup {
       DriveSubsystem driveSubsystem, ShooterHoodSubsystem hoodSubsystem, PigeonIMU pigeon,
       IntakeSubsystem intakeSubsystem) {
     addCommands(
-
         new ShooterExponentialCommand(hoodSubsystem, shooterSubsystem)
             .withTimeout(AutonConstants.kSpeedUpTime),
         new ParallelRaceGroup(new IndexerFullForwardCommand(indexerSubsystem),
             new ShooterExponentialCommand(hoodSubsystem, shooterSubsystem)
-                .withTimeout(AutonConstants.kShootTime)));
-
-    /*
-     * new DriveStraightPIDCommand(driveSubsystem, pigeon, 6.5, AutonConstants.kautonVelocity)
-     * .alongWith(new IntakeCargoCommand(indexerSubsystem, intakeSubsystem)));
-     */
+                .withTimeout(AutonConstants.kShootTime)),
+        new DriveStraightCommand(driveSubsystem, 6.5, AutonConstants.kautonVelocity)
+            .alongWith(new IntakeCargoCommand(indexerSubsystem, intakeSubsystem)));
   }
 }
