@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -19,9 +20,23 @@ public class ShooterSubsystem extends SubsystemBase {
   public double kD = 55 * kP;
   public double kI = 0.0;
   public double m_RPM;
+  public double feedForwardVoltage = 0.3;
+  public double error = 0;
+  public double gain = 0.002;
   public boolean RPMShotTune;
   public static boolean RPMShotValid = false;
   public static Timer timer;
+  public double slope = 0.3;
+  public double intercept = 0.1;
+
+  // Calculate manually or with https://www.reca.lc/flywheel
+  public double kS = 1;
+  public double kV = 1;
+  public double kA = 1;
+
+  public double velocity = 10; // units/second
+  public double accel = 10; // units/second/second
+
 
 
   /** Creates a new ExampleSubsystem. */
@@ -39,7 +54,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public double getRPM() {
 
-    return master.getSelectedSensorVelocity() * ShooterConstants.kTPSToRPM;
+    return master.getSelectedSensorVelocity(1) * ShooterConstants.kTPSToRPM;
 
   }
 
@@ -51,6 +66,7 @@ public class ShooterSubsystem extends SubsystemBase {
     master.set(ControlMode.PercentOutput, ShooterConstants.kLowGoalSpeed);
   }
 
+
   public void setFullPowerLow() {
     master.set(ControlMode.PercentOutput, ShooterConstants.kFullPowerLow);
   }
@@ -60,14 +76,45 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public void highGoalShooter() {
-    if (getRPM() < ShooterConstants.kHGHighRPM) {
+    if (getRPM() < ShooterConstants.kSetPointRPM) {
       setFullPowerHigh();
 
-    } else if (getRPM() > ShooterConstants.kHGLowRPM) {
+    } else if (getRPM() > ShooterConstants.kIndexerWindowLow) {
       setLowPowerHigh();
 
     }
   }
+
+  /*
+   * public void runFeedForward() { master.set(ControlMode.PercentOutput,
+   * m_feedforward.calculate(velocity, accel)); }
+   */
+
+  public void exponentialShooter() {
+    // TBD
+
+    if (getRPM() < (ShooterConstants.kSetPointRPM - 50)) {
+      feedForwardVoltage = 0.5;
+      master.set(ControlMode.PercentOutput, feedForwardVoltage);
+    } else {
+
+      feedForwardVoltage += gain * (Math.exp(error) - 1);
+      master.set(ControlMode.PercentOutput, feedForwardVoltage);
+    }
+  }
+
+  public void resetShooter() {
+    feedForwardVoltage = 0.3;
+  }
+
+  /*
+   * public void linearShooter() { master.set(ControlMode.PercentOutput, feedForwardVoltage + gain *
+   * error); }
+   * 
+   * public void quadraticShooter() { master.set(ControlMode.PercentOutput, (error *=
+   * Math.abs(error)) * gain + feedForwardVoltage); }
+   */
+
   // Sets shooter power for high goal shot.
 
   public void lowGoalShooter() {
@@ -111,10 +158,14 @@ public class ShooterSubsystem extends SubsystemBase {
     // System.out.println("RPM: " + getRPM());
     RPMShotTune = getRPM() < 1800;
     RPMShotValid = getRPM() > 1600;
+
+    System.out.println(feedForwardVoltage);
     System.out.println(getRPM());
+
     // System.out.println("RPM shot valid: " + RPMShotValid);
 
     // This method will be called once per scheduler run
+    error = ((ShooterConstants.kSetPointRPM) - getRPM()) / (ShooterConstants.kSetPointRPM);
   }
 
   @Override
