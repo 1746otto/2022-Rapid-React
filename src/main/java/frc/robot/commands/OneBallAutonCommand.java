@@ -6,6 +6,7 @@ import frc.robot.Constants.AutonConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterHoodSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
@@ -13,7 +14,8 @@ import frc.robot.subsystems.ShooterSubsystem;
 
 public class OneBallAutonCommand extends SequentialCommandGroup {
   public OneBallAutonCommand(IndexerSubsystem indexerSubsystem, ShooterSubsystem shooterSubsystem,
-      DriveSubsystem driveSubsystem, ShooterHoodSubsystem hoodSubsystem) {
+      DriveSubsystem driveSubsystem, ShooterHoodSubsystem hoodSubsystem,
+      IntakeSubsystem intakeSubsystem) {
     addCommands(
         new ShooterHighLowCommand(hoodSubsystem, shooterSubsystem)
             .withTimeout(AutonConstants.kSpeedUpTime),
@@ -21,6 +23,7 @@ public class OneBallAutonCommand extends SequentialCommandGroup {
             new ShooterHighLowCommand(hoodSubsystem, shooterSubsystem)
                 .withTimeout(AutonConstants.kShootTime)),
         new TimedDrive(driveSubsystem, AutonConstants.kautonVelocity,
-            AutonConstants.kautonDriveTime));
+            AutonConstants.kautonDriveTime)
+                .alongWith(new IntakeCargoCommand(indexerSubsystem, intakeSubsystem)));
   }
 }

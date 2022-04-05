@@ -44,15 +44,15 @@ public class IndexerSubsystem extends SubsystemBase {
   }
 
   public void runHighGoalIndexer() {
-    if (m_shooter.getRPM() > ShooterConstants.kHGLowRPM
-        && m_shooter.getRPM() < ShooterConstants.kHGHighRPM) {
+    if (m_shooter.getRPM() > ShooterConstants.kIndexerWindowLow
+        && m_shooter.getRPM() < ShooterConstants.kIndexerWindowHigh) {
       if (topBeamBreakBroken()) {
         runUpperFullForward();
       } else {
         runBothFullForward();
       }
     } else {
-      // stopUpperIndexer();
+      stopUpperIndexer();
     }
   }
 
@@ -65,7 +65,7 @@ public class IndexerSubsystem extends SubsystemBase {
         runBothFullForward();
       }
     } else {
-      // stopUpperIndexer();
+      stopUpperIndexer();
     }
   }
 

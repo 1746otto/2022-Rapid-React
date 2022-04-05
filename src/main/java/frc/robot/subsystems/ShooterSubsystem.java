@@ -20,9 +20,9 @@ public class ShooterSubsystem extends SubsystemBase {
   public double kD = 55 * kP;
   public double kI = 0.0;
   public double m_RPM;
-  public double feedForwardVoltage = 0.5;
+  public double feedForwardVoltage = 0.3;
   public double error = 0;
-  public double gain = 0.2;
+  public double gain = 0.002;
   public boolean RPMShotTune;
   public static boolean RPMShotValid = false;
   public static Timer timer;
@@ -37,7 +37,7 @@ public class ShooterSubsystem extends SubsystemBase {
   public double velocity = 10; // units/second
   public double accel = 10; // units/second/second
 
-  SimpleMotorFeedforward m_feedforward = new SimpleMotorFeedforward(kS, kV, kA);
+
 
   /** Creates a new ExampleSubsystem. */
   public ShooterSubsystem() {
@@ -66,6 +66,7 @@ public class ShooterSubsystem extends SubsystemBase {
     master.set(ControlMode.PercentOutput, ShooterConstants.kLowGoalSpeed);
   }
 
+
   public void setFullPowerLow() {
     master.set(ControlMode.PercentOutput, ShooterConstants.kFullPowerLow);
   }
@@ -75,30 +76,44 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public void highGoalShooter() {
-    if (getRPM() < ShooterConstants.kHGHighRPM) {
+    if (getRPM() < ShooterConstants.kSetPointRPM) {
       setFullPowerHigh();
 
-    } else if (getRPM() > ShooterConstants.kHGLowRPM) {
+    } else if (getRPM() > ShooterConstants.kIndexerWindowLow) {
       setLowPowerHigh();
 
     }
   }
 
-  public void runFeedForward() {
-    master.set(ControlMode.PercentOutput, m_feedforward.calculate(velocity, accel));
-  }
+  /*
+   * public void runFeedForward() { master.set(ControlMode.PercentOutput,
+   * m_feedforward.calculate(velocity, accel)); }
+   */
 
   public void exponentialShooter() {
-    master.set(ControlMode.PercentOutput, feedForwardVoltage + gain * Math.exp(error - 1));
+    // TBD
+
+    if (getRPM() < (ShooterConstants.kSetPointRPM - 50)) {
+      feedForwardVoltage = 0.5;
+      master.set(ControlMode.PercentOutput, feedForwardVoltage);
+    } else {
+
+      feedForwardVoltage += gain * (Math.exp(error) - 1);
+      master.set(ControlMode.PercentOutput, feedForwardVoltage);
+    }
   }
 
-  public void linearShooter() {
-    master.set(ControlMode.PercentOutput, slope * error + intercept);
+  public void resetShooter() {
+    feedForwardVoltage = 0.3;
   }
 
-  public void quadraticShooter() {
-    master.set(ControlMode.PercentOutput, (error *= Math.abs(error)) * slope + intercept);
-  }
+  /*
+   * public void linearShooter() { master.set(ControlMode.PercentOutput, feedForwardVoltage + gain *
+   * error); }
+   * 
+   * public void quadraticShooter() { master.set(ControlMode.PercentOutput, (error *=
+   * Math.abs(error)) * gain + feedForwardVoltage); }
+   */
 
   // Sets shooter power for high goal shot.
 
@@ -143,12 +158,14 @@ public class ShooterSubsystem extends SubsystemBase {
     // System.out.println("RPM: " + getRPM());
     RPMShotTune = getRPM() < 1800;
     RPMShotValid = getRPM() > 1600;
+
+    System.out.println(feedForwardVoltage);
     System.out.println(getRPM());
 
     // System.out.println("RPM shot valid: " + RPMShotValid);
 
     // This method will be called once per scheduler run
-    error = ((ShooterConstants.kHGHighRPM) - getRPM()) / (ShooterConstants.kHGHighRPM);
+    error = ((ShooterConstants.kSetPointRPM) - getRPM()) / (ShooterConstants.kSetPointRPM);
   }
 
   @Override

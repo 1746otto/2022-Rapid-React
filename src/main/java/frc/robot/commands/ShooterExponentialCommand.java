@@ -49,6 +49,7 @@ public class ShooterExponentialCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     m_shooter.setZeroPower();
+    m_shooter.resetShooter();
   }
 
   // Returns true when the command should end.

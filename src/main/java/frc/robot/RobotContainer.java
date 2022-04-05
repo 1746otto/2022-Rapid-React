@@ -23,6 +23,7 @@ import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.OneBallAutonCommand;
 import frc.robot.commands.OuttakeCommand;
 import frc.robot.commands.ShooterCustomRPMCommand;
+import frc.robot.commands.ShooterExponentialCommand;
 import frc.robot.commands.AutonDriveCommand;
 import frc.robot.commands.ClimberExtendCommand;
 import frc.robot.commands.ClimberRetractCommand;
@@ -162,7 +163,7 @@ public class RobotContainer {
 
 
 
-    xBoxLBumper.whenHeld(new ShooterHighLowCommand(m_shooterHoodSubsystem, m_shooterSubsystem)
+    xBoxLBumper.whenHeld(new ShooterExponentialCommand(m_shooterHoodSubsystem, m_shooterSubsystem)
         .raceWith(new IndexerFullForwardCommand(m_indexerSubsystem)));
 
 
@@ -219,7 +220,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
 
     return new OneBallAutonCommand(m_indexerSubsystem, m_shooterSubsystem, m_driveSubsystem,
-        m_shooterHoodSubsystem);
+        m_shooterHoodSubsystem, m_intakeSubsystem);
 
 
     // return new TwoBallAutonCommand(m_indexerSubsystem, m_intakeSubsystem, m_shooterSubsystem,
