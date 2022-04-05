@@ -25,7 +25,7 @@ public class ShooterSubsystem extends SubsystemBase {
   public double deltaError = 0;
   public double previousError = 0;
   public double gain = 0.002;
-  public double kpGain = 0.5 / ShooterConstants.kSetPointRPM;
+  public double kpGain = 0.5 / ShooterConstants.kSetPointRPMHigh;
   public double kdGain = 0 * kpGain;
   public boolean RPMShotTune;
   public static boolean RPMShotValid = false;
@@ -80,7 +80,7 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public void highGoalShooter() {
-    if (getRPM() < ShooterConstants.kSetPointRPM) {
+    if (getRPM() < ShooterConstants.kSetPointRPMHigh) {
       setFullPowerHigh();
 
     } else if (getRPM() > ShooterConstants.kIndexerWindowLow) {
@@ -97,7 +97,7 @@ public class ShooterSubsystem extends SubsystemBase {
   public void exponentialShooter() {
     // TBD
 
-    if (getRPM() < (ShooterConstants.kSetPointRPM - 50)) {
+    if (getRPM() < (ShooterConstants.kSetPointRPMHigh - 50)) {
       feedForwardVoltage = 0.55;
       master.set(ControlMode.PercentOutput, feedForwardVoltage);
     } else {
@@ -107,12 +107,19 @@ public class ShooterSubsystem extends SubsystemBase {
     }
   }
 
-  public void PIDShooter() {
-    error = ShooterConstants.kSetPointRPM - getRPM();
+  public void PIDShooterHigh() {
+    error = ShooterConstants.kSetPointRPMHigh - getRPM();
     deltaError = error - previousError;
     master.set(ControlMode.PercentOutput, 0.5 + error * kpGain + deltaError * kdGain);
     previousError = error;
 
+  }
+
+  public void PIDShooterLow() {
+    error = ShooterConstants.kSetPointRPMLow - getRPM();
+    deltaError = error - previousError;
+    master.set(ControlMode.PercentOutput, 0.35 + error * kpGain + deltaError * kdGain);
+    previousError = error;
   }
 
   public void resetShooter() {
@@ -177,7 +184,7 @@ public class ShooterSubsystem extends SubsystemBase {
     // System.out.println("RPM shot valid: " + RPMShotValid);
 
     // This method will be called once per scheduler run
-    error = ((ShooterConstants.kSetPointRPM) - getRPM()) / (ShooterConstants.kSetPointRPM);
+    error = ((ShooterConstants.kSetPointRPMHigh) - getRPM()) / (ShooterConstants.kSetPointRPMHigh);
   }
 
   @Override
