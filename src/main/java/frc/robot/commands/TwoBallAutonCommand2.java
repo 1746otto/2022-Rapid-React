@@ -20,8 +20,10 @@ public class TwoBallAutonCommand2 extends SequentialCommandGroup {
     /*
      * addCommands(new ShooterHoodRetractCommand(hoodSubsystem) .andThen(
      */addCommands(
-        new ShooterExponentialCommand(hoodSubsystem, shooterSubsystem)
-            .withTimeout(AutonConstants.kSpeedUpTime),
+        /*
+         * new ShooterExponentialCommand(hoodSubsystem, shooterSubsystem)
+         * .withTimeout(AutonConstants.kSpeedUpTime),
+         */
         new ParallelRaceGroup(new IndexerFullForwardCommand(indexerSubsystem),
             new ShooterExponentialCommand(hoodSubsystem, shooterSubsystem)
                 .withTimeout(AutonConstants.kShootTime)),
