@@ -21,6 +21,7 @@ public class IntakeSubsystem extends SubsystemBase {
         IntakeConstants.kIntakeSolenoid);
     omniWheels = new CANSparkMax(IntakeConstants.kIntakeOmniWheels, MotorType.kBrushless);
     omniWheels.setInverted(true);
+
   }
 
 
@@ -38,8 +39,8 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void runCustomPower(double input) {
-    intakeMotor.set(input);
-    omniWheels.set(-input);
+    intakeMotor.set(-input);
+    omniWheels.set(input);
   }
 
   public void runZeroPower() {

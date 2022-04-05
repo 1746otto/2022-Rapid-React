@@ -39,8 +39,8 @@ public final class Constants {
   }
 
   public static class IntakeConstants {
-    public static final int kIntakeMotor = 20;
-    public static final int kIntakeOmniWheels = 21;
+    public static final int kIntakeMotor = 21;
+    public static final int kIntakeOmniWheels = 20;
     public static final int kIntakeSolenoid = 11;
     public static final int kIntakeFullPower = 1;
     public static final double kIntakerunZeroPower = 0.0;
