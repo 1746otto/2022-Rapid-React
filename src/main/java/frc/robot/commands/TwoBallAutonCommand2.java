@@ -29,15 +29,16 @@ public class TwoBallAutonCommand2 extends SequentialCommandGroup {
          * new DriveStraightCommand(driveSubsystem, 6.5, AutonConstants.kautonVelocity), new
          * SimpleAutonTurningCommand(driveSubsystem, pigeon, 30),
          */
-        new DriveStraightPIDCommand(driveSubsystem, pigeon, 9.5, AutonConstants.kautonVelocity)
-            .alongWith(new IntakeCargoCommand(indexerSubsystem, intakeSubsystem))
-            .andThen(new DriveStraightPIDCommand(driveSubsystem, pigeon, -9.5,
-                AutonConstants.kautonVelocity).andThen( // new
-                                                        // VisionDriveAutonCommand(driveSubsystem,
-                    // visionSubsystem), // //temporary comment // out because we are not testin
-                    // with vision new
-                    new ParallelRaceGroup(new IndexerFullForwardCommand(indexerSubsystem),
-                        new ShooterExponentialCommand(hoodSubsystem, shooterSubsystem)))));
+        new ParallelRaceGroup(
+            new DriveStraightPIDCommand(driveSubsystem, pigeon, 9.5, AutonConstants.kautonVelocity),
+            new IntakeCargoCommand(indexerSubsystem, intakeSubsystem))
+                .andThen(new DriveStraightPIDCommand(driveSubsystem, pigeon, -9.5,
+                    AutonConstants.kautonVelocity).andThen( // new
+                                                            // VisionDriveAutonCommand(driveSubsystem,
+                        // visionSubsystem), // //temporary comment // out because we are not testin
+                        // with vision new
+                        new ParallelRaceGroup(new IndexerFullForwardCommand(indexerSubsystem),
+                            new ShooterExponentialCommand(hoodSubsystem, shooterSubsystem)))));
 
   }
 }
