@@ -39,8 +39,8 @@ public final class Constants {
   }
 
   public static class IntakeConstants {
-    public static final int kIntakeMotor = 20;
-    public static final int kIntakeOmniWheels = 21;
+    public static final int kIntakeMotor = 21;
+    public static final int kIntakeOmniWheels = 20;
     public static final int kIntakeSolenoid = 11;
     public static final int kIntakeFullPower = 1;
     public static final double kIntakerunZeroPower = 0.0;
@@ -84,9 +84,9 @@ public final class Constants {
     public static final double kRPMToTPS = 4096 / 600;
     public static final double kTPSToRPM = 1 / kRPMToTPS;
     public static final double kHighGoalRPM = 1000;
-    public static final double kIndexerWindowHigh = 2000;
-    public static final double kSetPointRPM = 1925;
-    public static final double kIndexerWindowLow = 1850;
+    public static final double kIndexerWindowHigh = 2150;
+    public static final double kSetPointRPM = 2050;
+    public static final double kIndexerWindowLow = 1950;
     public static final double kLGHighRPM = 1100;
     public static final double kLGLowRPM = 1000;
     public static final double kFullPowerLow = 0.45;
@@ -97,7 +97,7 @@ public final class Constants {
 
   public static class IndexerConstants {
     public static final double kLowerFullForward = 0.5;
-    public static final double kUpperFullForward = 0.6;
+    public static final double kUpperFullForward = 0.7;
     public static final double kLowerHalfForward = 0.5;
     public static final double kUpperHalfForward = 0.5;
     public static final double kLowerStop = 0.0;

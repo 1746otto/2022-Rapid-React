@@ -110,7 +110,7 @@ public class ShooterSubsystem extends SubsystemBase {
   public void PIDShooter() {
     error = ShooterConstants.kSetPointRPM - getRPM();
     deltaError = error - previousError;
-    master.set(ControlMode.PercentOutput, 0.45 + error * kpGain + deltaError * kdGain);
+    master.set(ControlMode.PercentOutput, 0.5 + error * kpGain + deltaError * kdGain);
     previousError = error;
 
   }
