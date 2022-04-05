@@ -22,7 +22,11 @@ public class ShooterSubsystem extends SubsystemBase {
   public double m_RPM;
   public double feedForwardVoltage = 0.3;
   public double error = 0;
+  public double deltaError = 0;
+  public double previousError = 0;
   public double gain = 0.002;
+  public double kpGain = 0.5 / ShooterConstants.kSetPointRPM;
+  public double kdGain = 0 * kpGain;
   public boolean RPMShotTune;
   public static boolean RPMShotValid = false;
   public static Timer timer;
@@ -94,13 +98,21 @@ public class ShooterSubsystem extends SubsystemBase {
     // TBD
 
     if (getRPM() < (ShooterConstants.kSetPointRPM - 50)) {
-      feedForwardVoltage = 0.5;
+      feedForwardVoltage = 0.55;
       master.set(ControlMode.PercentOutput, feedForwardVoltage);
     } else {
 
-      feedForwardVoltage += gain * (Math.exp(error) - 1);
+      feedForwardVoltage = gain * (Math.exp(error) - 1);
       master.set(ControlMode.PercentOutput, feedForwardVoltage);
     }
+  }
+
+  public void PIDShooter() {
+    error = ShooterConstants.kSetPointRPM - getRPM();
+    deltaError = error - previousError;
+    master.set(ControlMode.PercentOutput, 0.45 + error * kpGain + deltaError * kdGain);
+    previousError = error;
+
   }
 
   public void resetShooter() {

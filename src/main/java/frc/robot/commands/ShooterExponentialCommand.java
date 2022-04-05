@@ -40,7 +40,7 @@ public class ShooterExponentialCommand extends CommandBase {
   @Override
   public void execute() {
     if (ShooterHoodSubsystem.isRetracted() == true) {
-      m_shooter.exponentialShooter();
+      m_shooter.PIDShooter();
     } else if (ShooterHoodSubsystem.isRetracted() == false) {
       m_shooter.lowGoalShooter();
     }
