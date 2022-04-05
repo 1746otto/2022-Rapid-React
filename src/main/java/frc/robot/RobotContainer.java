@@ -23,6 +23,7 @@ import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.OneBallAutonCommand;
 import frc.robot.commands.OuttakeCommand;
 import frc.robot.commands.ShooterCustomRPMCommand;
+import frc.robot.commands.ShooterExponentialCommand;
 import frc.robot.commands.AutonDriveCommand;
 import frc.robot.commands.ClimberExtendCommand;
 import frc.robot.commands.ClimberRetractCommand;
@@ -149,6 +150,7 @@ public class RobotContainer {
     xBoxStart.whenHeld(new VisionTuningCommand(m_visionTuningCommand));
     xBoxA.toggleWhenPressed(new IntakeCargoCommand(m_indexerSubsystem, m_intakeSubsystem));
     xBoxRBumper2.whenPressed(new ShooterHoodToggleCommand(m_shooterHoodSubsystem));
+    xBoxLBumper2.whenHeld(new OuttakeCommand(m_indexerSubsystem, m_intakeSubsystem));
 
     /*
      * xBoxLBumper.whenHeld(m_customRPMCommand.withTimeout(Constants.AutonConstants. kSpeedUpTime)
@@ -161,16 +163,15 @@ public class RobotContainer {
 
 
 
-    xBoxLBumper.whenHeld(new ShooterHighLowCommand(m_shooterHoodSubsystem, m_shooterSubsystem)
+    xBoxLBumper.whenHeld(new ShooterExponentialCommand(m_shooterHoodSubsystem, m_shooterSubsystem)
         .raceWith(new IndexerFullForwardCommand(m_indexerSubsystem)));
 
 
     /*
      * .andThen(new IndexerUpperCommand(m_indexerSubsystem)
      * .withTimeout(IndexerConstants.kTwoBallDelay) .raceWith(new
-     * ShooterFullPowerCommand(m_shooterSubsystem)) .andThen(new
-     * IndexerFullForwardCommand(m_indexerSubsystem) .raceWith(new
-     * ShooterFullPowerCommand(m_shooterSubsystem)))));
+     * ShooterFullPowerCommand(m_shooterSubsystem)) .andThen(new IndexerFullForwardCommand(m_01
+     * indexerSubsystem) .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem)))));
      */
     /**
      *
@@ -182,7 +183,7 @@ public class RobotContainer {
      * ShooterHighLowCommand(m_shooterHoodSubsystem, m_shooterSubsystem)) .andThen(new
      * IndexerFullForwardCommand(m_indexerSubsystem).raceWith( new
      * ShooterHighLowCommand(m_shooterHoodSubsystem, m_shooterSubsystem)))));
-     * xBoxLBumper2.whenHeld(new OuttakeCommand(m_indexerSubsystem, m_intakeSubsystem));
+     * 
      */
 
   }
@@ -217,9 +218,15 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // return new OneBallAutonCommand(m_indexerSubsystem, m_shooterSubsystem, m_driveSubsystem);
-    return new TwoBallAutonCommand(m_indexerSubsystem, m_intakeSubsystem, m_shooterSubsystem,
-        m_driveSubsystem, m_visionSubsystem, m_pigeon);
+
+    return new OneBallAutonCommand(m_indexerSubsystem, m_shooterSubsystem, m_driveSubsystem,
+        m_shooterHoodSubsystem, m_intakeSubsystem);
+
+
+    // return new TwoBallAutonCommand(m_indexerSubsystem, m_intakeSubsystem, m_shooterSubsystem,
+    // m_driveSubsystem, m_visionSubsystem, m_pigeon, m_shooterHoodSubsystem);
+
+
   }
 
   /*

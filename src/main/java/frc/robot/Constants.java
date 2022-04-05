@@ -52,8 +52,8 @@ public final class Constants {
   public static class ClimberConstants {
     public static final int kMotorR = 51;
     public static final int kMotorL = 50;
-    public static final double kClimberExtendSpeed = 0.5;
-    public static final double kClimberRetractSpeed = -0.5;
+    public static final double kClimberExtendSpeed = 0.7;
+    public static final double kClimberRetractSpeed = -0.7;
     public static final int kTopLimitSwitch = 1;
     public static final int kBottomLimitSwitch = 0;
     public static final int kChannel = 2;
@@ -65,7 +65,7 @@ public final class Constants {
 
   public static class AutonConstants {
     public static final double kautonVelocity = 0.6;
-    public static final double kautonDriveTime = 2.0;
+    public static final double kautonDriveTime = 1.5;
     public static final double kautonSpeedBackwards = 0.7;
     public static double kSpeedUpTime = 2;
     public static double kShootTime = 4.0;
@@ -80,14 +80,15 @@ public final class Constants {
     public static final int kIndexerMotor = 30;
     public static final double kFullPower = 0.7;
     public static final int kZeroPower = 0;
-    public static final double kLowGoalSpeed = 0.4;
+    public static final double kLowGoalSpeed = 0.3;
     public static final double kRPMToTPS = 4096 / 600;
     public static final double kTPSToRPM = 1 / kRPMToTPS;
     public static final double kHighGoalRPM = 1000;
-    public static final double kHGHighRPM = 1750;
-    public static final double kHGLowRPM = 1650;
-    public static final double kLGHighRPM = 900;
-    public static final double kLGLowRPM = 700;
+    public static final double kIndexerWindowHigh = 2000;
+    public static final double kSetPointRPM = 1925;
+    public static final double kIndexerWindowLow = 1850;
+    public static final double kLGHighRPM = 1100;
+    public static final double kLGLowRPM = 1000;
     public static final double kFullPowerLow = 0.45;
     public static final double kLowPowerLow = 0.2;
   }
@@ -96,7 +97,7 @@ public final class Constants {
 
   public static class IndexerConstants {
     public static final double kLowerFullForward = 0.5;
-    public static final double kUpperFullForward = 1;
+    public static final double kUpperFullForward = 0.6;
     public static final double kLowerHalfForward = 0.5;
     public static final double kUpperHalfForward = 0.5;
     public static final double kLowerStop = 0.0;
