@@ -17,10 +17,10 @@ public class OneBallAutonCommand extends SequentialCommandGroup {
       DriveSubsystem driveSubsystem, ShooterHoodSubsystem hoodSubsystem,
       IntakeSubsystem intakeSubsystem) {
     addCommands(
-        new ShooterHighLowCommand(hoodSubsystem, shooterSubsystem)
+        new ShooterExponentialCommand(hoodSubsystem, shooterSubsystem)
             .withTimeout(AutonConstants.kSpeedUpTime),
         new ParallelRaceGroup(new IndexerFullForwardCommand(indexerSubsystem),
-            new ShooterHighLowCommand(hoodSubsystem, shooterSubsystem)
+            new ShooterExponentialCommand(hoodSubsystem, shooterSubsystem)
                 .withTimeout(AutonConstants.kShootTime)),
         new DriveStraightCommand(driveSubsystem, 6.5, AutonConstants.kautonVelocity)
             .alongWith(new IntakeCargoCommand(indexerSubsystem, intakeSubsystem)));
