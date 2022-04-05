@@ -18,7 +18,7 @@ public class TwoBallAutonCommand2 extends SequentialCommandGroup {
       ShooterSubsystem shooterSubsystem, DriveSubsystem driveSubsystem, Vision visionSubsystem,
       PigeonIMU pigeon, ShooterHoodSubsystem hoodSubsystem) {
     addCommands(new ShooterHoodExtendCommand(hoodSubsystem)
-        .andThen(new ShooterHighLowCommand(hoodSubsystem, shooterSubsystem)).andThen(
+        .andThen(new ShooterExponentialCommand(hoodSubsystem, shooterSubsystem)).andThen(
             /*
              * new DriveStraightCommand(driveSubsystem, 6.5, AutonConstants.kautonVelocity), new
              * SimpleAutonTurningCommand(driveSubsystem, pigeon, 30),
