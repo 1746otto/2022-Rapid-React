@@ -23,7 +23,7 @@ public class OneBallAutonCommand extends SequentialCommandGroup {
          * IndexerFullForwardCommand(indexerSubsystem), new ShooterExponentialCommand(hoodSubsystem,
          * shooterSubsystem) .withTimeout(AutonConstants.kShootTime)),
          */
-        new DriveStraightCommand(driveSubsystem, 6.5, AutonConstants.kautonVelocity)
+        new DriveStraightPIDCommand(driveSubsystem, pigeon, 6.5, AutonConstants.kautonVelocity)
             .alongWith(new IntakeCargoCommand(indexerSubsystem, intakeSubsystem)));
   }
 }
