@@ -28,6 +28,7 @@ import frc.robot.commands.AutonDriveCommand;
 import frc.robot.commands.ClimberExtendCommand;
 import frc.robot.commands.ClimberRetractCommand;
 import frc.robot.commands.ClimberStopCommand;
+import frc.robot.commands.FullAutonCommand;
 import frc.robot.commands.HighBarExtendCommand;
 import frc.robot.commands.ReleaseMidBarHook;
 import frc.robot.commands.IndexerFullForwardCommand;
@@ -38,6 +39,7 @@ import frc.robot.commands.LowGoalCommand;
 import frc.robot.commands.ShooterFullPowerCommand;
 import frc.robot.commands.TopIndexerIntakeCommand;
 import frc.robot.commands.TwoBallAutonCommand;
+import frc.robot.commands.TwoBallAutonCommand2;
 import frc.robot.commands.ShooterHighLowCommand;
 import frc.robot.commands.ShooterHoodExtendCommand;
 import frc.robot.commands.ShooterHoodRetractCommand;
@@ -219,8 +221,8 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
 
-    return new OneBallAutonCommand(m_indexerSubsystem, m_shooterSubsystem, m_driveSubsystem,
-        m_shooterHoodSubsystem, m_intakeSubsystem);
+    return new TwoBallAutonCommand2(m_indexerSubsystem, m_intakeSubsystem, m_shooterSubsystem,
+        m_driveSubsystem, m_visionSubsystem, m_pigeon, m_shooterHoodSubsystem);
 
 
     // return new TwoBallAutonCommand(m_indexerSubsystem, m_intakeSubsystem, m_shooterSubsystem,
