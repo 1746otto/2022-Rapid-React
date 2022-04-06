@@ -24,19 +24,23 @@ public class StupidTimedTurningCommand extends CommandBase {
   @Override
   public void initialize() {
     m_timer.start();
+  }
+
+  @Override
+  public void execute() {
     m_drive.setr(0.16);
     m_drive.setl(-0.32);
   }
 
   @Override
   public void end(boolean interrupted) {
-    m_drive.arcadeDrive(0, 0);
+    m_drive.setr(0);
+    m_drive.setl(0);
     m_timer.stop();
     m_timer.reset();
   }
 
-  @Override
-  public boolean isFinished() {
-    return m_timer.getFPGATimestamp() >= m_time;
-  }
+  /*
+   * @Override public boolean isFinished() { return m_timer.getFPGATimestamp() >= m_time; }
+   */
 }

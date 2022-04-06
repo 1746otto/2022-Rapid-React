@@ -34,25 +34,20 @@ public class SimpleAutonTurningCommand extends CommandBase {
       System.out.println("invalid state");
     }
     if (m_passedFinish) {
-      m_driveSubsystem.arcadeDrive(0,
-          (m_angle - m_pigeon.getFusedHeading()) / 360 * DriveConstants.kSafeTurnSpeed
-              + DriveConstants.kSafeTurnSpeed);
+      m_driveSubsystem.arcadeDrive(0, (m_angle - m_pigeon.getFusedHeading() % 360) / 180);
 
     } else {
       if (m_angle < 0) {
-        if (m_pigeon.getFusedHeading() >= m_angle) {
+        if (m_pigeon.getFusedHeading() % 360 >= m_angle) {
           m_passedFinish = true;
         } else {
           m_driveSubsystem.arcadeDrive(0,
-              -1 * ((m_angle - m_pigeon.getFusedHeading()) / 360 * DriveConstants.kSafeTurnSpeed
-                  + DriveConstants.kSafeTurnSpeed));
+              -1 * ((m_angle - m_pigeon.getFusedHeading() % 360) / 180));
         }
-      } else if (m_pigeon.getFusedHeading() >= m_angle) {
+      } else if (m_pigeon.getFusedHeading() % 360 >= m_angle) {
         m_passedFinish = true;
       } else {
-        m_driveSubsystem.arcadeDrive(0,
-            (m_angle - m_pigeon.getFusedHeading()) / 360 * DriveConstants.kSafeTurnSpeed
-                + DriveConstants.kSafeTurnSpeed);
+        m_driveSubsystem.arcadeDrive(0, (m_angle - m_pigeon.getFusedHeading() % 360) / 180);
       }
     }
   }
@@ -66,10 +61,10 @@ public class SimpleAutonTurningCommand extends CommandBase {
   @Override
   public boolean isFinished() {
     if (m_angle > 0) {
-      if (m_pigeon.getFusedHeading() * 360 >= m_angle && m_passedFinish) {
+      if (Math.abs(m_pigeon.getFusedHeading() % 360) >= Math.abs(m_angle) && m_passedFinish) {
         return true;
       }
-    } else if (m_pigeon.getFusedHeading() * 360 <= m_angle && m_passedFinish) {
+    } else if (Math.abs(m_pigeon.getFusedHeading() % 360) <= Math.abs(m_angle) && m_passedFinish) {
       return true;
     }
     return false;

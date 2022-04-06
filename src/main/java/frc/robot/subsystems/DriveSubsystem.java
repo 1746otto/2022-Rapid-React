@@ -193,8 +193,8 @@ public class DriveSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    System.out.println("Yaw is " + m_pigeon.getYaw());
-    System.out.println("fused heading is " + m_pigeon.getFusedHeading());
+    System.out.println("Yaw is " + m_pigeon.getYaw() % 360);
+    System.out.println("fused heading is " + m_pigeon.getFusedHeading() % 360);
     System.out.println("pitch is " + m_pigeon.getPitch());
     System.out.println("roll is " + m_pigeon.getRoll());
   }
