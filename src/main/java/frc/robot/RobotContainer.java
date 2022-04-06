@@ -10,6 +10,7 @@ import org.ejml.equation.IntegerSequence.Explicit;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
@@ -87,7 +88,7 @@ public class RobotContainer {
       new VisionDriveCommand(m_driveSubsystem, m_controller, m_visionSubsystem);
   private final IndexerSubsystem m_indexerSubsystem = new IndexerSubsystem(m_shooterSubsystem);
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
-
+  private final Timer m_timer = new Timer();
 
   private final Compressor compressor =
       new Compressor(RobotConstants.kREVPH, PneumaticsModuleType.REVPH);
@@ -223,7 +224,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
 
     return new ThreeBallAutonCommand(m_indexerSubsystem, m_intakeSubsystem, m_shooterSubsystem,
-        m_driveSubsystem, m_visionSubsystem, m_pigeon, m_shooterHoodSubsystem, 45);
+        m_driveSubsystem, m_visionSubsystem, m_pigeon, m_shooterHoodSubsystem, 45, m_timer);
 
 
     // return new TwoBallAutonCommand(m_indexerSubsystem, m_intakeSubsystem, m_shooterSubsystem,

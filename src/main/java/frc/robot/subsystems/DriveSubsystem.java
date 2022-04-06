@@ -182,6 +182,14 @@ public class DriveSubsystem extends SubsystemBase {
     m_leftLeader.set((forward + rotation) / 2);
   }
 
+  public void setr(double forward) {
+    m_rightLeader.set(forward);
+  }
+
+  public void setl(double forward) {
+    m_leftLeader.set(forward);
+  }
+
 
   @Override
   public void periodic() {

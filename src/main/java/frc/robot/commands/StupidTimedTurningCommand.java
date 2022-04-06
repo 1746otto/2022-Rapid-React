@@ -24,7 +24,8 @@ public class StupidTimedTurningCommand extends CommandBase {
   @Override
   public void initialize() {
     m_timer.start();
-    m_drive.arcadeDrive(m_forward, m_rotation);
+    m_drive.setr(0.16);
+    m_drive.setl(-0.32);
   }
 
   @Override

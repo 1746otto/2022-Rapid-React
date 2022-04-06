@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.AutonConstants;
@@ -16,10 +17,10 @@ import frc.robot.commands.DriveStraightPIDCommand;
 public class ThreeBallAutonCommand extends SequentialCommandGroup {
   public ThreeBallAutonCommand(IndexerSubsystem indexerSubsystem, IntakeSubsystem intakeSubsystem,
       ShooterSubsystem shooterSubsystem, DriveSubsystem driveSubsystem, Vision visionSubsystem,
-      PigeonIMU pigeon, ShooterHoodSubsystem hoodSubsystem, double angle) {
+      PigeonIMU pigeon, ShooterHoodSubsystem hoodSubsystem, double angle, Timer timer) {
     /*
      * addCommands(new ShooterHoodRetractCommand(hoodSubsystem) .andThen(
-     */addCommands(new SimpleAutonTurningCommand(driveSubsystem, pigeon, angle));
+     */addCommands(new StupidTimedTurningCommand(driveSubsystem, 5, timer, 0.16, -0.32));
 
   }
 }
