@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import java.lang.reflect.Type;
+import com.ctre.phoenix.sensors.PigeonIMU;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -20,6 +21,7 @@ public class DriveSubsystem extends SubsystemBase {
   private double forwardComponent;
   private double rotationComponent;
   private double sumComponents;
+  private final PigeonIMU m_pigeon = new PigeonIMU(6);
 
   public DriveSubsystem() {
     m_leftLeader.setInverted(true);
@@ -178,6 +180,11 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
 
+  @Override
+  public void periodic() {
+    System.out.println("Yaw is " + m_pigeon.getYaw());
+    System.out.println("fused heading is " + m_pigeon.getFusedHeading());
+  }
 
   public void stop() {
     m_rightLeader.set(0);

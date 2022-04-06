@@ -16,18 +16,18 @@ public class SimpleAutonTurningCommand extends CommandBase {
   public SimpleAutonTurningCommand(DriveSubsystem driveSubsystem, PigeonIMU pigeon, double angle) {
     m_driveSubsystem = driveSubsystem;
     m_pigeon = pigeon;
-    m_angle = Math.abs(angle);
+    m_angle = angle;
   }
 
   @Override
   public void initialize() {
-
-
-    m_pigeon.setYaw(0);
+    // m_pigeon.setYaw(0);
+    m_pigeon.setFusedHeading(0);
     m_driveSubsystem.arcadeDrive(0, (m_angle <= 0 ? -1 : 1) * DriveConstants.kSafeTurnSpeed);
   }
 
   // look over this code again it is probably wrong
+
   @Override
   public void execute() {
     if (m_pigeon.getState() != PigeonIMU.PigeonState.Ready) {
@@ -35,23 +35,23 @@ public class SimpleAutonTurningCommand extends CommandBase {
     }
     if (m_passedFinish) {
       m_driveSubsystem.arcadeDrive(0,
-          (m_angle - m_pigeon.getYaw()) / 360 * DriveConstants.kSafeTurnSpeed
+          (m_angle - m_pigeon.getFusedHeading()) / 360 * DriveConstants.kSafeTurnSpeed
               + DriveConstants.kSafeTurnSpeed);
 
     } else {
       if (m_angle < 0) {
-        if (m_pigeon.getYaw() >= m_angle) {
+        if (m_pigeon.getFusedHeading() >= m_angle) {
           m_passedFinish = true;
         } else {
           m_driveSubsystem.arcadeDrive(0,
-              -1 * ((m_angle - m_pigeon.getYaw()) / 360 * DriveConstants.kSafeTurnSpeed
+              -1 * ((m_angle - m_pigeon.getFusedHeading()) / 360 * DriveConstants.kSafeTurnSpeed
                   + DriveConstants.kSafeTurnSpeed));
         }
-      } else if (m_pigeon.getYaw() >= m_angle) {
+      } else if (m_pigeon.getFusedHeading() >= m_angle) {
         m_passedFinish = true;
       } else {
         m_driveSubsystem.arcadeDrive(0,
-            (m_angle - m_pigeon.getYaw()) / 360 * DriveConstants.kSafeTurnSpeed
+            (m_angle - m_pigeon.getFusedHeading()) / 360 * DriveConstants.kSafeTurnSpeed
                 + DriveConstants.kSafeTurnSpeed);
       }
     }
@@ -60,21 +60,21 @@ public class SimpleAutonTurningCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     m_driveSubsystem.arcadeDrive(0, 0);
-    m_pigeon.setYaw(0);
+    m_pigeon.setFusedHeading(0);
   }
-
 
   @Override
   public boolean isFinished() {
     if (m_angle > 0) {
-      if (m_pigeon.getYaw() * 360 >= m_angle && m_passedFinish) {
+      if (m_pigeon.getFusedHeading() * 360 >= m_angle && m_passedFinish) {
         return true;
       }
-    } else if (m_pigeon.getYaw() * 360 <= m_angle && m_passedFinish) {
+    } else if (m_pigeon.getFusedHeading() * 360 <= m_angle && m_passedFinish) {
       return true;
     }
     return false;
   }
+
 
 
 }
