@@ -25,6 +25,7 @@ import frc.robot.commands.OuttakeCommand;
 import frc.robot.commands.ShooterCustomRPMCommand;
 import frc.robot.commands.ShooterExponentialCommand;
 import frc.robot.commands.AutonDriveCommand;
+import frc.robot.commands.AutonTurningCommand;
 import frc.robot.commands.ClimberExtendCommand;
 import frc.robot.commands.ClimberRetractCommand;
 import frc.robot.commands.ClimberStopCommand;
@@ -218,9 +219,8 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-
-    return new OneBallAutonCommand(m_indexerSubsystem, m_shooterSubsystem, m_driveSubsystem,
-        m_shooterHoodSubsystem, m_intakeSubsystem);
+    return new AutonTurningCommand(m_driveSubsystem, m_pigeon, 90);
+    // return new AutonTurningCommand(m_driveSubsystem, m_pigeon, 90);
 
 
     // return new TwoBallAutonCommand(m_indexerSubsystem, m_intakeSubsystem, m_shooterSubsystem,
