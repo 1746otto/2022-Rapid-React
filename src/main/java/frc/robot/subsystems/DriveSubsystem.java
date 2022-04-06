@@ -151,6 +151,9 @@ public class DriveSubsystem extends SubsystemBase {
 
     m_rightLeader.set(forward - rotation);
     m_leftLeader.set(forward + rotation);
+
+    System.out.println("forward is " + (forward - rotation));
+    System.out.println("rotation is " + (rotation + rotation));
   }
 
 
