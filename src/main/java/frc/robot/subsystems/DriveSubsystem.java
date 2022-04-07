@@ -9,7 +9,9 @@ import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.DriveConstants;
 
 public class DriveSubsystem extends SubsystemBase {
-
+  public final double kpGain = 1 / 360;
+  public double m_angle;
+  public boolean m_passedFinish = false;
   private final CANSparkMax m_rightLeader =
       new CANSparkMax(DriveConstants.krightDriveLeader, MotorType.kBrushless);
   private final CANSparkMax m_rightFollow =
@@ -153,7 +155,6 @@ public class DriveSubsystem extends SubsystemBase {
     m_leftLeader.set(forward + rotation);
   }
 
-
   public double getLeftRotations() {
     return m_leftLeader.getEncoder().getPosition();
   }
@@ -175,17 +176,35 @@ public class DriveSubsystem extends SubsystemBase {
    * Type.MatchCompass, 0); }
    */
   public void stupidArcadeDrive(double forward, double rotation) {
-    m_rightLeader.set((forward - rotation) / 2);
-    m_leftLeader.set((forward + rotation) / 2);
+    m_rightLeader.set(forward - rotation);
+    m_leftLeader.set(forward + rotation);
   }
 
+  public double error = 0;
+
+  public void autonTurning(double angle) {
+    m_angle = angle;
+    System.out.println(error);
+    System.out.println(m_pigeon.getFusedHeading());
+    if (m_angle != m_pigeon.getFusedHeading()) {
+      System.out.println("running");
+      stupidArcadeDrive(0, error * kpGain);
+      System.out.println("Error:" + error * kpGain);
+    } else {
+      arcadeDrive(0, 0);
+      m_passedFinish = true;
+      System.out.println("finished");
+    }
+    if (m_pigeon.getState() != PigeonIMU.PigeonState.Ready) {
+      System.out.println("invalid state");
+    }
+
+  }
 
   @Override
   public void periodic() {
-    System.out.println("Yaw is " + m_pigeon.getYaw());
-    System.out.println("fused heading is " + m_pigeon.getFusedHeading());
-    System.out.println("pitch is " + m_pigeon.getPitch());
-    System.out.println("roll is " + m_pigeon.getRoll());
+    error = m_angle - m_pigeon.getFusedHeading();
+
   }
 
   public void stop() {

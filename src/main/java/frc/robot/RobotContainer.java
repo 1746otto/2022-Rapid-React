@@ -61,6 +61,7 @@ import frc.robot.commands.ShooterFullPowerCommand;
 import frc.robot.commands.ShooterPIDTuningCommand;
 import frc.robot.commands.ShooterTuning2Command;
 import frc.robot.commands.ShooterTuningCommand;
+import frc.robot.commands.SimpleAutonTurningCommand;
 import frc.robot.commands.ThreeBallAutonCommand;
 import frc.robot.commands.VisionDriveCommand;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -222,13 +223,15 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
 
-    return new TwoBallAutonCommand2(m_indexerSubsystem, m_intakeSubsystem, m_shooterSubsystem,
-        m_driveSubsystem, m_visionSubsystem, m_pigeon, m_shooterHoodSubsystem);
+    /*
+     * return new TwoBallAutonCommand2(m_indexerSubsystem, m_intakeSubsystem, m_shooterSubsystem,
+     * m_driveSubsystem, m_visionSubsystem, m_pigeon, m_shooterHoodSubsystem);
+     */
 
 
     // return new TwoBallAutonCommand(m_indexerSubsystem, m_intakeSubsystem, m_shooterSubsystem,
     // m_driveSubsystem, m_visionSubsystem, m_pigeon, m_shooterHoodSubsystem);
-
+    return new SimpleAutonTurningCommand(m_driveSubsystem, m_pigeon, 90);
 
   }
 
