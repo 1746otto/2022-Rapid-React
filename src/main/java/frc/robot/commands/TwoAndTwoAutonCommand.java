@@ -17,18 +17,32 @@ public class TwoAndTwoAutonCommand extends SequentialCommandGroup {
   public TwoAndTwoAutonCommand(IndexerSubsystem indexerSubsystem, IntakeSubsystem intakeSubsystem,
       ShooterSubsystem shooterSubsystem, DriveSubsystem driveSubsystem, Vision visionSubsystem,
       PigeonIMU pigeon, ShooterHoodSubsystem hoodSubsystem) {
-    addCommands(
-        new ParallelRaceGroup(new IndexerFullForwardCommand(indexerSubsystem),
-            new ShooterExponentialCommand(hoodSubsystem, shooterSubsystem)
-                .withTimeout(AutonConstants.kShootTime)),
+    addCommands(new ParallelRaceGroup(
+        new DriveStraightPIDCommand(driveSubsystem, pigeon, 8.5, AutonConstants.kautonVelocity), // Remember
+                                                                                                 // to
+                                                                                                 // change
+                                                                                                 // back
+                                                                                                 // autonvelocity
+                                                                                                 // to
+                                                                                                 // 0.6
+        new IntakeCargoCommand(indexerSubsystem, intakeSubsystem)).andThen(
+            new DriveStraightPIDCommand(driveSubsystem, pigeon, -8.5, AutonConstants.kautonVelocity)
+                .andThen(new ParallelRaceGroup(new IndexerFullForwardCommand(indexerSubsystem),
+                    new ShooterExponentialCommand(hoodSubsystem, shooterSubsystem))))
+            .andThen(new DriveStraightPIDCommand(driveSubsystem, pigeon, 8.5,
+                AutonConstants.kautonVelocity))
+            .andThen(new SimpleAutonTurningCommand(driveSubsystem, pigeon, 83))
+            .andThen(new ParallelRaceGroup(
+                new DriveStraightPIDCommand(driveSubsystem, pigeon, 4.5,
+                    AutonConstants.kautonVelocity),
+                new IntakeCargoCommand(indexerSubsystem, intakeSubsystem))),
+        new SimpleAutonTurningCommand(driveSubsystem, pigeon, 330),
         new ParallelRaceGroup(
-            new DriveStraightPIDCommand(driveSubsystem, pigeon, 8.5, AutonConstants.kautonVelocity),
+            new DriveStraightPIDCommand(driveSubsystem, pigeon, -10, AutonConstants.kautonVelocity),
             new IntakeCargoCommand(indexerSubsystem, intakeSubsystem))
-                .andThen(new DriveStraightPIDCommand(driveSubsystem, pigeon, -8.5,
-                    AutonConstants.kautonVelocity).andThen(
-                        new ParallelRaceGroup(new IndexerFullForwardCommand(indexerSubsystem),
-                            new ShooterExponentialCommand(hoodSubsystem, shooterSubsystem)))),
-        new DriveStraightPIDCommand(driveSubsystem, pigeon, -8.5, AutonConstants.kautonVelocity));
+                .andThen(new ShooterHoodExtendCommand(hoodSubsystem))
+                .andThen(new ParallelRaceGroup(new IndexerFullForwardCommand(indexerSubsystem),
+                    new ShooterExponentialCommand(hoodSubsystem, shooterSubsystem))));
   }
 }
 
