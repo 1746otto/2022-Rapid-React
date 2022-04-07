@@ -12,7 +12,7 @@ public class SimpleAutonTurningCommand extends CommandBase {
   public final double m_angle;
   public boolean m_passedFinish;
   public double error = 0;
-  public final double kpGain = (2 / 360.0);
+  public final double kpGain = -(1.9 / 360.0);
 
 
   public SimpleAutonTurningCommand(DriveSubsystem driveSubsystem, PigeonIMU pigeon, double angle) {
@@ -27,7 +27,7 @@ public class SimpleAutonTurningCommand extends CommandBase {
   public void initialize() {
     // m_pigeon.setYaw(0);
     m_pigeon.setFusedHeading(0);
-    m_driveSubsystem.stupidArcadeDrive(0, 1);
+
 
     // m_driveSubsystem.arcadeDrive(0, (m_angle < 0 ? -1 : 1) * DriveConstants.kSafeTurnSpeed);
   }
@@ -50,6 +50,22 @@ public class SimpleAutonTurningCommand extends CommandBase {
      * m_driveSubsystem.arcadeDrive(0, (m_angle - m_pigeon.getFusedHeading()) / 360 *
      * DriveConstants.kSafeTurnSpeed + DriveConstants.kSafeTurnSpeed); } }
      */
+    error = m_angle - m_pigeon.getFusedHeading();
+    System.out.println("angle error:" + error);
+    System.out.println("angle:" + m_pigeon.getFusedHeading());
+    if (m_angle != m_pigeon.getFusedHeading()) {
+      System.out.println("running");
+      m_driveSubsystem.stupidArcadeDrive(0, error * kpGain);
+
+    } else {
+      m_driveSubsystem.stupidArcadeDrive(0, 0);
+      m_passedFinish = true;
+      System.out.println("finished");
+    }
+    if (m_pigeon.getState() != PigeonIMU.PigeonState.Ready) {
+      System.out.println("invalid state");
+      m_driveSubsystem.stupidArcadeDrive(0, 0);
+    }
 
   }
 

@@ -203,7 +203,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    error = m_angle - m_pigeon.getFusedHeading();
+
 
   }
 
