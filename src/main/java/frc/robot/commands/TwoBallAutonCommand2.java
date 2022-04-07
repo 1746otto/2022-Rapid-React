@@ -32,9 +32,9 @@ public class TwoBallAutonCommand2 extends SequentialCommandGroup {
          * SimpleAutonTurningCommand(driveSubsystem, pigeon, 30),
          */
         new ParallelRaceGroup(
-            new DriveStraightPIDCommand(driveSubsystem, pigeon, 8.5, AutonConstants.kautonVelocity),
+            new DriveStraightPIDCommand(driveSubsystem, pigeon, 7.9, AutonConstants.kautonVelocity),
             new IntakeCargoCommand(indexerSubsystem, intakeSubsystem))
-                .andThen(new DriveStraightPIDCommand(driveSubsystem, pigeon, -8.5,
+                .andThen(new DriveStraightPIDCommand(driveSubsystem, pigeon, -8.4,
                     AutonConstants.kautonVelocity).andThen( // new
                                                             // VisionDriveAutonCommand(driveSubsystem,
                         // visionSubsystem), // //temporary comment // out because we are not testin

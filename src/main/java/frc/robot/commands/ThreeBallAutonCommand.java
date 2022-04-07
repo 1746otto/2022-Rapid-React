@@ -19,9 +19,36 @@ public class ThreeBallAutonCommand extends SequentialCommandGroup {
       PigeonIMU pigeon, ShooterHoodSubsystem hoodSubsystem, double angle) {
     /*
      * addCommands(new ShooterHoodRetractCommand(hoodSubsystem) .andThen(
-     */addCommands(new SimpleAutonTurningCommand(driveSubsystem, pigeon, angle));
+     */
+    addCommands(
+        /*
+         * new ShooterExponentialCommand(hoodSubsystem, shooterSubsystem)
+         * .withTimeout(AutonConstants.kSpeedUpTime),
+         */
+        new ParallelRaceGroup(new IndexerFullForwardCommand(indexerSubsystem),
+            new ShooterExponentialCommand(hoodSubsystem, shooterSubsystem)
+                .withTimeout(AutonConstants.kShootTime)),
+        /*
+         * new DriveStraightCommand(driveSubsystem, 6.5, AutonConstants.kautonVelocity), new
+         * SimpleAutonTurningCommand(driveSubsystem, pigeon, 30),
+         */
+        new ParallelRaceGroup(
+            new DriveStraightPIDCommand(driveSubsystem, pigeon, 8.5, AutonConstants.kautonVelocity),
+            new IntakeCargoCommand(indexerSubsystem, intakeSubsystem)),
+        new SimpleAutonTurningCommand(driveSubsystem, pigeon, 69.43),
+        new ParallelRaceGroup(
+            new DriveStraightPIDCommand(driveSubsystem, pigeon, 9.83969,
+                AutonConstants.kautonVelocity),
+            new IntakeCargoCommand(indexerSubsystem, intakeSubsystem)),
+        new DriveStraightPIDCommand(driveSubsystem, pigeon, 4.833333333333,
+            AutonConstants.kautonVelocity),
+        new SimpleAutonTurningCommand(driveSubsystem, pigeon, -84),
+        new DriveStraightPIDCommand(driveSubsystem, pigeon, 9.3333333,
+            AutonConstants.kautonVelocity),
+        new ParallelRaceGroup(new IndexerFullForwardCommand(indexerSubsystem),
+            new ShooterExponentialCommand(hoodSubsystem, shooterSubsystem)));
 
   }
+
+
 }
-
-
