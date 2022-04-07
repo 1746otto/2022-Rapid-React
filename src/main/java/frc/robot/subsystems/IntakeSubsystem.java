@@ -38,7 +38,7 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void runCustomPower(double input) {
-    intakeMotor.set(input);
+    intakeMotor.set(-input); // Note change in intake
     omniWheels.set(input);
   }
 
