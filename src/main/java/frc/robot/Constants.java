@@ -52,8 +52,8 @@ public final class Constants {
   public static class ClimberConstants {
     public static final int kMotorR = 51;
     public static final int kMotorL = 50;
-    public static final double kClimberExtendSpeed = 0.7;
-    public static final double kClimberRetractSpeed = -0.7;
+    public static final double kClimberExtendSpeed = 0.9;
+    public static final double kClimberRetractSpeed = -0.9;
     public static final int kTopLimitSwitch = 1;
     public static final int kBottomLimitSwitch = 0;
     public static final int kChannel = 2;
@@ -89,7 +89,7 @@ public final class Constants {
     public static final double kIndexerWindowLow = 1650;
     public static final double kLGHighRPM = 1200;
     public static final double kSetPointRPMLow = 1150;
-    public static final double kLGLowRPM = 1100;
+    public static final double kLGLowRPM = 1000;
     public static final double kFullPowerLow = 0.45;
     public static final double kLowPowerLow = 0.2;
   }
