@@ -17,24 +17,24 @@ public class TwoBallAutonCommand2 extends SequentialCommandGroup {
   public TwoBallAutonCommand2(IndexerSubsystem indexerSubsystem, IntakeSubsystem intakeSubsystem,
       ShooterSubsystem shooterSubsystem, DriveSubsystem driveSubsystem, Vision visionSubsystem,
       PigeonIMU pigeon, ShooterHoodSubsystem hoodSubsystem) {
-    addCommands(new ShooterHoodExtendCommand(hoodSubsystem)
-        .andThen(new ShooterHighLowCommand(hoodSubsystem, shooterSubsystem)).andThen(
+    addCommands((new ShooterExponentialCommand(hoodSubsystem, shooterSubsystem)
+        .alongWith(new IndexerFullForwardCommand(indexerSubsystem))).andThen(
             /*
              * new DriveStraightCommand(driveSubsystem, 6.5, AutonConstants.kautonVelocity), new
              * SimpleAutonTurningCommand(driveSubsystem, pigeon, 30),
              */
             new ParallelRaceGroup(
-                new DriveStraightPIDCommand(driveSubsystem, pigeon, 9.5,
+                new DriveStraightPIDCommand(driveSubsystem, pigeon, 8.5,
                     AutonConstants.kautonVelocity),
                 new IntakeCargoCommand(indexerSubsystem, intakeSubsystem)))
-        .andThen(new DriveStraightPIDCommand(driveSubsystem, pigeon, -9.5,
-            AutonConstants.kautonVelocity))
-        .andThen(
-            // new VisionDriveAutonCommand(driveSubsystem, visionSubsystem),
-            // //temporary comment
-            // out because we are not testin with vision
-            new ParallelRaceGroup(new IndexerFullForwardCommand(indexerSubsystem),
-                new ShooterHighLowCommand(hoodSubsystem, shooterSubsystem))));
+            .andThen(new DriveStraightPIDCommand(driveSubsystem, pigeon, -8.5,
+                AutonConstants.kautonVelocity))
+            .andThen(
+                // new VisionDriveAutonCommand(driveSubsystem, visionSubsystem),
+                // //temporary comment
+                // out because we are not testin with vision
+                new ParallelRaceGroup(new IndexerFullForwardCommand(indexerSubsystem),
+                    new ShooterExponentialCommand(hoodSubsystem, shooterSubsystem))));
   }
 }
 
