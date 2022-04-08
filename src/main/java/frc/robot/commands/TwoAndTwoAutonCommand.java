@@ -18,13 +18,7 @@ public class TwoAndTwoAutonCommand extends SequentialCommandGroup {
       ShooterSubsystem shooterSubsystem, DriveSubsystem driveSubsystem, Vision visionSubsystem,
       PigeonIMU pigeon, ShooterHoodSubsystem hoodSubsystem) {
     addCommands(new ParallelRaceGroup(
-        new DriveStraightPIDCommand(driveSubsystem, pigeon, 8.5, AutonConstants.kautonVelocity), // Remember
-                                                                                                 // to
-                                                                                                 // change
-                                                                                                 // back
-                                                                                                 // autonvelocity
-                                                                                                 // to
-                                                                                                 // 0.6
+        new DriveStraightPIDCommand(driveSubsystem, pigeon, 8.5, AutonConstants.kautonVelocity),
         new IntakeCargoCommand(indexerSubsystem, intakeSubsystem)).andThen(
             new DriveStraightPIDCommand(driveSubsystem, pigeon, -8.5, AutonConstants.kautonVelocity)
                 .andThen(new ParallelRaceGroup(new IndexerFullForwardCommand(indexerSubsystem),
