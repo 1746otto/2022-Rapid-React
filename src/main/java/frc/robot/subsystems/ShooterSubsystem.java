@@ -98,7 +98,7 @@ public class ShooterSubsystem extends SubsystemBase {
     // TBD
 
     if (getRPM() < (ShooterConstants.kSetPointRPMHigh - 50)) {
-      feedForwardVoltage = 0.55;
+      feedForwardVoltage = 0.52;
       master.set(ControlMode.PercentOutput, feedForwardVoltage);
     } else {
 
@@ -110,7 +110,7 @@ public class ShooterSubsystem extends SubsystemBase {
   public void PIDShooterHigh() {
     error = ShooterConstants.kSetPointRPMHigh - getRPM();
     deltaError = error - previousError;
-    master.set(ControlMode.PercentOutput, 0.5 + error * kpGain + deltaError * kdGain);
+    master.set(ControlMode.PercentOutput, 0.47 + error * kpGain + deltaError * kdGain);
     previousError = error;
 
   }

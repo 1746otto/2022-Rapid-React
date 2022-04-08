@@ -129,12 +129,13 @@ public class RobotContainer {
     JoystickButton xBoxA2 = new JoystickButton(m_controller2, XboxController.Button.kA.value);
     JoystickButton xBoxB2 = new JoystickButton(m_controller2, XboxController.Button.kB.value);
     JoystickButton xBoxSelect2 =
-        new JoystickButton(m_controller2, XboxController.Button.kStart.value);
+        new JoystickButton(m_controller2, XboxController.Button.kLeftStick.value);
     JoystickButton xBoxY = new JoystickButton(m_controller, XboxController.Button.kY.value);
     JoystickButton xBoxB = new JoystickButton(m_controller, XboxController.Button.kB.value);
     JoystickButton xBoxX = new JoystickButton(m_controller, XboxController.Button.kX.value);
     JoystickButton xBoxA = new JoystickButton(m_controller, XboxController.Button.kA.value);
-    JoystickButton xBoxStart = new JoystickButton(m_controller, XboxController.Button.kStart.value);
+    JoystickButton xBoxStart =
+        new JoystickButton(m_controller, XboxController.Button.kLeftStick.value);
     JoystickButton xBoxX2 = new JoystickButton(m_controller2, XboxController.Button.kX.value);
     JoystickButton xBoxLBumper =
         new JoystickButton(m_controller, XboxController.Button.kLeftBumper.value);
