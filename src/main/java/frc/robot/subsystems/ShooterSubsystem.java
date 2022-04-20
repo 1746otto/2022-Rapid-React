@@ -58,7 +58,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public double getRPM() {
 
-    return master.getSelectedSensorVelocity(1) * ShooterConstants.kTPSToRPM;
+    return master.getSelectedSensorVelocity(0) * ShooterConstants.kTPSToRPM;
 
   }
 
@@ -98,7 +98,7 @@ public class ShooterSubsystem extends SubsystemBase {
     // TBD
 
     if (getRPM() < (ShooterConstants.kSetPointRPMHigh - 50)) {
-      feedForwardVoltage = 0.55;
+      feedForwardVoltage = 0.52;
       master.set(ControlMode.PercentOutput, feedForwardVoltage);
     } else {
 
@@ -110,7 +110,7 @@ public class ShooterSubsystem extends SubsystemBase {
   public void PIDShooterHigh() {
     error = ShooterConstants.kSetPointRPMHigh - getRPM();
     deltaError = error - previousError;
-    master.set(ControlMode.PercentOutput, 0.5 + error * kpGain + deltaError * kdGain);
+    master.set(ControlMode.PercentOutput, 0.47 + error * kpGain + deltaError * kdGain);
     previousError = error;
 
   }
@@ -179,7 +179,7 @@ public class ShooterSubsystem extends SubsystemBase {
     RPMShotValid = getRPM() > 1600;
 
     System.out.println(feedForwardVoltage);
-    System.out.println(getRPM());
+    System.out.println("RPM" + getRPM());
 
     // System.out.println("RPM shot valid: " + RPMShotValid);
 
