@@ -1,12 +1,9 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 import frc.robot.Constants.ShooterConstants;
-import java.util.function.BooleanSupplier;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
@@ -89,14 +86,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
   }
 
-  /*
-   * public void runFeedForward() { master.set(ControlMode.PercentOutput,
-   * m_feedforward.calculate(velocity, accel)); }
-   */
-
   public void exponentialShooter() {
-    // TBD
-
     if (getRPM() < (ShooterConstants.kSetPointRPMHigh - 50)) {
       feedForwardVoltage = 0.52;
       master.set(ControlMode.PercentOutput, feedForwardVoltage);
@@ -126,14 +116,6 @@ public class ShooterSubsystem extends SubsystemBase {
     feedForwardVoltage = 0.3;
   }
 
-  /*
-   * public void linearShooter() { master.set(ControlMode.PercentOutput, feedForwardVoltage + gain *
-   * error); }
-   * 
-   * public void quadraticShooter() { master.set(ControlMode.PercentOutput, (error *=
-   * Math.abs(error)) * gain + feedForwardVoltage); }
-   */
-
   // Sets shooter power for high goal shot.
 
   public void lowGoalShooter() {
@@ -145,16 +127,6 @@ public class ShooterSubsystem extends SubsystemBase {
 
     }
   }
-
-  /*
-   * if (getRPM() < ShooterConstants.kLGHighRPM) { setFullPowerLow(); } else if (getRPM() >
-   * ShooterConstants.kLGLowRPM) { setLowPowerLow(); }
-   */
-
-
-  /**
-   * Sets shooter power for lowgoal shot
-   */
 
   public boolean getRPMShot() {
     return RPMShotTune;
@@ -173,17 +145,12 @@ public class ShooterSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("RPM", getRPM());
     SmartDashboard.putNumber("Error", getRPM() - m_RPM);
     SmartDashboard.putNumber("Percent Error", (getRPM() - m_RPM) / m_RPM);
-
-    // System.out.println("RPM: " + getRPM());
-    RPMShotTune = getRPM() < 1800;
-    RPMShotValid = getRPM() > 1600;
-
     System.out.println(feedForwardVoltage);
     System.out.println("RPM" + getRPM());
 
-    // System.out.println("RPM shot valid: " + RPMShotValid);
+    RPMShotTune = getRPM() < 1800;
+    RPMShotValid = getRPM() > 1600;
 
-    // This method will be called once per scheduler run
     error = ((ShooterConstants.kSetPointRPMHigh) - getRPM()) / (ShooterConstants.kSetPointRPMHigh);
   }
 
