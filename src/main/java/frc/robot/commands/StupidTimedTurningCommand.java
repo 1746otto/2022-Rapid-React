@@ -36,6 +36,6 @@ public class StupidTimedTurningCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return m_timer.getFPGATimestamp() >= m_time;
+    return Timer.getFPGATimestamp() >= m_time;
   }
 }

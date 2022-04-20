@@ -25,9 +25,9 @@ public class ShooterHoodToggleCommand extends CommandBase {
    */
   @Override
   public void initialize() {
-    if (m_subsystem.isRetracted() == true) {
+    if (ShooterHoodSubsystem.isRetracted() == true) {
       m_subsystem.Extend();
-    } else if (m_subsystem.isRetracted() == false) {
+    } else if (ShooterHoodSubsystem.isRetracted() == false) {
       m_subsystem.Retract();
     }
 
