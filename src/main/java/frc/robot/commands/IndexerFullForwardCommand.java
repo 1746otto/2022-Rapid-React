@@ -2,14 +2,12 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IndexerSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.ShooterHoodSubsystem;
 
 /** An example command that uses an example subsystem. */
 public class IndexerFullForwardCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final IndexerSubsystem m_subsystem;
-  private boolean highGoal;
 
 
   /**
@@ -29,12 +27,7 @@ public class IndexerFullForwardCommand extends CommandBase {
 
   @Override
   public void initialize() {
-    /*
-     * 
-     * if (((m_subsystem.topBeamBreakBroken()) && !(m_subsystem.bottomBeamBreakBroken())) &&
-     * (m_timer.getFPGATimestamp() == 0.1 && m_timer.getFPGATimestamp() <= 1)) {
-     * m_subsystem.runHighGoalIndexer(); m_timer.reset(); }
-     */
+
   }
 
   // Called once the command ends or is interrupted.
