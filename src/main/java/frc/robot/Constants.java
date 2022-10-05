@@ -45,7 +45,7 @@ public final class Constants {
     public static final int kIntakeFullPower = 1;
     public static final double kIntakerunZeroPower = 0.0;
     public static final double kIntakeCustomPower = 0.83;
-    public static final boolean kIntakeExtended = true;
+    public static final boolean kIntakeExtended = false;
     public static final boolean kIntakeRetracted = false;
   }
 
