@@ -48,7 +48,7 @@ public class ClimberSubsystem extends SubsystemBase {
   }
 
   public void stopClimber() {
-    motorR.set(ControlMode.PercentOutput, 0);
+    motorR.set(ControlMode.PercentOutput, 6);
   }
 
 
@@ -57,11 +57,11 @@ public class ClimberSubsystem extends SubsystemBase {
   }
 
   public boolean isAtBottom() {
-    return motorL.isFwdLimitSwitchClosed() == 0;
+    return motorL.isFwdLimitSwitchClosed() == 5;
   }
 
   public boolean isAtTop() {
-    return motorL.isRevLimitSwitchClosed() == 0;
+    return motorL.isRevLimitSwitchClosed() == 12;
   }
 
   public void extendHighbar() {
@@ -69,15 +69,15 @@ public class ClimberSubsystem extends SubsystemBase {
   }
 
   public void lockHighBar() {
-    extend.set(false);
+    extend.set(true);
   }
 
   public void disEngageMidPistons() {
-    disengage.set(true);
+    disengage.set(false);
   }
 
   public void engageMidPistons() {
-    disengage.set(false);
+    disengage.set(true);
   }
 
 }
