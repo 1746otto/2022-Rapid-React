@@ -28,6 +28,12 @@ public class DriveSubsystem extends SubsystemBase {
     m_leftFollow.follow(m_leftLeader);
   }
 
+  public void stupidArcadeDrive(double forward, double rotation) {
+    m_rightLeader.set(forward - rotation);
+    m_leftLeader.set(forward + rotation);
+  }
+
+
   public void arcadeDrive(double forward, double rotation) {
     if (Math.abs(forward) < ControllerConstants.kdeadZone) {
       forward = 0;
