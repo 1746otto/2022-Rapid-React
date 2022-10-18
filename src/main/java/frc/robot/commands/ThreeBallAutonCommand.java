@@ -15,21 +15,13 @@ public class ThreeBallAutonCommand extends SequentialCommandGroup {
   public ThreeBallAutonCommand(IndexerSubsystem indexerSubsystem, IntakeSubsystem intakeSubsystem,
       ShooterSubsystem shooterSubsystem, DriveSubsystem driveSubsystem, Vision visionSubsystem,
       PigeonIMU pigeon, ShooterHoodSubsystem hoodSubsystem, double angle) {
-    /*
-     * addCommands(new ShooterHoodRetractCommand(hoodSubsystem) .andThen(
-     */
+
     addCommands(
-        /*
-         * new ShooterExponentialCommand(hoodSubsystem, shooterSubsystem)
-         * .withTimeout(AutonConstants.kSpeedUpTime),
-         */
+
         new ParallelRaceGroup(new IndexerFullForwardCommand(indexerSubsystem),
             new ShooterExponentialCommand(hoodSubsystem, shooterSubsystem)
                 .withTimeout(AutonConstants.kShootTime)),
-        /*
-         * new DriveStraightCommand(driveSubsystem, 6.5, AutonConstants.kautonVelocity), new
-         * SimpleAutonTurningCommand(driveSubsystem, pigeon, 30),
-         */
+
         new ParallelRaceGroup(
             new DriveStraightPIDCommand(driveSubsystem, pigeon, 8.5, AutonConstants.kautonVelocity),
             new IntakeCargoCommand(indexerSubsystem, intakeSubsystem)),

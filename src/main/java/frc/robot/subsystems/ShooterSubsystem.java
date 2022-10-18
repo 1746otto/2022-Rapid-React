@@ -86,10 +86,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
   }
 
-  /*
-   * public void runFeedForward() { master.set(ControlMode.PercentOutput,
-   * m_feedforward.calculate(velocity, accel)); }
-   */
+
 
   public void exponentialShooter() {
     // TBD
@@ -123,13 +120,6 @@ public class ShooterSubsystem extends SubsystemBase {
     feedForwardVoltage = 0.3;
   }
 
-  /*
-   * public void linearShooter() { master.set(ControlMode.PercentOutput, feedForwardVoltage + gain *
-   * error); }
-   * 
-   * public void quadraticShooter() { master.set(ControlMode.PercentOutput, (error *=
-   * Math.abs(error)) * gain + feedForwardVoltage); }
-   */
 
   // Sets shooter power for high goal shot.
 

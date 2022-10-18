@@ -114,15 +114,6 @@ public class RobotContainer {
     xBoxRBumper2.whenPressed(new ShooterHoodToggleCommand(m_shooterHoodSubsystem));
     xBoxLBumper2.whenHeld(new OuttakeCommand(m_indexerSubsystem, m_intakeSubsystem));
 
-    /*
-     * xBoxLBumper.whenHeld(m_customRPMCommand.withTimeout(Constants.AutonConstants. kSpeedUpTime)
-     * .andThen(new IndexerUpperCommand(m_indexerSubsystem)
-     * .withTimeout(IndexerConstants.kTwoBallDelay) .raceWith( new
-     * ShooterCustomRPMCommand(m_shooterSubsystem, ShooterConstants.kHighGoalRPM)) .andThen(new
-     * IndexerFullForwardCommand(m_indexerSubsystem).raceWith( new
-     * ShooterCustomRPMCommand(m_shooterSubsystem, ShooterConstants.kHighGoalRPM)))));
-     */
-
 
 
     xBoxLBumper.whenHeld(new ShooterExponentialCommand(m_shooterHoodSubsystem, m_shooterSubsystem)

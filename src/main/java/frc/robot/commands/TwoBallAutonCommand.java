@@ -21,10 +21,7 @@ public class TwoBallAutonCommand extends SequentialCommandGroup {
         new ParallelRaceGroup(new IndexerFullForwardCommand(indexerSubsystem),
             new ShooterCustomRPMCommand(shooterSubsystem, ShooterConstants.kHighGoalRPM)
                 .withTimeout(AutonConstants.kShootTime)),
-        /*
-         * new DriveStraightCommand(driveSubsystem, 6.5, AutonConstants.kautonVelocity), new
-         * SimpleAutonTurningCommand(driveSubsystem, pigeon, 30),
-         */
+
         new ParallelRaceGroup(
             new DriveStraightPIDCommand(driveSubsystem, pigeon, 9.5, AutonConstants.kautonVelocity),
             new IntakeCargoCommand(indexerSubsystem, intakeSubsystem)),

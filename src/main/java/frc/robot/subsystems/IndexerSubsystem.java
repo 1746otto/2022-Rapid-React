@@ -69,11 +69,6 @@ public class IndexerSubsystem extends SubsystemBase {
     }
   }
 
-  /*
-   * if (m_shooter.getRPM() > ShooterConstants.kLGLowRPM && m_shooter.getRPM() <
-   * ShooterConstants.kLGHighRPM) { if (topBeamBreakBroken()) { runUpperFullForward(); } else {
-   * runBothFullForward(); } }
-   */
 
 
   public void runLowerHalfForward() {

@@ -78,11 +78,3 @@ public class SimpleAutonTurningCommand extends CommandBase {
 
 
 }
-/*
- * For turning advanced we can get our final angle and then use the pigeon to get the angle at the
- * start of the turn and then we use the arpit to calculate the distance one side has to travel
- * greater than the other. Then use PID(F) to do the make sure the turning is on track by getting
- * the total diff in rot of the two sides of the drive train and dividing it by theta over 360 times
- * full circle rotations. We use the number we get from those calculations to compare with
- * angle/currentAngle and if they are about the same, then they good.
- */

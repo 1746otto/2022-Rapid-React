@@ -15,20 +15,12 @@ public class TwoBallAutonCommand2 extends SequentialCommandGroup {
   public TwoBallAutonCommand2(IndexerSubsystem indexerSubsystem, IntakeSubsystem intakeSubsystem,
       ShooterSubsystem shooterSubsystem, DriveSubsystem driveSubsystem, Vision visionSubsystem,
       PigeonIMU pigeon, ShooterHoodSubsystem hoodSubsystem) {
-    /*
-     * addCommands(new ShooterHoodRetractCommand(hoodSubsystem) .andThen(
-     */addCommands(
-        /*
-         * new ShooterExponentialCommand(hoodSubsystem, shooterSubsystem)
-         * .withTimeout(AutonConstants.kSpeedUpTime),
-         */
+    addCommands(
+
         new ParallelRaceGroup(new IndexerFullForwardCommand(indexerSubsystem),
             new ShooterExponentialCommand(hoodSubsystem, shooterSubsystem)
                 .withTimeout(AutonConstants.kShootTime)),
-        /*
-         * new DriveStraightCommand(driveSubsystem, 6.5, AutonConstants.kautonVelocity), new
-         * SimpleAutonTurningCommand(driveSubsystem, pigeon, 30),
-         */
+
         new ParallelRaceGroup(
             new DriveStraightPIDCommand(driveSubsystem, pigeon, 7.6, AutonConstants.kautonVelocity),
             new IntakeCargoCommand(indexerSubsystem, intakeSubsystem))

@@ -161,18 +161,7 @@ public class DriveSubsystem extends SubsystemBase {
     return m_rightLeader.getEncoder().getPosition();
   }
 
-  /*
-   * public enum ParamEnum { YawOffset(160), CompassOffset(160), BetaGain(162), Reserved163(163),
-   * GyroNoMotionCal(164), EnterCalibration(165), FusedHeadingOffset(166), StatusFrameRate(169),
-   * AccumZ(170), TempCompDisable(171); private int value; private ParamEnum(int value) { this.value
-   * = value; } }
-   * 
-   * private enum TareType { SetValue (0x00), AddOffset(0x01), MatchCompass(0x02), SetOffset(0xFF);
-   * private int value; private Tare }
-   * 
-   * public int setYawToComass() { int errCode = ConfigSetParameter(ParamEnum.YawOffset,
-   * Type.MatchCompass, 0); }
-   */
+
   public void stupidArcadeDrive(double forward, double rotation) {
     m_rightLeader.set((forward - rotation) / 2);
     m_leftLeader.set((forward + rotation) / 2);
@@ -181,11 +170,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    /*
-     * System.out.println("Yaw is " + m_pigeon.getYaw()); System.out.println("fused heading is " +
-     * m_pigeon.getFusedHeading()); System.out.println("pitch is " + m_pigeon.getPitch());
-     * System.out.println("roll is " + m_pigeon.getRoll());
-     */
+
   }
 
   public void stop() {
