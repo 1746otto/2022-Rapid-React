@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-import java.lang.reflect.Type;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;

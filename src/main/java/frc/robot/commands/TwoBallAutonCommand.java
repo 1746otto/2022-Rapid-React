@@ -10,7 +10,6 @@ import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.Vision;
-import frc.robot.commands.DriveStraightPIDCommand;
 
 public class TwoBallAutonCommand extends SequentialCommandGroup {
   public TwoBallAutonCommand(IndexerSubsystem indexerSubsystem, IntakeSubsystem intakeSubsystem,
