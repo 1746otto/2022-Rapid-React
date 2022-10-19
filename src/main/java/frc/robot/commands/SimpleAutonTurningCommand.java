@@ -14,6 +14,7 @@ public class SimpleAutonTurningCommand extends CommandBase {
   public double error = 0;
   public final double kpGain = -(1.9 / 360.0);
 
+  // I think right is negative but i will test it.
 
   public SimpleAutonTurningCommand(DriveSubsystem driveSubsystem, PigeonIMU pigeon, double angle) {
     m_driveSubsystem = driveSubsystem;

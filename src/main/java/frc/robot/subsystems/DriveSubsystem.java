@@ -28,6 +28,15 @@ public class DriveSubsystem extends SubsystemBase {
     m_leftFollow.follow(m_leftLeader);
   }
 
+  public double getLeftRotations() {
+    return m_leftLeader.getEncoder().getPosition();
+  }
+
+  public double getRightRotations() {
+    return m_rightLeader.getEncoder().getPosition();
+  }
+
+
   public void stupidArcadeDrive(double forward, double rotation) {
     m_rightLeader.set(forward - rotation);
     m_leftLeader.set(forward + rotation);
