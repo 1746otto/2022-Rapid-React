@@ -19,11 +19,13 @@ import frc.robot.Constants.RobotConstants;
 import frc.robot.commands.AutonDriveCommand;
 import frc.robot.commands.BottomIndexerIntakeCommand;
 import frc.robot.commands.ClimberExtendCommand;
+import frc.robot.commands.DriveStraightCommand;
 import frc.robot.commands.IndexerFullForwardCommand;
 import frc.robot.commands.IntakeCargoCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeExtendCommand;
 import frc.robot.commands.ShooterFullPowerCommand;
+import frc.robot.commands.ThreeBallAutonCommand;
 import frc.robot.commands.TopIndexerIntakeCommand;
 import frc.robot.commands.VisionDriveCommand;
 import frc.robot.commands.VisionTuningCommand;
@@ -33,6 +35,8 @@ import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.Vision;
+import com.ctre.phoenix.sensors.PigeonIMU;
+import com.ctre.phoenix.sensors.PigeonIMU_StatusFrame;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -55,6 +59,8 @@ public class RobotContainer {
       new Compressor(RobotConstants.kREVPH, PneumaticsModuleType.REVPH);
   private final VisionTuningCommand m_visionTuningCommand =
       new VisionTuningCommand(m_visionSubsystem, m_driveSubsystem);
+  private final PigeonIMU m_pigeon = new PigeonIMU(6);
+
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -122,12 +128,17 @@ public class RobotContainer {
   }
 
   public Command createAutoCommand() {
-    return new ShooterFullPowerCommand(m_shooterSubsystem)
-        .withTimeout(Constants.AutonConstants.kSpeedUpTime)
-        .andThen(new IndexerFullForwardCommand(m_indexerSubsystem)
-            .andThen(new IntakeExtendCommand(m_intakeSubsystem)
-                .raceWith(new ShooterFullPowerCommand(m_shooterSubsystem)
-                    .withTimeout(Constants.AutonConstants.kShootTime))));
+    /*
+     * return new ShooterFullPowerCommand(m_shooterSubsystem)
+     * .withTimeout(Constants.AutonConstants.kSpeedUpTime) .andThen(new
+     * IndexerFullForwardCommand(m_indexerSubsystem) .andThen(new
+     * IntakeExtendCommand(m_intakeSubsystem) .raceWith(new
+     * ShooterFullPowerCommand(m_shooterSubsystem)
+     * .withTimeout(Constants.AutonConstants.kShootTime))));
+     */
+
+    return new ThreeBallAutonCommand(m_shooterSubsystem, m_driveSubsystem, m_indexerSubsystem,
+        m_intakeSubsystem, m_pigeon);
   }
 
   public Command getTeleopDrive() {
