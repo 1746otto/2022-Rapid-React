@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.sensors.PigeonIMU;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -19,6 +20,7 @@ public class DriveSubsystem extends SubsystemBase {
   private double forwardComponent;
   private double rotationComponent;
   private double sumComponents;
+  private final PigeonIMU m_pigeon = new PigeonIMU(6);
 
   public DriveSubsystem() {
     m_leftLeader.setInverted(true);
@@ -44,12 +46,37 @@ public class DriveSubsystem extends SubsystemBase {
 
 
   public void arcadeDrive(double forward, double rotation) {
+    // squaring inputs
+
+
+    forward *= Math.abs(forward);
+    rotation *= Math.abs(rotation);
+
+
+
     if (Math.abs(forward) < ControllerConstants.kdeadZone) {
       forward = 0;
     }
     if (Math.abs(rotation) < ControllerConstants.kdeadZone) {
       rotation = 0;
     }
+
+    // if (rotation != 0 && forward != 0) {
+    // if (forward < 0.5) {
+    // if (rotation > 0) {
+    // rotation = Math.max(rotation + DriveConstants.kProportionalConstant * forward, 1);
+    // } else {
+    // rotation = Math.min(rotation - DriveConstants.kProportionalConstant * forward, -1);
+    // }
+    // } else {
+    // if (rotation > 0) {
+    // rotation = Math.min(rotation - DriveConstants.kProportionalConstant * forward, 0);
+    // } else {
+    // rotation = Math.max(rotation + DriveConstants.kProportionalConstant * forward, 0);
+    // }
+    // }
+    // }
+
     if (forward > 0 && rotation > 0) { // Quadrant 1
       if (Math.abs(forward) >= Math.abs(rotation)) {
         forwardComponent = 1;
@@ -131,8 +158,34 @@ public class DriveSubsystem extends SubsystemBase {
       forward /= sumComponents;
       rotation /= sumComponents;
     }
+
+    // if (Math.abs(forward) > 0.8) {
+    // rotation /= 2;
+    // }
+
     m_rightLeader.set(forward - rotation);
     m_leftLeader.set(forward + rotation);
+  }
+
+
+  public double getLeftRotations() {
+    return m_leftLeader.getEncoder().getPosition();
+  }
+
+  public double getRightRotations() {
+    return m_rightLeader.getEncoder().getPosition();
+  }
+
+
+  public void stupidArcadeDrive(double forward, double rotation) {
+    m_rightLeader.set((forward - rotation) / 2);
+    m_leftLeader.set((forward + rotation) / 2);
+  }
+
+
+  @Override
+  public void periodic() {
+
   }
 
   public void stop() {

@@ -1,12 +1,9 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 import frc.robot.Constants.ShooterConstants;
-import java.util.function.BooleanSupplier;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
@@ -89,10 +86,6 @@ public class ShooterSubsystem extends SubsystemBase {
     }
   }
 
-  /*
-   * public void runFeedForward() { master.set(ControlMode.PercentOutput,
-   * m_feedforward.calculate(velocity, accel)); }
-   */
 
   public void exponentialShooter() {
     // TBD
@@ -108,7 +101,6 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public void PIDShooterHigh() {
-
     error = ShooterConstants.kSetPointRPMHigh - getRPM();
     deltaError = error - previousError;
     master.set(ControlMode.PercentOutput, 0.47 + error * kpGain + deltaError * kdGain);
@@ -127,13 +119,6 @@ public class ShooterSubsystem extends SubsystemBase {
     feedForwardVoltage = 0.3;
   }
 
-  /*
-   * public void linearShooter() { master.set(ControlMode.PercentOutput, feedForwardVoltage + gain *
-   * error); }
-   * 
-   * public void quadraticShooter() { master.set(ControlMode.PercentOutput, (error *=
-   * Math.abs(error)) * gain + feedForwardVoltage); }
-   */
 
   // Sets shooter power for high goal shot.
 

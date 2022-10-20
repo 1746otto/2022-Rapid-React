@@ -5,7 +5,7 @@ import frc.robot.subsystems.ShooterHoodSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 /** An example command that uses an example subsystem. */
-public class ShooterExponentialCommand extends CommandBase {
+public class ShooterHighLowCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   public final ShooterHoodSubsystem m_hood;
   public final ShooterSubsystem m_shooter;
@@ -16,7 +16,7 @@ public class ShooterExponentialCommand extends CommandBase {
    * 
    * @param hoodSubsystem The subsystem used by this command.
    */
-  public ShooterExponentialCommand(ShooterHoodSubsystem hoodSubsystem,
+  public ShooterHighLowCommand(ShooterHoodSubsystem hoodSubsystem,
       ShooterSubsystem shooterSubsystem) {
     m_hood = hoodSubsystem;
     m_shooter = shooterSubsystem;
@@ -29,9 +29,9 @@ public class ShooterExponentialCommand extends CommandBase {
   @Override
   public void initialize() {
     if (ShooterHoodSubsystem.isRetracted() == true) {
-      m_shooter.PIDShooterHigh();
+      m_shooter.highGoalShooter();
     } else if (ShooterHoodSubsystem.isRetracted() == false) {
-      m_shooter.PIDShooterLow();
+      m_shooter.lowGoalShooter();
     }
   }
 
@@ -39,16 +39,15 @@ public class ShooterExponentialCommand extends CommandBase {
   @Override
   public void execute() {
     if (ShooterHoodSubsystem.isRetracted() == true) {
-      m_shooter.PIDShooterHigh();
+      m_shooter.highGoalShooter();
     } else if (ShooterHoodSubsystem.isRetracted() == false) {
-      m_shooter.PIDShooterLow();
+      m_shooter.lowGoalShooter();
     }
   }
 
   @Override
   public void end(boolean interrupted) {
     m_shooter.setZeroPower();
-    m_shooter.resetShooter();
   }
 
   // Returns true when the command should end.

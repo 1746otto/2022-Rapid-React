@@ -22,19 +22,19 @@ public class ThreeBallAutonCommand extends ParallelRaceGroup {
             new ShooterExponentialCommand(hood, shooterSubsystem)
                 .withTimeout(Constants.AutonConstants.kSpeedUpTime),
             new IndexerFullForwardCommand(indexerSubsystem))
-                .andThen(new DriveStraightCommand(driveSubsystem, 18.0 / 12, .3))
+                .andThen(new DriveStraightPIDCommand(driveSubsystem, pigeon, 18.0 / 12, .3))
                 .andThen(new SimpleAutonTurningCommand(driveSubsystem, pigeon, 16.89)) // left
                 .andThen(new ParallelRaceGroup(new IndexerFullForwardCommand(indexerSubsystem),
                     new IntakeExtendCommand(intakeSubsystem),
-                    new DriveStraightCommand(driveSubsystem, 82.0 / 12, .3)))
+                    new DriveStraightPIDCommand(driveSubsystem, pigeon, 82.0 / 12, .3)))
                 .andThen(new SimpleAutonTurningCommand(driveSubsystem, pigeon, -70.67)) // right
                 .andThen(new ParallelRaceGroup(new IndexerFullForwardCommand(indexerSubsystem),
                     new IntakeExtendCommand(intakeSubsystem),
-                    new DriveStraightCommand(driveSubsystem, 97.83 / 12, .3)))
+                    new DriveStraightPIDCommand(driveSubsystem, pigeon, 97.83 / 12, .3)))
                 .andThen(new SimpleAutonTurningCommand(driveSubsystem, pigeon, 48.35)) // left
-                .andThen(new DriveStraightCommand(driveSubsystem, -105.56 / 12, .3))
+                .andThen(new DriveStraightPIDCommand(driveSubsystem, pigeon, -105.56 / 12, .3))
                 .andThen(new SimpleAutonTurningCommand(driveSubsystem, pigeon, 60.98)) // left
-                .andThen(new DriveStraightCommand(driveSubsystem, -18.0 / 12, .3))
+                .andThen(new DriveStraightPIDCommand(driveSubsystem, pigeon, -18.0 / 12, .3))
                 .andThen(new ParallelRaceGroup(
                     new ShooterExponentialCommand(hood, shooterSubsystem)
                         .withTimeout(Constants.AutonConstants.kSpeedUpTime * 3),

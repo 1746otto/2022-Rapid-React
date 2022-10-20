@@ -2,11 +2,14 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IndexerSubsystem;
+import frc.robot.subsystems.ShooterHoodSubsystem;
 
 /** An example command that uses an example subsystem. */
 public class IndexerFullForwardCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final IndexerSubsystem m_subsystem;
+  private boolean highGoal;
+
 
   /**
    * Creates a new ExampleCommand.
@@ -18,12 +21,19 @@ public class IndexerFullForwardCommand extends CommandBase {
     m_subsystem = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
+
   }
 
   // Called when the command is initially scheduled.
+
   @Override
   public void initialize() {
-    m_subsystem.runBothFullForward();
+    /*
+     * 
+     * if (((m_subsystem.topBeamBreakBroken()) && !(m_subsystem.bottomBeamBreakBroken())) &&
+     * (m_timer.getFPGATimestamp() == 0.1 && m_timer.getFPGATimestamp() <= 1)) {
+     * m_subsystem.runHighGoalIndexer(); m_timer.reset(); }
+     */
   }
 
   // Called once the command ends or is interrupted.
@@ -31,6 +41,19 @@ public class IndexerFullForwardCommand extends CommandBase {
   public void end(boolean interrupted) {
     m_subsystem.stopBoth();
   }
+
+  @Override
+  public void execute() {
+    System.out.println(ShooterHoodSubsystem.isRetracted());
+    if (ShooterHoodSubsystem.isRetracted()) {
+      m_subsystem.runHighGoalIndexer();
+    } else {
+      m_subsystem.runLowGoalIndexer();
+      System.out.println("LowGoalrunning");
+    }
+  }
+
+
 
   // Returns true when the command should end.
   @Override

@@ -1,20 +1,24 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShooterSubsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An example command that uses an example subsystem. */
-public class ShooterFullPowerCommand extends CommandBase {
+public class ShooterCustomRPMCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   public final ShooterSubsystem m_subsystem;
+  public double m_RPM;
 
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public ShooterFullPowerCommand(ShooterSubsystem subsystem) {
+  public ShooterCustomRPMCommand(ShooterSubsystem subsystem, double RPM) {
     m_subsystem = subsystem;
+    m_RPM = RPM;
+
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
   }
@@ -22,17 +26,20 @@ public class ShooterFullPowerCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_subsystem.setFullPowerHigh();
+    m_subsystem.setRPM(m_RPM);
   }
 
+  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (m_subsystem.getRPM() < 1600) {
-      m_subsystem.setFullPowerHigh();
-    } else if (m_subsystem.getRPM() > 1800) {
-      m_subsystem.setLowPowerHigh();
-    }
-
+    SmartDashboard.putNumber("kP", m_subsystem.kP);
+    SmartDashboard.putNumber("kI", m_subsystem.kI);
+    SmartDashboard.putNumber("kD", m_subsystem.kD);
+    SmartDashboard.putNumber("kF", m_subsystem.kF);
+    SmartDashboard.putNumber("RPM", m_subsystem.getRPM());
+    SmartDashboard.putNumber("Error", m_subsystem.getRPM() - m_RPM);
+    SmartDashboard.putNumber("Percent Error", (m_subsystem.getRPM() - m_RPM) / m_RPM);
+    System.out.println(m_subsystem.getRPM());
   }
 
   // Called once the command ends or is interrupted.
