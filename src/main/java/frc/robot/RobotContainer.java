@@ -35,6 +35,7 @@ import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.Vision;
+import frc.robot.subsystems.ShooterHoodSubsystem;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.ctre.phoenix.sensors.PigeonIMU_StatusFrame;
 
@@ -60,6 +61,7 @@ public class RobotContainer {
   private final VisionTuningCommand m_visionTuningCommand =
       new VisionTuningCommand(m_visionSubsystem, m_driveSubsystem);
   private final PigeonIMU m_pigeon = new PigeonIMU(6);
+  private final ShooterHoodSubsystem m_shooterHoodSubsystem = new ShooterHoodSubsystem();
 
 
   /**
@@ -137,8 +139,8 @@ public class RobotContainer {
      * .withTimeout(Constants.AutonConstants.kShootTime))));
      */
 
-    return new ThreeBallAutonCommand(m_shooterSubsystem, m_driveSubsystem, m_indexerSubsystem,
-        m_intakeSubsystem, m_pigeon);
+    return new ThreeBallAutonCommand(m_shooterSubsystem, m_shooterHoodSubsystem, m_driveSubsystem,
+        m_indexerSubsystem, m_intakeSubsystem, m_pigeon);
   }
 
   public Command getTeleopDrive() {

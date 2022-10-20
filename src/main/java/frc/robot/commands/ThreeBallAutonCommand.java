@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
-import frc.robot.commands.ShooterFullPowerCommand;
+import frc.robot.subsystems.ShooterHoodSubsystem;
+import frc.robot.commands.ShooterExponentialCommand;
 import frc.robot.commands.SimpleAutonTurningCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
@@ -12,12 +13,13 @@ import frc.robot.Constants;
 import com.ctre.phoenix.sensors.PigeonIMU;
 
 public class ThreeBallAutonCommand extends ParallelRaceGroup {
-  public ThreeBallAutonCommand(ShooterSubsystem shooterSubsystem, DriveSubsystem driveSubsystem,
-      IndexerSubsystem indexerSubsystem, IntakeSubsystem intakeSubsystem, PigeonIMU pigeon) {
+  public ThreeBallAutonCommand(ShooterSubsystem shooterSubsystem, ShooterHoodSubsystem hood,
+      DriveSubsystem driveSubsystem, IndexerSubsystem indexerSubsystem,
+      IntakeSubsystem intakeSubsystem, PigeonIMU pigeon) {
 
     addCommands(
         new ParallelRaceGroup(
-            new ShooterFullPowerCommand(shooterSubsystem)
+            new ShooterExponentialCommand(hood, shooterSubsystem)
                 .withTimeout(Constants.AutonConstants.kSpeedUpTime),
             new IndexerFullForwardCommand(indexerSubsystem))
                 .andThen(new DriveStraightCommand(driveSubsystem, 18.0 / 12, .3))
@@ -34,7 +36,7 @@ public class ThreeBallAutonCommand extends ParallelRaceGroup {
                 .andThen(new SimpleAutonTurningCommand(driveSubsystem, pigeon, 60.98)) // left
                 .andThen(new DriveStraightCommand(driveSubsystem, -18.0 / 12, .3))
                 .andThen(new ParallelRaceGroup(
-                    new ShooterFullPowerCommand(shooterSubsystem)
+                    new ShooterExponentialCommand(hood, shooterSubsystem)
                         .withTimeout(Constants.AutonConstants.kSpeedUpTime * 3),
                     new IndexerFullForwardCommand(indexerSubsystem))))
 

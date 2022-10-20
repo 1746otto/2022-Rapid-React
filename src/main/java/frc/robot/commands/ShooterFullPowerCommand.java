@@ -22,7 +22,7 @@ public class ShooterFullPowerCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_subsystem.setFullPower();
+    // m_subsystem.setFullPower();
   }
 
   // Called once the command ends or is interrupted.

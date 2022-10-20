@@ -74,6 +74,19 @@ public final class Constants {
     public static final int kIndexerMotor = 30;
     public static final double kFullPower = 0.9;
     public static final int kZeroPower = 0;
+    public static final double kLowGoalSpeed = 0.3;
+    public static final double kRPMToTPS = 4096 / 600;
+    public static final double kTPSToRPM = 1 / kRPMToTPS;
+    public static final double kHighGoalRPM = 1000;
+    public static final double kIndexerWindowHigh = 2050;
+    public static final double kSetPointRPMHigh = 1950;
+    public static final double kIndexerWindowLow = 1850;
+    public static final double kLGHighRPM = 1200;
+    public static final double kSetPointRPMLow = 1150;
+    public static final double kLGLowRPM = 1000;
+    public static final double kFullPowerLow = 0.45;
+    public static final double kLowPowerLow = 0.2;
+
   }
 
   public static class IndexerConstants {
@@ -91,5 +104,13 @@ public final class Constants {
     public static final double kLowerCustomPower = 0.5;
     public static final double kUpperCustomPower = 0.5;
   }
+
+  public static class ShooterHoodConstants {
+    // Test these constants later. Then delete comment.
+    public static final boolean kShooterHoodExtended = true;
+    public static final boolean kShooterHoodRetracted = false;
+    public static final int kShooterHood = 14;
+  }
+
 
 }
