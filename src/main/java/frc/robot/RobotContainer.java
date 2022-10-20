@@ -28,6 +28,7 @@ import frc.robot.commands.IntakeCargoCommand;
 import frc.robot.commands.ShooterFullPowerCommand;
 import frc.robot.commands.TwoBallAutonCommand2;
 import frc.robot.commands.ShooterHoodToggleCommand;
+import frc.robot.commands.ThreeBallAutonCommand;
 import frc.robot.commands.VisionDriveCommand;
 import frc.robot.commands.VisionTuningCommand;
 import frc.robot.subsystems.ClimberSubsystem;
@@ -148,7 +149,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
 
-    return new TwoBallAutonCommand2(m_indexerSubsystem, m_intakeSubsystem, m_shooterSubsystem,
+    return new ThreeBallAutonCommand(m_indexerSubsystem, m_intakeSubsystem, m_shooterSubsystem,
         m_driveSubsystem, m_visionSubsystem, m_pigeon, m_shooterHoodSubsystem);
 
 
