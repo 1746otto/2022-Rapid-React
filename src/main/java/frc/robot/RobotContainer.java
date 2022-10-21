@@ -90,7 +90,7 @@ public class RobotContainer {
     JoystickButton xBoxA2 = new JoystickButton(m_controller2, XboxController.Button.kA.value);
     JoystickButton xBoxB2 = new JoystickButton(m_controller2, XboxController.Button.kB.value);
     JoystickButton xBoxSelect2 =
-        new JoystickButton(m_controller2, XboxController.Button.kLeftStick.value);
+        new JoystickButton(m_controller2, XboxController.Button.kBack.value);
     JoystickButton xBoxY = new JoystickButton(m_controller, XboxController.Button.kY.value);
     JoystickButton xBoxB = new JoystickButton(m_controller, XboxController.Button.kB.value);
     JoystickButton xBoxX = new JoystickButton(m_controller, XboxController.Button.kX.value);
@@ -149,7 +149,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
 
-    return new ThreeBallAutonCommand(m_indexerSubsystem, m_intakeSubsystem, m_shooterSubsystem,
+    return new TwoBallAutonCommand2(m_indexerSubsystem, m_intakeSubsystem, m_shooterSubsystem,
         m_driveSubsystem, m_visionSubsystem, m_pigeon, m_shooterHoodSubsystem);
 
 
