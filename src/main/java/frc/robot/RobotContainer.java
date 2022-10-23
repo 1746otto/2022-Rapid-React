@@ -41,7 +41,7 @@ import frc.robot.subsystems.Vision;
 import frc.robot.subsystems.ShooterHoodSubsystem;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.ctre.phoenix.sensors.PigeonIMU_StatusFrame;
-
+import frc.robot.commands.FullOuttakeCommand;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -95,8 +95,8 @@ public class RobotContainer {
     JoystickButton xBoxB = new JoystickButton(m_controller, XboxController.Button.kB.value);
     JoystickButton xBoxX = new JoystickButton(m_controller, XboxController.Button.kX.value);
     JoystickButton xBoxA = new JoystickButton(m_controller, XboxController.Button.kA.value);
-    JoystickButton xBoxStart =
-        new JoystickButton(m_controller, XboxController.Button.kLeftStick.value);
+    JoystickButton xBoxStart2 =
+        new JoystickButton(m_controller2, XboxController.Button.kStart.value);
     JoystickButton xBoxX2 = new JoystickButton(m_controller2, XboxController.Button.kX.value);
     JoystickButton xBoxLBumper =
         new JoystickButton(m_controller, XboxController.Button.kLeftBumper.value);
@@ -105,14 +105,13 @@ public class RobotContainer {
     JoystickButton xBoxRBumper2 =
         new JoystickButton(m_controller2, XboxController.Button.kRightBumper.value);
 
-
     xBoxY2.whenPressed(new ClimberExtendCommand(m_climberSubsystem));
     xBoxA2.whenPressed(new ClimberRetractCommand(m_climberSubsystem));
     xBoxX2.whenPressed(new HighBarExtendCommand(m_climberSubsystem));
     xBoxB2.whenHeld(new ReleaseMidBarHook(m_climberSubsystem));
     xBoxSelect2.whenPressed(new ClimberStopCommand(m_climberSubsystem));
     xBoxX.whenHeld(new VisionDriveCommand(m_driveSubsystem, m_controller, m_visionSubsystem));
-    xBoxStart.whenHeld(new VisionTuningCommand(m_visionTuningCommand));
+    xBoxStart2.whenHeld(new FullOuttakeCommand(m_indexerSubsystem, m_intakeSubsystem));
     xBoxA.toggleWhenPressed(new IntakeCargoCommand(m_indexerSubsystem, m_intakeSubsystem));
     xBoxRBumper2.whenPressed(new ShooterHoodToggleCommand(m_shooterHoodSubsystem));
     xBoxLBumper2.whenHeld(new OuttakeCommand(m_indexerSubsystem, m_intakeSubsystem));

@@ -30,7 +30,8 @@ public class TwoBallAutonCommand2 extends SequentialCommandGroup {
                         // visionSubsystem), // //temporary comment // out because we are not testin
                         // with vision new
                         new ParallelRaceGroup(new IndexerFullForwardCommand(indexerSubsystem),
-                            new ShooterExponentialCommand(hoodSubsystem, shooterSubsystem)))));
+                            new ShooterExponentialCommand(hoodSubsystem, shooterSubsystem)
+                                .withTimeout(AutonConstants.kShootTime * 1.5)))));
 
   }
 }

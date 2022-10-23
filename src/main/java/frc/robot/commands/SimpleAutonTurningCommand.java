@@ -22,7 +22,7 @@ public class SimpleAutonTurningCommand extends CommandBase {
   public void initialize() {
     // m_pigeon.setYaw(0);
     m_pigeon.setFusedHeading(0);
-    m_driveSubsystem.arcadeDrive(0, (m_angle <= 0 ? -1 : 1) * DriveConstants.kSafeTurnSpeed);
+    m_driveSubsystem.stupidArcadeDrive(0, (m_angle <= 0 ? -1 : 1) * DriveConstants.kSafeTurnSpeed);
   }
 
   // look over this code again it is probably wrong
@@ -33,42 +33,41 @@ public class SimpleAutonTurningCommand extends CommandBase {
       System.out.println("invalid state");
     }
     if (m_passedFinish) {
-      m_driveSubsystem.arcadeDrive(0,
-          (m_angle - m_pigeon.getFusedHeading()) / 360 * DriveConstants.kSafeTurnSpeed
-              + DriveConstants.kSafeTurnSpeed);
-
+      return;
     } else {
-      if (m_angle < 0) {
-        if (m_pigeon.getFusedHeading() >= m_angle) {
+      if (m_angle >= 0) {
+        if (m_pigeon.getFusedHeading() <= m_angle) {
           m_passedFinish = true;
         } else {
-          m_driveSubsystem.arcadeDrive(0,
+          m_driveSubsystem.stupidArcadeDrive(0,
               -1 * ((m_angle - m_pigeon.getFusedHeading()) / 360 * DriveConstants.kSafeTurnSpeed
-                  + DriveConstants.kSafeTurnSpeed));
+                  - DriveConstants.kSafeTurnSpeed));
         }
-      } else if (m_pigeon.getFusedHeading() >= m_angle) {
+      } else if (m_pigeon.getFusedHeading() < m_angle) {
         m_passedFinish = true;
       } else {
-        m_driveSubsystem.arcadeDrive(0,
+        m_driveSubsystem.stupidArcadeDrive(0,
             (m_angle - m_pigeon.getFusedHeading()) / 360 * DriveConstants.kSafeTurnSpeed
                 + DriveConstants.kSafeTurnSpeed);
       }
     }
+
   }
 
+  // left is positive
   @Override
   public void end(boolean interrupted) {
-    m_driveSubsystem.arcadeDrive(0, 0);
+    m_driveSubsystem.stupidArcadeDrive(0, 0);
     m_pigeon.setFusedHeading(0);
   }
 
   @Override
   public boolean isFinished() {
     if (m_angle > 0) {
-      if (m_pigeon.getFusedHeading() * 360 >= m_angle && m_passedFinish) {
+      if (m_pigeon.getFusedHeading() >= m_angle) {
         return true;
       }
-    } else if (m_pigeon.getFusedHeading() * 360 <= m_angle && m_passedFinish) {
+    } else if (m_pigeon.getFusedHeading() <= m_angle) {
       return true;
     }
     return false;

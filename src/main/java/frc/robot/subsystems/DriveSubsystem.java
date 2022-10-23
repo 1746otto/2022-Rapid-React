@@ -172,7 +172,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-
+    System.out.println(m_pigeon.getFusedHeading());
   }
 
   public void stop() {

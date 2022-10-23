@@ -164,8 +164,6 @@ public class ShooterSubsystem extends SubsystemBase {
     RPMShotTune = getRPM() < 1800;
     RPMShotValid = getRPM() > 1600;
 
-    System.out.println(feedForwardVoltage);
-    System.out.println("RPM" + getRPM());
 
     // System.out.println("RPM shot valid: " + RPMShotValid);
 
