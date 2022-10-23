@@ -39,7 +39,7 @@ public class DriveStraightPIDCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void initialize() {
-    m_drive.arcadeDrive(m_speed, 0);
+    m_drive.stupidArcadeDrive(m_speed, 0);
     // yaw returns a value in degrees and does not overflow until 23040.
     m_pigeon.setYaw(0);
     m_startingRotations = m_drive.getLeftRotations();
@@ -53,7 +53,7 @@ public class DriveStraightPIDCommand extends CommandBase {
     m_error = m_target - m_pigeon.getYaw();
     m_deltaError = m_error - m_prevError;
     m_rotationSignal = -(m_kP * m_error + m_kD * m_deltaError);
-    m_drive.arcadeDrive(m_speed, m_rotationSignal * -1);
+    m_drive.stupidArcadeDrive(m_speed, m_rotationSignal * -1);
     m_prevError = m_error;
 
     System.out.println("Left Ticks: " + m_drive.getLeftRotations());
@@ -62,7 +62,7 @@ public class DriveStraightPIDCommand extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
-    m_drive.arcadeDrive(0, 0);
+    m_drive.stupidArcadeDrive(0, 0);
   }
 
   @Override
