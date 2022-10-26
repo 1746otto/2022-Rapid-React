@@ -15,31 +15,11 @@ import frc.robot.Constants;
 import frc.robot.Constants.AutonConstants;
 import com.ctre.phoenix.sensors.PigeonIMU;
 
-public class ThreeBallAutonCommand extends SequentialCommandGroup {
-  public ThreeBallAutonCommand(IndexerSubsystem indexerSubsystem, IntakeSubsystem intakeSubsystem,
+public class ThreeBallAutonCommand2 extends SequentialCommandGroup {
+  public ThreeBallAutonCommand2(IndexerSubsystem indexerSubsystem, IntakeSubsystem intakeSubsystem,
       ShooterSubsystem shooterSubsystem, DriveSubsystem driveSubsystem, Vision visionSubsystem,
       PigeonIMU pigeon, ShooterHoodSubsystem hoodSubsystem) {
-    /*
-     * addCommands( new ParallelRaceGroup( new ShooterExponentialCommand(hoodSubsystem,
-     * shooterSubsystem) .withTimeout(Constants.AutonConstants.kSpeedUpTime), new
-     * IndexerFullForwardCommand(indexerSubsystem)) .andThen(new
-     * DriveStraightPIDCommand(driveSubsystem, pigeon, 180.0 / 12.0, .3)) .andThen(new
-     * SimpleAutonTurningCommand(driveSubsystem, pigeon, 16.89)) // left .andThen(new
-     * ParallelRaceGroup(new IndexerFullForwardCommand(indexerSubsystem), new
-     * IntakeExtendCommand(intakeSubsystem), new DriveStraightPIDCommand(driveSubsystem, pigeon,
-     * 82.0 / 12, .3))) .andThen(new SimpleAutonTurningCommand(driveSubsystem, pigeon, -70.67)) //
-     * right .andThen(new ParallelRaceGroup(new IndexerFullForwardCommand(indexerSubsystem), new
-     * IntakeExtendCommand(intakeSubsystem), new DriveStraightPIDCommand(driveSubsystem, pigeon,
-     * 97.83 / 12, .3))) .andThen(new SimpleAutonTurningCommand(driveSubsystem, pigeon, 48.35)) //
-     * left .andThen(new DriveStraightPIDCommand(driveSubsystem, pigeon, -105.56 / 12, .3))
-     * .andThen(new SimpleAutonTurningCommand(driveSubsystem, pigeon, 60.98)) // left .andThen(new
-     * DriveStraightPIDCommand(driveSubsystem, pigeon, -18.0 / 12, .3)) .andThen(new
-     * ParallelRaceGroup( new ShooterExponentialCommand(hoodSubsystem, shooterSubsystem)
-     * .withTimeout(Constants.AutonConstants.kSpeedUpTime * 3), new
-     * IndexerFullForwardCommand(indexerSubsystem))))
-     * 
-     * ;
-     */
+
     addCommands(
 
         new ParallelRaceGroup(new IndexerFullForwardCommand(indexerSubsystem),
@@ -47,11 +27,11 @@ public class ThreeBallAutonCommand extends SequentialCommandGroup {
                 .withTimeout(AutonConstants.kShootTime)),
         new DriveStraightPIDCommand(driveSubsystem, pigeon, 24.2 / 12.0,
             AutonConstants.kautonVelocity),
-        new SimpleAutonTurningCommand(driveSubsystem, pigeon, 21.0),
+        new SimpleAutonTurningCommand(driveSubsystem, pigeon, 21),
         new ParallelRaceGroup(new IntakeCargoCommand(indexerSubsystem, intakeSubsystem),
             new DriveStraightPIDCommand(driveSubsystem, pigeon, 78.0 / 12,
                 AutonConstants.kautonVelocity)),
-        new DriveStraightPIDCommand(driveSubsystem, pigeon, 17.0 / 12.0,
+        new DriveStraightPIDCommand(driveSubsystem, pigeon, -17.0 / 12.0,
             AutonConstants.kautonVelocity),
         new SimpleAutonTurningCommand(driveSubsystem, pigeon, -112.67),
         new ParallelRaceGroup(new IntakeCargoCommand(indexerSubsystem, intakeSubsystem),
@@ -65,6 +45,13 @@ public class ThreeBallAutonCommand extends SequentialCommandGroup {
             AutonConstants.kautonVelocity),
         new ParallelRaceGroup(new IndexerFullForwardCommand(indexerSubsystem),
             new ShooterExponentialCommand(hoodSubsystem, shooterSubsystem)
-                .withTimeout(AutonConstants.kShootTime * 1.8)));
+                .withTimeout(AutonConstants.kShootTime * 1.8)),
+        new DriveStraightPIDCommand(driveSubsystem, pigeon, 24.2 / 12,
+            AutonConstants.kautonVelocity),
+        new SimpleAutonTurningCommand(driveSubsystem, pigeon, -77.03),
+        new DriveStraightPIDCommand(driveSubsystem, pigeon, 96.87 / 12.0,
+            AutonConstants.kautonVelocity),
+        new SimpleAutonTurningCommand(driveSubsystem, pigeon, -11.43), new DriveStraightPIDCommand(
+            driveSubsystem, pigeon, 135.36 / 12.0, AutonConstants.kautonVelocity));
   }
 }

@@ -5,6 +5,8 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.DriveSubsystem;
 
+// LEFT IS POSITIVE
+
 public class SimpleAutonTurningCommand extends CommandBase {
 
   public final DriveSubsystem m_driveSubsystem;
@@ -36,19 +38,15 @@ public class SimpleAutonTurningCommand extends CommandBase {
       return;
     } else {
       if (m_angle >= 0) {
-        if (m_pigeon.getFusedHeading() <= m_angle) {
+        if (m_pigeon.getFusedHeading() >= m_angle) {
           m_passedFinish = true;
         } else {
-          m_driveSubsystem.stupidArcadeDrive(0,
-              -1 * ((m_angle - m_pigeon.getFusedHeading()) / 360 * DriveConstants.kSafeTurnSpeed
-                  - DriveConstants.kSafeTurnSpeed));
+          m_driveSubsystem.stupidArcadeDrive(0, DriveConstants.kSafeTurnSpeed);
         }
       } else if (m_pigeon.getFusedHeading() < m_angle) {
         m_passedFinish = true;
       } else {
-        m_driveSubsystem.stupidArcadeDrive(0,
-            (m_angle - m_pigeon.getFusedHeading()) / 360 * DriveConstants.kSafeTurnSpeed
-                + DriveConstants.kSafeTurnSpeed);
+        m_driveSubsystem.stupidArcadeDrive(0, DriveConstants.kSafeTurnSpeed);
       }
     }
 
@@ -63,11 +61,15 @@ public class SimpleAutonTurningCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
+    System.out.println(m_pigeon.getFusedHeading() + " >= " + m_angle + ": "
+        + (m_pigeon.getFusedHeading() >= m_angle));
     if (m_angle > 0) {
       if (m_pigeon.getFusedHeading() >= m_angle) {
+
         return true;
       }
-    } else if (m_pigeon.getFusedHeading() <= m_angle) {
+
+    } else if (m_pigeon.getFusedHeading() < m_angle) {
       return true;
     }
     return false;

@@ -20,7 +20,7 @@ public class TwoBallAutonCommand2 extends SequentialCommandGroup {
         new ParallelRaceGroup(new IndexerFullForwardCommand(indexerSubsystem),
             new ShooterExponentialCommand(hoodSubsystem, shooterSubsystem)
                 .withTimeout(AutonConstants.kShootTime)),
-
+        new IntakeCargoCommand(indexerSubsystem, intakeSubsystem).withTimeout(.5),
         new ParallelRaceGroup(
             new DriveStraightPIDCommand(driveSubsystem, pigeon, 8.2, AutonConstants.kautonVelocity),
             new IntakeCargoCommand(indexerSubsystem, intakeSubsystem))

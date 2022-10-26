@@ -22,6 +22,8 @@ import frc.robot.commands.ClimberExtendCommand;
 import frc.robot.commands.ClimberRetractCommand;
 import frc.robot.commands.ClimberStopCommand;
 import frc.robot.commands.HighBarExtendCommand;
+import frc.robot.commands.HighBarExtendCommand2;
+import frc.robot.commands.HighBarRetractCommand;
 import frc.robot.commands.ReleaseMidBarHook;
 import frc.robot.commands.IndexerFullForwardCommand;
 import frc.robot.commands.IntakeCargoCommand;
@@ -104,7 +106,8 @@ public class RobotContainer {
         new JoystickButton(m_controller2, XboxController.Button.kLeftBumper.value);
     JoystickButton xBoxRBumper2 =
         new JoystickButton(m_controller2, XboxController.Button.kRightBumper.value);
-
+    JoystickButton xBox2LeftStick =
+        new JoystickButton(m_controller2, XboxController.Button.kLeftStick.value);
     xBoxY2.whenPressed(new ClimberExtendCommand(m_climberSubsystem));
     xBoxA2.whenPressed(new ClimberRetractCommand(m_climberSubsystem));
     xBoxX2.whenPressed(new HighBarExtendCommand(m_climberSubsystem));
@@ -113,9 +116,10 @@ public class RobotContainer {
     xBoxX.whenHeld(new VisionDriveCommand(m_driveSubsystem, m_controller, m_visionSubsystem));
     xBoxStart2.whenHeld(new FullOuttakeCommand(m_indexerSubsystem, m_intakeSubsystem));
     xBoxA.toggleWhenPressed(new IntakeCargoCommand(m_indexerSubsystem, m_intakeSubsystem));
-    xBoxRBumper2.whenPressed(new ShooterHoodToggleCommand(m_shooterHoodSubsystem));
+    xBox2LeftStick.whenPressed(new ShooterHoodToggleCommand(m_shooterHoodSubsystem));
     xBoxLBumper2.whenHeld(new OuttakeCommand(m_indexerSubsystem, m_intakeSubsystem));
-
+    xBoxRBumper2.whenPressed(new HighBarRetractCommand(m_climberSubsystem))
+        .whenReleased(new HighBarExtendCommand(m_climberSubsystem));
 
 
     xBoxLBumper.whenHeld(new ShooterExponentialCommand(m_shooterHoodSubsystem, m_shooterSubsystem)

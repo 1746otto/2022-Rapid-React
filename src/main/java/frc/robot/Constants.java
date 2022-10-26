@@ -100,7 +100,7 @@ public final class Constants {
 
   public static class IndexerConstants {
     public static final double kLowerFullForward = 0.5;
-    public static final double kUpperFullForward = 0.7;
+    public static final double kUpperFullForward = 0.8;
     public static final double kLowerHalfForward = 0.5;
     public static final double kUpperHalfForward = 0.5;
     public static final double kLowerStop = 0.0;

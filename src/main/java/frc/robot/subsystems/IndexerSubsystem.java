@@ -22,6 +22,7 @@ public class IndexerSubsystem extends SubsystemBase {
   public IndexerSubsystem(ShooterSubsystem shooter) {
     m_lower = new VictorSPX(IndexerConstants.kLower);
     m_upper = new VictorSPX(IndexerConstants.kUpper);
+
     m_lower.setInverted(true);
     beambreakTop = new AnalogInput(IndexerConstants.kBeamBreakTop);
     beambreakBottom = new AnalogInput(IndexerConstants.kBeamBreakBottom);
