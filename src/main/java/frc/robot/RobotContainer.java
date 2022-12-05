@@ -145,15 +145,15 @@ public class RobotContainer {
         new JoystickButton(m_controller2, XboxController.Button.kRightBumper.value);
 
 
-    xBoxY2.whenPressed(new ClimberExtendCommand(m_climberSubsystem));
-    xBoxA2.whenPressed(new ClimberRetractCommand(m_climberSubsystem));
-    xBoxX2.whenPressed(new HighBarExtendCommand(m_climberSubsystem));
-    xBoxB2.whenHeld(new ReleaseMidBarHook(m_climberSubsystem));
-    xBoxSelect2.whenPressed(new ClimberStopCommand(m_climberSubsystem));
-    xBoxX.whenHeld(new VisionDriveCommand(m_driveSubsystem, m_controller, m_visionSubsystem));
-    xBoxStart.whenHeld(new VisionTuningCommand(m_visionTuningCommand));
+    // xBoxY2.whenPressed(new ClimberExtendCommand(m_climberSubsystem));
+    // xBoxA2.whenPressed(new ClimberRetractCommand(m_climberSubsystem));
+    // xBoxX2.whenPressed(new HighBarExtendCommand(m_climberSubsystem));
+    // xBoxB2.whenHeld(new ReleaseMidBarHook(m_climberSubsystem));
+    // xBoxSelect2.whenPressed(new ClimberStopCommand(m_climberSubsystem));
+    // xBoxX.whenHeld(new VisionDriveCommand(m_driveSubsystem, m_controller, m_visionSubsystem));
+    // xBoxStart.whenHeld(new VisionTuningCommand(m_visionTuningCommand));
     xBoxA.toggleWhenPressed(new IntakeCargoCommand(m_indexerSubsystem, m_intakeSubsystem));
-    xBoxRBumper2.whenPressed(new ShooterHoodToggleCommand(m_shooterHoodSubsystem));
+    // xBoxRBumper2.whenPressed(new ShooterHoodToggleCommand(m_shooterHoodSubsystem));
     xBoxLBumper2.whenHeld(new OuttakeCommand(m_indexerSubsystem, m_intakeSubsystem));
 
     /*
@@ -203,8 +203,8 @@ public class RobotContainer {
      */
 
     m_driveSubsystem.setDefaultCommand(new RunCommand(() -> m_driveSubsystem.arcadeDrive(
-        m_controller.getRightTriggerAxis() - m_controller.getLeftTriggerAxis(),
-        m_controller.getLeftX()), m_driveSubsystem));
+        (m_controller.getRightTriggerAxis() - m_controller.getLeftTriggerAxis()) * 0.75,
+        m_controller.getLeftX() * 0.75), m_driveSubsystem));
 
   }
 
