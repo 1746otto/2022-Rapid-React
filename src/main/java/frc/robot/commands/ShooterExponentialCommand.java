@@ -29,21 +29,13 @@ public class ShooterExponentialCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if (ShooterHoodSubsystem.isRetracted() == true) {
-      m_shooter.PIDShooterHigh();
-    } else if (ShooterHoodSubsystem.isRetracted() == false) {
-      m_shooter.PIDShooterLow();
-    }
+    m_shooter.PIDShooterLow();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void execute() {
-    if (ShooterHoodSubsystem.isRetracted() == true) {
-      m_shooter.PIDShooterHigh();
-    } else if (ShooterHoodSubsystem.isRetracted() == false) {
-      m_shooter.PIDShooterLow();
-    }
+    m_shooter.PIDShooterLow();
   }
 
   @Override
